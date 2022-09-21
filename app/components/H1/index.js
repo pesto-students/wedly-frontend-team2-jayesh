@@ -1,8 +1,12 @@
-import styled from 'styled-components';
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-const H1 = styled.h1`
-  font-size: 2em;
-  margin-bottom: 0.25em;
-`;
+function H1({ text, classes }) {
+  return (
+    <h1 className={classes}>
+      <FormattedMessage {...text} />
+    </h1>
+  );
+}
 
 export default H1;
