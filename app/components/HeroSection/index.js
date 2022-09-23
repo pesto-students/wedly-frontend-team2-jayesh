@@ -5,8 +5,7 @@ import H1 from "../H1";
 import H3 from "../H3";
 export default function HeroSection() {
   return (
-    <div className="hero-background justify-center flex-col">
-      <div className="mt-96 text-center">
+    <div className="hero-background flex flex-col justify-end items-center p-4">
         <H1
           classes="text-white text-4xl font-extrabold leading-3"
           text={messages.heading}
@@ -16,7 +15,6 @@ export default function HeroSection() {
           text={messages.subHeading}
         />
         <Button classes="font-semibold" text={messages.getStarted} />
-      </div>
     </div>
   );
 }

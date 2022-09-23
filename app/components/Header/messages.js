@@ -29,4 +29,20 @@ export default defineMessages({
     defaultMessage: `"Once in a while, right in the middle of an ordinary life, love gives
     us a fairy tale."`,
   },
-});
+  weddingDetails: {
+    id: `${scope}.weddingDetails`,
+    defaultMessage: 'Wedding Details',
+  },
+  einvites: {
+    id: `${scope}.einvites`,
+    defaultMessage: 'E-Invites',
+  },
+  reminders: {
+    id: `${scope}.reminders`,
+    defaultMessage: 'Reminders',
+  },
+  eaashirvaad: {
+    id: `${scope}.eaashirvaad`,
+    defaultMessage: 'E-Aashirvaad',
+  },
+  });

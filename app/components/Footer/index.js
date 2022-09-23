@@ -8,22 +8,18 @@ import messages from './messages';
 
 function Footer() {
   return (
-    <Wrapper>
+    <footer className="flex justify-between bg-white p-4">
       <section>
-        <FormattedMessage {...messages.licenseMessage} />
-      </section>
-      <section>
-        <LocaleToggle />
+        <FormattedMessage
+          {...messages.copyrightMessage}
+        />
       </section>
       <section>
         <FormattedMessage
           {...messages.authorMessage}
-          values={{
-            author: <A href="https://twitter.com/mxstbr">Max Stoiber</A>,
-          }}
         />
       </section>
-    </Wrapper>
+    </footer>
   );
 }
 

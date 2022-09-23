@@ -6,32 +6,30 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React from "react";
+import React, { useState, useEffect, memo } from "react";
+import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-import styled from "styled-components";
 import { Switch, Route } from "react-router-dom";
-
+import { connect, useSelector } from "react-redux";
+import { compose } from "redux";
 import HomePage from "containers/HomePage/Loadable";
 import FeaturePage from "containers/FeaturePage/Loadable";
 import NotFoundPage from "containers/NotFoundPage/Loadable";
 import Header from "components/Header";
 import Footer from "components/Footer";
-
-import GlobalStyle from "../../global-styles";
-import HeroSection from "../../components/HeroSection";
+import { createStructuredSelector } from "reselect";
+import { toggleModal } from "./actions";
 import "./index.css";
+import {
+  makeSelectIsOpen,
+  makeSelectError,
+  makeSelectLoading,
+  makeSelectRepos,
+} from "./selectors";
 
-const AppWrapper = styled.div`
-  width: 98vw;
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  position: relative;
-`;
-
-export default function App() {
+export default function App({ }) {
   return (
-    <AppWrapper>
+    <div className="bg-mainTheme">
       <Helmet
         titleTemplate="%s - React.js Boilerplate"
         defaultTitle="React.js Boilerplate"
@@ -39,14 +37,13 @@ export default function App() {
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       <Header />
-      <HeroSection />
-      {/* <Switch>
+      <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
         <Route path="" component={NotFoundPage} />
-      </Switch> */}
-      {/* <Footer /> */}
+      </Switch>
+      <Footer />
       {/* <GlobalStyle /> */}
-    </AppWrapper>
+    </div>
   );
 }

@@ -11,7 +11,5 @@
   background-image: url("../../components/HeroSection/hero_background.png");
   background-size: cover;
   min-height: 528px;
-  position: absolute;
   width: 100vw;
-  top: 60px;
 }
