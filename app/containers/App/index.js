@@ -27,13 +27,10 @@ import {
   makeSelectRepos,
 } from "./selectors";
 
-export default function App({ }) {
+export default function App({}) {
   return (
     <div className="bg-mainTheme">
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
-      >
+      <Helmet>
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       <Header />

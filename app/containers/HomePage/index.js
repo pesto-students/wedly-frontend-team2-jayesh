@@ -37,7 +37,7 @@ const key = "home";
 export function HomePage({ isOpen }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
- 
+
   return (
     <article>
       <Helmet>
@@ -78,10 +78,12 @@ export function HomePage({ isOpen }) {
           <ReposList {...reposListProps} />
         </Section>
       </div> */}
-      <HeroSection />
-      <FeaturesSection />
-      <FeedbackSection />
-      <InfoSection />
+      <div className={isOpen ? `opacity-50` : `opacity-100`}>
+        <HeroSection />
+        <FeaturesSection />
+        <FeedbackSection />
+        <InfoSection />
+        </div>
       {isOpen && <SigninModal />}
     </article>
   );
