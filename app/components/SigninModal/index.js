@@ -1,12 +1,27 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import googleLogo from "./googleLogo.svg";
 import { createStructuredSelector } from "reselect";
 import { toggleModal } from "../../containers/App/actions";
 import { makeSelectIsOpen } from "../../containers/App/selectors";
-import {connect} from "react-redux";
-import {compose} from "redux";
+import { connect } from "react-redux";
+import { useInjectSaga } from "../../utils/injectSaga";
+import saga from "../../containers/HomePage/saga";
+import { compose } from "redux";
+import { SIGNIN } from "../../containers/HomePage/constants";
+import { makeSelectLoginSuccess } from "../../containers/HomePage/selectors";
+import { signinSuccessToast } from "../../utils/toast";
 
-function SigninModal(props) { 
+function SigninModal({ success, signInModal, onToggleModal }) {
+  const key = "signinModal";
+  useInjectSaga({ key, saga });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    signInModal(email, password);
+  }
+
   return (
     <div
       id="authentication-modal"
@@ -20,7 +35,7 @@ function SigninModal(props) {
             type="button"
             className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
             data-modal-toggle="authentication-modal"
-            onClick={() => props.onToggleModal()}
+            onClick={() => onToggleModal()}
           >
             <svg
               aria-hidden="true"
@@ -43,7 +58,6 @@ function SigninModal(props) {
               <button
                 type="submit"
                 class="flex items-center text-black border border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-               
               >
                 <img className="mr-2" src={googleLogo} alt="googleLogo" />
                 <span>Login with Google</span>
@@ -52,7 +66,13 @@ function SigninModal(props) {
             <div className="flex justify-center mb-4">
               <span className="text-gray-500">-OR-</span>
             </div>
-            <form class="space-y-6" action="#">
+            <form
+              class="space-y-6"
+              onSubmit={(event) => {
+                handleSubmit(event);
+                onToggleModal();
+              }}
+            >
               <div>
                 <label
                   for="email"
@@ -67,6 +87,8 @@ function SigninModal(props) {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Enter Email Address"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -83,6 +105,8 @@ function SigninModal(props) {
                   placeholder="Enter your password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
@@ -108,15 +132,18 @@ function SigninModal(props) {
   );
 }
 
-
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectIsOpen(),
+  success: makeSelectLoginSuccess(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onToggleModal: () => {
       dispatch(toggleModal());
+    },
+    signInModal: (email, password) => {
+      dispatch({ type: SIGNIN, email, password });
     },
   };
 }
@@ -130,4 +157,3 @@ export default compose(
   withConnect,
   memo
 )(SigninModal);
-

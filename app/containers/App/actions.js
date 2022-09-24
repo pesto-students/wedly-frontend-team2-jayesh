@@ -15,7 +15,14 @@
  *    }
  */
 
-import { LOAD_REPOS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR, TOGGLE_MODAL } from './constants';
+import {
+  LOAD_REPOS,
+  LOAD_REPOS_SUCCESS,
+  LOAD_REPOS_ERROR,
+  TOGGLE_MODAL,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from "./constants";
 
 /**
  * Load the repositories, this action starts the request saga
@@ -58,9 +65,9 @@ export function repoLoadingError(error) {
   };
 }
 
-export function toggleModal(isOpen) {
+export function toggleModal() {
   return {
     type: TOGGLE_MODAL,
-    isOpen,
   };
 }
+

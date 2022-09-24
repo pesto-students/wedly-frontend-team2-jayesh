@@ -6,7 +6,7 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React, { useState, useEffect, memo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { Switch, Route } from "react-router-dom";
@@ -19,6 +19,8 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 import { createStructuredSelector } from "reselect";
 import { toggleModal } from "./actions";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import {
   makeSelectIsOpen,
@@ -27,12 +29,23 @@ import {
   makeSelectRepos,
 } from "./selectors";
 
-export default function App({}) {
+export default function App() {
   return (
     <div className="bg-mainTheme">
       <Helmet>
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />

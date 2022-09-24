@@ -17,6 +17,7 @@
 
 import { CHANGE_USERNAME } from "./constants";
 import { TOGGLE_MODAL } from "./constants";
+import { SIGNIN } from "./constants";
 
 /**
  * Changes the input field of the form
@@ -32,10 +33,17 @@ export function changeUsername(username) {
   };
 }
 
-export function toggleModal(isOpen) 
-{
+export function toggleModal(isOpen) {
   return {
     type: TOGGLE_MODAL,
     isOpen,
+  };
+}
+
+export function logIn(email, password) {
+  return {
+    type: SIGNIN,
+    email,
+    password,
   };
 }

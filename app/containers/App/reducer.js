@@ -13,6 +13,8 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_ERROR,
   TOGGLE_MODAL,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
 } from "./constants";
 
 // The initial state of the App
@@ -24,6 +26,7 @@ export const initialState = {
     repositories: false,
   },
   isOpen: false,
+  isAuthenticated: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */

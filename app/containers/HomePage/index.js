@@ -36,8 +36,6 @@ const key = "home";
 
 export function HomePage({ isOpen }) {
   useInjectReducer({ key, reducer });
-  useInjectSaga({ key, saga });
-
   return (
     <article>
       <Helmet>
