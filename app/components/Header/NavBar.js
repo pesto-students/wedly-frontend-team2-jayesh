@@ -17,7 +17,7 @@ function NavBar(props) {
         <div className="flex items-center w-1/4">
           <img src={Logo} alt="wedly logo" />
         </div>
-        {props.success || document.cookie.length !== 0 ? (
+        {props.success || document.cookie.length !== 0 || props.user ? (
           <>
             <div className="flex items-center justify-evenly w-1/2">
               <a href="">Events</a>

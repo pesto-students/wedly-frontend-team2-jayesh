@@ -9,7 +9,6 @@ import saga from "../../containers/HomePage/saga";
 import { compose } from "redux";
 import { SIGNIN } from "../../containers/HomePage/constants";
 import { makeSelectLoginSuccess } from "../../containers/HomePage/selectors";
-import { signinSuccessToast } from "../../utils/toast";
 
 function SigninModal({ signInModal, onToggleModal }) {
   const key = "signinModal";
