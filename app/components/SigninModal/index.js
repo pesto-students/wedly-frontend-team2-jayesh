@@ -11,7 +11,7 @@ import { SIGNIN } from "../../containers/HomePage/constants";
 import { makeSelectLoginSuccess } from "../../containers/HomePage/selectors";
 import { signinSuccessToast } from "../../utils/toast";
 
-function SigninModal({ success, signInModal, onToggleModal }) {
+function SigninModal({ signInModal, onToggleModal }) {
   const key = "signinModal";
   useInjectSaga({ key, saga });
   const [email, setEmail] = useState("");

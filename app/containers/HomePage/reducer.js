@@ -12,6 +12,7 @@ import {
   SIGNIN_SUCCESS,
   SIGNIN,
   SIGNIN_FAILURE,
+  SIGNOUT_SUCCESS,
 } from "./constants";
 
 // The initial state of the App
@@ -21,8 +22,6 @@ export const initialState = {
   error: false,
   success: false,
 };
-
-
 
 /* eslint-disable default-case, no-param-reassign */
 const homeReducer = (state = initialState, action) =>
@@ -42,6 +41,10 @@ const homeReducer = (state = initialState, action) =>
 
       case SIGNIN_FAILURE:
         draft.error = true;
+        draft.success = false;
+        break;
+
+      case SIGNOUT_SUCCESS:
         draft.success = false;
         break;
     }
