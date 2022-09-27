@@ -9,6 +9,7 @@ import saga from "../../containers/HomePage/saga";
 import { compose } from "redux";
 import { SIGNIN } from "../../containers/HomePage/constants";
 import { makeSelectLoginSuccess } from "../../containers/HomePage/selectors";
+import history from "../../utils/history";
 
 function SigninModal({ signInModal, onToggleModal }) {
   const key = "signinModal";
@@ -61,7 +62,10 @@ function SigninModal({ signInModal, onToggleModal }) {
               <button
                 type="submit"
                 class="flex items-center text-black border border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                onClick={google}
+                onClick={() => {
+                  google();
+                  signinSuccessToast();
+                }}
               >
                 <img className="mr-2" src={googleLogo} alt="googleLogo" />
                 <span>Login with Google</span>
@@ -124,9 +128,15 @@ function SigninModal({ signInModal, onToggleModal }) {
               </div>
               <div class="text-sm font-medium text-center text-black">
                 Don't have an account?{" "}
-                <a href="#" className="text-pink hover:underline">
+                <button
+                  onClick={() => {
+                    history.push("/signup");
+                    onToggleModal();
+                  }}
+                  className="text-pink hover:underline"
+                >
                   Signup
-                </a>
+                </button>
               </div>
             </form>
           </div>

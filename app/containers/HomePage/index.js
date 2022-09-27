@@ -25,7 +25,6 @@ import messages from "./messages";
 import { toggleModal } from "../App/actions";
 import { makeSelectIsOpen } from "../App/selectors";
 import reducer from "./reducer";
-import saga from "./saga";
 import HeroSection from "../../components/HeroSection";
 import FeaturesSection from "../../components/FeaturesSection";
 import FeedbackSection from "../../components/FeedbackSection";
@@ -45,43 +44,12 @@ export function HomePage({ isOpen }) {
           content="A React.js Boilerplate application homepage"
         />
       </Helmet>
-      {/* <div>
-        <CenteredSection>
-          <H2>
-            <FormattedMessage {...messages.startProjectHeader} />
-          </H2>
-          <p>
-            <FormattedMessage {...messages.startProjectMessage} />
-          </p>
-        </CenteredSection>
-        <Section>
-          <H2>
-            <FormattedMessage {...messages.trymeHeader} />
-          </H2>
-          <Form onSubmit={onSubmitForm}>
-            <label htmlFor="username">
-              <FormattedMessage {...messages.trymeMessage} />
-              <AtPrefix>
-                <FormattedMessage {...messages.trymeAtPrefix} />
-              </AtPrefix>
-              <Input
-                id="username"
-                type="text"
-                placeholder="mxstbr"
-                value={username}
-                onChange={onChangeUsername}
-              />
-            </label>
-          </Form>
-          <ReposList {...reposListProps} />
-        </Section>
-      </div> */}
       <div className={isOpen ? `opacity-50` : `opacity-100`}>
         <HeroSection />
         <FeaturesSection />
         <FeedbackSection />
         <InfoSection />
-        </div>
+      </div>
       {isOpen && <SigninModal />}
     </article>
   );

@@ -20,6 +20,10 @@ export default defineMessages({
     id: `${scope}.getStarted`,
     defaultMessage: "Get Started",
   },
+  fillDetails: {
+    id: `${scope}.fillDetails`,
+    defaultMessage: "Fill Details",
+  },
   heading: {
     id: `${scope}.heading`,
     defaultMessage: "When your Dream Wedding come true",
@@ -31,18 +35,18 @@ export default defineMessages({
   },
   weddingDetails: {
     id: `${scope}.weddingDetails`,
-    defaultMessage: 'Wedding Details',
+    defaultMessage: "Wedding Details",
   },
   einvites: {
     id: `${scope}.einvites`,
-    defaultMessage: 'E-Invites',
+    defaultMessage: "E-Invites",
   },
   reminders: {
     id: `${scope}.reminders`,
-    defaultMessage: 'Reminders',
+    defaultMessage: "Reminders",
   },
   eaashirvaad: {
     id: `${scope}.eaashirvaad`,
-    defaultMessage: 'E-Aashirvaad',
+    defaultMessage: "E-Aashirvaad",
   },
-  });
+});

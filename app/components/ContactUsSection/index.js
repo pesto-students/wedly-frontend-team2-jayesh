@@ -2,11 +2,9 @@ import React from "react";
 
 function ContactUs() {
   return (
-    <section className="w-1/2">
+    <section id="contactUs" className="w-1/2">
       <div className="py-8 lg:py-16 px-4">
-        <h2 className="mb-4 text-xl font-semibold">
-          Contact Us
-        </h2>
+        <h2 className="mb-4 text-xl font-semibold">Contact Us</h2>
         <form action="#" className="space-y-8">
           <div>
             <label

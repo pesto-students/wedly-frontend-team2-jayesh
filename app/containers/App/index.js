@@ -13,42 +13,27 @@ import { Switch, Route } from "react-router-dom";
 import HomePage from "containers/HomePage/Loadable";
 import FeaturePage from "containers/FeaturePage/Loadable";
 import NotFoundPage from "containers/NotFoundPage/Loadable";
-import DetailsPage from "../DetailsPage";
+import SignupPage from "../SignupPage";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
+import { getUser } from "../../utils/api";
 
 export default function App() {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:7000/api/google/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
-        })
-        .then((resObject) => {
-          setUser(resObject.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getUser();
+    getGoogleUser();
   }, []);
 
+  const getGoogleUser = async () => {
+    const newUser = await getUser();
+    setUser(newUser);
+  };
+
   return (
-    <div className="bg-mainTheme">
+    <div className="bg-mainTheme overflow-x-hidden">
       <Helmet>
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
@@ -67,7 +52,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
-        <Route path="/details" component={DetailsPage} />
+        <Route path="/signup" component={SignupPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
