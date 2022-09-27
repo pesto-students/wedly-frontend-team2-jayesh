@@ -17,19 +17,74 @@ const key = "signup";
 function SignupPage({ isOpen, onToggleModal, signup }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [input, setInput] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [error, setError] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const inputStyles =
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5";
+
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    validateInput(e);
+  };
+
+  const validateInput = (e) => {
+    let { name, value } = e.target;
+    setError((prev) => {
+      const stateObj = { ...prev, [name]: "" };
+
+      switch (name) {
+        case "password":
+          if (!value) {
+            stateObj[name] = "Please enter Password.";
+          } else if (input.confirmPassword && value !== input.confirmPassword) {
+            stateObj["confirmPassword"] =
+              "Password and Confirm Password does not match.";
+          } else {
+            stateObj["confirmPassword"] = input.confirmPassword
+              ? ""
+              : error.confirmPassword;
+          }
+          break;
+
+        case "confirmPassword":
+          if (!value) {
+            stateObj[name] = "Please enter Confirm Password.";
+          } else if (input.password && value !== input.password) {
+            stateObj[name] = "Password and Confirm Password does not match.";
+          }
+          break;
+      }
+
+      return stateObj;
+    });
+  };
+
   const google = () => {
     window.open("http://localhost:7000/api/google", "_self");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const name = firstName + " " + lastName;
-    signup(name, email, password);
+    const name = input.firstName + " " + input.lastName;
+    signup(name, input.email, input.password);
   };
 
   return (
@@ -44,7 +99,7 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
         <div className="flex justify-center mb-4">
           <button
             type="submit"
-            class="flex items-center text-black border border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className="flex items-center text-black border border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             onClick={google}
           >
             <img className="mr-2" src={googleLogo} alt="googleLogo" />
@@ -57,35 +112,35 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
         <form class="space-y-6 w-1/2" onSubmit={(e) => handleSubmit(e)}>
           <div>
             <label
-              for="first_name"
-              class="block mb-2 text-sm font-medium text-gray-900"
+              for="firstName"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               First Name
             </label>
             <input
               type="text"
-              name="first_name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              name="firstName"
+              className={inputStyles}
               placeholder="First Name"
               required
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={input.firstName}
+              onChange={onInputChange}
             />
           </div>
           <div>
             <label
-              for="last_name"
+              for="lastName"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Last Name
             </label>
             <input
               type="text"
-              name="last_name"
+              name="lastName"
               placeholder="Last Name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              className={inputStyles}
+              value={input.lastName}
+              onChange={onInputChange}
             />
           </div>
           <div>
@@ -97,12 +152,12 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
             </label>
             <input
               type="email"
-              name="email_address"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              name="email"
+              className={inputStyles}
               placeholder="Email Address"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={input.email}
+              onChange={onInputChange}
             />
           </div>
           <div>
@@ -116,26 +171,36 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
               type="password"
               name="password"
               placeholder="Password"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              className={inputStyles}
+              value={input.password}
+              onChange={onInputChange}
+              onBlur={validateInput}
             />
+            {error.password && (
+              <span className="text-red-500 text-sm">{error.password}</span>
+            )}
           </div>
           <div>
             <label
-              for="confirm_password"
+              for="confirmPassword"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Confirm Password
             </label>
             <input
               type="password"
-              name="confirm_password"
+              name="confirmPassword"
               placeholder="Confirm Password"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={inputStyles}
+              value={input.confirmPassword}
+              onChange={onInputChange}
+              onBlur={validateInput}
             />
+            {error.confirmPassword && (
+              <span className="text-red-500 text-sm">
+                {error.confirmPassword}
+              </span>
+            )}
           </div>
           <div className="flex justify-between">
             <button
