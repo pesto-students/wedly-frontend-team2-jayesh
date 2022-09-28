@@ -93,8 +93,11 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
         className={`p-4 w-full h-full md:h-auto flex justify-center items-center flex-col ${isOpen &&
           "opacity-50"}`}
       >
-        <h3 className="mb-4 text-xl font-medium text-gray-900">
+        <h3 className="mb-4 hidden md:block text-xl font-medium text-gray-900">
           Create an Account to start using our services
+        </h3>
+        <h3 className="mb-4 block md:hidden font-medium text-gray-900">
+          Create an Account
         </h3>
         <div className="flex justify-center mb-4">
           <button
@@ -109,7 +112,10 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
         <div className="flex justify-center mb-4">
           <span className="text-gray-500">-OR-</span>
         </div>
-        <form class="space-y-6 w-1/2" onSubmit={(e) => handleSubmit(e)}>
+        <form
+          class="space-y-6 w-full p-3 md:w-1/2"
+          onSubmit={(e) => handleSubmit(e)}
+        >
           <div>
             <label
               for="firstName"

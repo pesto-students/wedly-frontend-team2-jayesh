@@ -15,7 +15,7 @@ import history from "../../utils/history";
 function NavBar({ user, success, onToggleModal }) {
   const [clicked, setClicked] = useState(false);
   return (
-    <div>
+    <div className="hidden md:block">
       <div className="bg-white flex justify-between py-2 px-2 w-full">
         <div className="flex items-center w-1/4">
           <img
