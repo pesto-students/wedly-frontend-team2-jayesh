@@ -7,9 +7,18 @@
   font-family: "Poppins", sans-serif;
 }
 
-.hero-background {
-  background-image: url("../../components/HeroSection/hero_background.png");
+.hero-background-mobile {
+  background-image: url("../../components/HeroSection/hero-bg-mobile.png");
   background-size: cover;
-  min-height: 528px;
+  min-height: 250px;
   width: 100vw;
+}
+
+@media (min-width: 768px) {
+  .hero-background {
+    background-image: url("../../components/HeroSection/hero_background.png");
+    background-size: cover;
+    min-height: 528px;
+    width: 100vw;
+  }
 }

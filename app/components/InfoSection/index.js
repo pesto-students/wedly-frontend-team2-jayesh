@@ -4,7 +4,7 @@ import AboutUsSection from "../AboutUsSection"
 
 function Info() {
   return (
-    <div className="flex mx-auto w-11/12">
+    <div className="flex flex-col md:flex-row mx-auto w-11/12">
       <ContactUsSection />
       <AboutUsSection />
     </div>
