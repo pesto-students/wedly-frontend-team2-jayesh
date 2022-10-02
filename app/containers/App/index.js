@@ -16,6 +16,7 @@ import NotFoundPage from "containers/NotFoundPage/Loadable";
 import SignupPage from "../SignupPage";
 import Header from "components/Header";
 import Footer from "components/Footer";
+import CoupleDetailsPage from "../CoupleDetailsPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
@@ -33,7 +34,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-mainTheme overflow-x-hidden">
+    <div className="bg-mainTheme overflow-x-hidden min-h-screen relative">
       <Helmet>
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
@@ -53,6 +54,7 @@ export default function App() {
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignupPage} />
+        <Route path="/coupleDetails" component={CoupleDetailsPage}/>
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />

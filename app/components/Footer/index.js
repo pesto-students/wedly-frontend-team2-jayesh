@@ -8,7 +8,7 @@ import messages from './messages';
 
 function Footer() {
   return (
-    <footer className="flex justify-between bg-white p-4">
+    <footer className="w-full absolute bottom-0 flex justify-between bg-white p-4">
       <section>
         <FormattedMessage
           {...messages.copyrightMessage}
