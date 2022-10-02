@@ -19,6 +19,8 @@ import NotFoundPage from "containers/NotFoundPage/Loadable";
 import SignupPage from "../SignupPage";
 import Header from "components/Header";
 import Footer from "components/Footer";
+import CoupleDetailsPage from "../CoupleDetailsPage/index.js";
+import EventsPage from "../EventsPage/index.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
@@ -41,7 +43,7 @@ function App({ checkAuthState }) {
   // };
 
   return (
-    <div className="bg-mainTheme overflow-x-hidden">
+    <div className="bg-mainTheme overflow-x-hidden min-h-screen relative">
       <Helmet>
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
@@ -63,6 +65,8 @@ function App({ checkAuthState }) {
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignupPage} />
+        <Route path="/coupleDetails" component={CoupleDetailsPage}/>
+        <Route path="/events" component={EventsPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
