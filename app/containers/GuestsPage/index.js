@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -6,7 +6,6 @@ import { compose } from "redux";
 
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
-import { makeSelectEvents } from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
 import {
@@ -17,19 +16,17 @@ import {
 import { BsPlusLg } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
 import UploadModal from "../../components/UploadModal";
-import AddEventModal from "../../components/AddEventModal";
-import { GET_EVENT, DELETE_EVENT } from "./constants";
+import AddGuestModal from "../../components/AddGuestModal";
+import { guests } from "../../utils/constants";
+import makeSelectGuestsPage from "./selectors";
 
-const tableHeaders = ["Event Name", "Event Date", "Event Time", "Event Venue"];
-function EventsPage({ getEvents, events, deleteEvent }) {
-  useInjectReducer({ key: "eventsPage", reducer });
-  useInjectSaga({ key: "eventsPage", saga });
+const tableHeaders = ["Guest Name", "Guest Contact Number", "Guest Email"];
+export function GuestsPage() {
+  useInjectReducer({ key: "guestsPage", reducer });
+  useInjectSaga({ key: "guestsPage", saga });
 
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
-  useEffect(() => {
-    getEvents();
-  }, []);
 
   return (
     <div>
@@ -40,13 +37,40 @@ function EventsPage({ getEvents, events, deleteEvent }) {
       >
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-12">
           <div className="flex flex-col">
-            <div className="flex flex-wrap flex-grow justify-between mb-2">
+            <div className="flex justify-between items-center mb-2">
               <div className="flex items-center py-2">
                 <h3 className="text-xl font-semibold text-gray-900">
-                  Event Details
+                  Guest Details
                 </h3>
               </div>
-
+              <div className="relative w-full basis-1/2">
+                <input
+                  type="search"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-lg"
+                  placeholder="Enter guest's name"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="absolute top-0.5 right-0.5 p-2 text-sm font-medium text-white bg-pink rounded-lg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </button>
+              </div>
               <div className="flex py-2">
                 <button
                   type="submit"
@@ -62,57 +86,55 @@ function EventsPage({ getEvents, events, deleteEvent }) {
                   onClick={() => setIsAddOpen(!isAddOpen)}
                 >
                   <BsPlusLg size="0.7rem" className="mr-1" />
-                  Add an Event
+                  Add a Guest
                 </button>
               </div>
             </div>
-            <div className="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-12">
+            <div className="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-24">
               <div className="align-middle inline-block w-full shadow overflow-x-auto sm:rounded-lg border-b border-gray-200">
                 <table className="min-w-full">
                   <thead>
                     <tr className="bg-gray-50 border-b border-gray-200 text-xs leading-4 text-gray-500 tracking-wider">
+                      <th className="px-6 py-3 text-left">
+                        <input type="checkbox" />
+                      </th>
                       {tableHeaders.map((tableHeader) => (
                         <th className="px-6 py-3 text-left font-medium">
                           {tableHeader}
                         </th>
                       ))}
-                      <th className="px-6 py-3 text-left font-medium" />
+                      <th className="px-6 py-3 text-center font-medium">
+                        <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
+                          Invite selected guests
+                        </button>
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white">
-                    {events.map((eventDetails, index) => (
+                    {guests.map((guest, index) => (
                       <tr className={index % 2 && `bg-[#f7f8ff]`}>
                         <td className="px-6 py-4 whitespace-no-wrap ">
+                          <input type="checkbox" />
+                        </td>
+                        <td className="px-6 py-4 whitespace-no-wrap ">
                           <div className="text-sm leading-5 text-gray-900">
-                            {eventDetails.customEvent || eventDetails.category}
+                            {guest.name}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-no-wrap ">
                           <div className="text-sm leading-5 text-gray-900">
-                            {eventDetails.date
-                              .split("T")[0]
-                              .split("-")
-                              .reverse()
-                              .join("-")}
+                            {guest.mobile}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-no-wrap ">
                           <div className="text-sm leading-5 text-gray-900">
-                            {eventDetails.time}
-                          </div>
-                        </td>
-                        <td
-                          className="px-6 py-4 whitespace-no-wrap "
-                          width="20%"
-                        >
-                          <div className="text-sm leading-5 text-gray-900">
-                            {eventDetails.venue}
+                            {guest.email}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
                           <div className="flex items-center justify-between">
                             <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
-                              Remind
+                              Invite
                             </button>
                             <AiOutlineInfoCircle
                               size="1rem"
@@ -124,7 +146,6 @@ function EventsPage({ getEvents, events, deleteEvent }) {
                             className=" text-black"
                           />
                           <AiOutlineDelete
-                            onClick={() => deleteEvent(eventDetails._id)}
                             size="1.5rem"
                             className=" text-red-500"
                           />
@@ -139,7 +160,7 @@ function EventsPage({ getEvents, events, deleteEvent }) {
         </div>
       </div>
       {isAddOpen && (
-        <AddEventModal isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
+        <AddGuestModal isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
       )}
       {isUploadOpen && (
         <UploadModal isOpen={isUploadOpen} setIsOpen={setIsUploadOpen} />
@@ -148,21 +169,17 @@ function EventsPage({ getEvents, events, deleteEvent }) {
   );
 }
 
-EventsPage.propTypes = {
+GuestsPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
+
 const mapStateToProps = createStructuredSelector({
-  events: makeSelectEvents(),
+  guestsPage: makeSelectGuestsPage(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    getEvents: () => {
-      dispatch({ type: GET_EVENT });
-    },
-    deleteEvent: (id) => {
-      dispatch({ type: DELETE_EVENT, id });
-    },
+    dispatch,
   };
 }
 
@@ -174,4 +191,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo
-)(EventsPage);
+)(GuestsPage);

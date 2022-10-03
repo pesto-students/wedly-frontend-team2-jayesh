@@ -4,15 +4,18 @@
  *
  */
 import produce from "immer";
-import { DEFAULT_ACTION } from "./constants";
+import { GET_EVENT_SUCCESS } from "./constants";
 
-export const initialState = {};
+export const initialState = {
+  events: [],
+};
 
 /* eslint-disable default-case, no-param-reassign */
 const eventsPageReducer = (state = initialState, action) =>
-  produce(state, (/* draft */) => {
+  produce(state, (draft) => {
     switch (action.type) {
-      case DEFAULT_ACTION:
+      case GET_EVENT_SUCCESS:
+        draft.events = action.response.data.events;
         break;
     }
   });

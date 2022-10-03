@@ -60,8 +60,32 @@ export const signoutSuccessToast = () => {
   });
 };
 
+export const addEventSuccessToast = () => {
+  toast.success("Event was successfully added!", {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
 export const signoutFailureToast = () => {
   toast.error("Logout failed!", {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const addEventFailureToast = () => {
+  toast.error("Something went wrong! Please try again", {
     position: "top-center",
     autoClose: 5000,
     hideProgressBar: true,

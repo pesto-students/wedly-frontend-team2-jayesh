@@ -5,7 +5,7 @@ import { initialState } from "./reducer";
  * Direct selector to the eventsPage state domain
  */
 
-const selectEventsPageDomain = state => state.eventsPage || initialState;
+const selectEventsPageDomain = (state) => state.eventsPage || initialState;
 
 /**
  * Other specific selectors
@@ -15,11 +15,10 @@ const selectEventsPageDomain = state => state.eventsPage || initialState;
  * Default selector used by EventsPage
  */
 
-const makeSelectEventsPage = () =>
+const makeSelectEvents = () =>
   createSelector(
     selectEventsPageDomain,
-    substate => substate
+    (substate) => substate.events
   );
 
-export default makeSelectEventsPage;
-export { selectEventsPageDomain };
+export { selectEventsPageDomain, makeSelectEvents };
