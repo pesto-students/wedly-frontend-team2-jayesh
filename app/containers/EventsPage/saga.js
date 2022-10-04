@@ -40,13 +40,12 @@ export async function getEvents() {
 
 export async function deleteEvent(id) {
   console.log(id);
-  const requestURL = `http://localhost:7000/api/event?id=${id}`;
-  const response = await axios({
-    method: "DELETE",
-    url: requestURL,
-    withCredentials: true,
-    data: { id: id },
-  });
+  const requestURL = `http://localhost:7000/api/event`;
+  const response = await axios.delete(
+    requestURL,
+    { withCredentials: true },
+    { data: { id: id } }
+  );
 
   return response;
 }

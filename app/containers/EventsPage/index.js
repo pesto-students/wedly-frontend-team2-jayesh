@@ -31,10 +31,6 @@ function EventsPage({ getEvents, events, deleteEvent }) {
     getEvents();
   }, []);
 
-  const deleteAndUpdateEvent = async (id) => {
-    await deleteEvent(id);
-  };
-
   return (
     <div>
       <div
@@ -128,11 +124,9 @@ function EventsPage({ getEvents, events, deleteEvent }) {
                             className=" text-black"
                           />
                           <AiOutlineDelete
-                            onClick={() =>
-                              deleteAndUpdateEvent(eventDetails._id)
-                            }
+                            onClick={() => deleteEvent(eventDetails._id)}
                             size="1.5rem"
-                            className="cursor-pointer text-red-500"
+                            className=" text-red-500"
                           />
                         </td>
                       </tr>

@@ -28,9 +28,9 @@ function UploadModal({ isOpen, setIsOpen, addEvent }) {
     }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    await addEvent(
+    addEvent(
       input.category,
       input.customEvent,
       input.date,
