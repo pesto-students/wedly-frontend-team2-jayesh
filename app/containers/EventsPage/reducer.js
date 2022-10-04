@@ -4,7 +4,11 @@
  *
  */
 import produce from "immer";
-import { GET_EVENT_SUCCESS } from "./constants";
+import {
+  ADD_EVENT_SUCCESS,
+  DELETE_EVENT_SUCCESS,
+  GET_EVENT_SUCCESS,
+} from "./constants";
 
 export const initialState = {
   events: [],
@@ -16,6 +20,16 @@ const eventsPageReducer = (state = initialState, action) =>
     switch (action.type) {
       case GET_EVENT_SUCCESS:
         draft.events = action.response.data.events;
+        break;
+
+      case ADD_EVENT_SUCCESS:
+        draft.events.push(action.response.data.addedEvent);
+        break;
+
+      case DELETE_EVENT_SUCCESS:
+        draft.events = draft.events.filter(
+          (event) => event._id !== action.response.data.deletedEvent._id
+        );
         break;
     }
   });
