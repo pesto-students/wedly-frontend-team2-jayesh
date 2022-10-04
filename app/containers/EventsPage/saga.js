@@ -10,9 +10,11 @@ import {
   DELETE_EVENT,
   DELETE_EVENT_FAILURE,
   DELETE_EVENT_SUCCESS,
+  ADD_MULTIPLE_EVENTS_SUCCESS,
+  ADD_MULTIPLE_EVENTS_FAILURE,
+  ADD_MULTIPLE_EVENTS,
 } from "./constants";
 import { addEventSuccessToast, addEventFailureToast } from "../../utils/toast";
-// import history from "../../utils/history";
 
 export async function addEvent(category, customEvent, date, time, venue) {
   const body = {};
@@ -39,8 +41,7 @@ export async function getEvents() {
 }
 
 export async function deleteEvent(id) {
-  console.log(id);
-  const requestURL = `http://localhost:7000/api/event?id=${id}`;
+  const requestURL = `http://localhost:7000/api/event`;
   const response = await axios({
     method: "DELETE",
     url: requestURL,
@@ -48,6 +49,15 @@ export async function deleteEvent(id) {
     data: { id: id },
   });
 
+  return response;
+}
+
+export async function addMultipleEvents(arrayOfEvents) {
+  const requestURL = `http://localhost:7000/api/event/multiple`;
+
+  const response = await axios.post(requestURL, arrayOfEvents, {
+    withCredentials: true,
+  });
   return response;
 }
 
@@ -68,6 +78,19 @@ function* addEventSaga(action) {
   } catch (error) {
     yield put({ type: ADD_EVENT_FAILURE, error });
     yield addEventFailureToast();
+  }
+}
+
+function* addMultipleEventsSaga(action) {
+  try {
+    const response = yield call(addMultipleEvents, action.arrayOfEvents);
+
+    yield put({ type: ADD_MULTIPLE_EVENTS_SUCCESS, response });
+    // yield addEventSuccessToast();
+    // yield history.push("/");
+  } catch (error) {
+    yield put({ type: ADD_MULTIPLE_EVENTS_FAILURE, error });
+    // yield addEventFailureToast();
   }
 }
 
@@ -99,4 +122,5 @@ export default function* watcherSaga() {
   yield takeEvery(ADD_EVENT, addEventSaga);
   yield takeEvery(GET_EVENT, getEventSaga);
   yield takeEvery(DELETE_EVENT, deleteEventSaga);
+  yield takeEvery(ADD_MULTIPLE_EVENTS, addMultipleEventsSaga);
 }

@@ -4,15 +4,19 @@
  *
  */
 import produce from "immer";
-import { DEFAULT_ACTION } from "./constants";
+import { ADD_COUPLE_DETAILS_SUCCESS } from "./constants";
 
-export const initialState = {};
+export const initialState = {
+  coupleDetails: {},
+};
 
 /* eslint-disable default-case, no-param-reassign */
 const coupleDetailsPageReducer = (state = initialState, action) =>
-  produce(state, (/* draft */) => {
+  produce(state, (draft) => {
     switch (action.type) {
-      case DEFAULT_ACTION:
+      case ADD_COUPLE_DETAILS_SUCCESS:
+        draft.coupleDetails.bride = action.response.data.newBride;
+        draft.coupleDetails.groom = action.response.data.newGroom;
         break;
     }
   });

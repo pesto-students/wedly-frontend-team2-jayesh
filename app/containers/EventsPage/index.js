@@ -6,7 +6,7 @@ import { compose } from "redux";
 
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
-import { makeSelectEvents } from "./selectors";
+import { makeSelectEvents, makeSelectisUploading } from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
 import {
@@ -84,59 +84,63 @@ function EventsPage({ getEvents, events, deleteEvent }) {
                     </tr>
                   </thead>
                   <tbody className="bg-white">
-                    {events.map((eventDetails, index) => (
-                      <tr className={index % 2 && `bg-[#f7f8ff]`}>
-                        <td className="px-6 py-4 whitespace-no-wrap ">
-                          <div className="text-sm leading-5 text-gray-900">
-                            {eventDetails.customEvent || eventDetails.category}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap ">
-                          <div className="text-sm leading-5 text-gray-900">
-                            {eventDetails.date
-                              .split("T")[0]
-                              .split("-")
-                              .reverse()
-                              .join("-")}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap ">
-                          <div className="text-sm leading-5 text-gray-900">
-                            {eventDetails.time}
-                          </div>
-                        </td>
-                        <td
-                          className="px-6 py-4 whitespace-no-wrap "
-                          width="20%"
-                        >
-                          <div className="text-sm leading-5 text-gray-900">
-                            {eventDetails.venue}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
-                          <div className="flex items-center justify-between">
-                            <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
-                              Remind
-                            </button>
-                            <AiOutlineInfoCircle
-                              size="1rem"
-                              className=" text-black"
-                            />
-                          </div>
-                          <AiOutlineEdit
-                            size="1.5rem"
-                            className=" text-black"
-                          />
-                          <AiOutlineDelete
-                            onClick={() =>
-                              deleteAndUpdateEvent(eventDetails._id)
-                            }
-                            size="1.5rem"
-                            className="cursor-pointer text-red-500"
-                          />
-                        </td>
-                      </tr>
-                    ))}
+                    {events.length !== 0
+                      ? events.map((eventDetails, index) => (
+                          <tr className={index % 2 && `bg-[#f7f8ff]`}>
+                            <td className="px-6 py-4 whitespace-no-wrap ">
+                              <div className="text-sm leading-5 text-gray-900">
+                                {eventDetails.customEvent ||
+                                  eventDetails.category}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-no-wrap ">
+                              <div className="text-sm leading-5 text-gray-900">
+                                {eventDetails.date &&
+                                  eventDetails.date
+                                    .split("T")[0]
+                                    .split("-")
+                                    .reverse()
+                                    .join("-")}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-no-wrap ">
+                              <div className="text-sm leading-5 text-gray-900">
+                                {eventDetails.time}
+                              </div>
+                            </td>
+                            <td
+                              className="px-6 py-4 whitespace-no-wrap "
+                              width="20%"
+                            >
+                              <div className="text-sm leading-5 text-gray-900">
+                                {eventDetails.venue}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
+                              <div className="flex items-center justify-between">
+                                <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
+                                  Remind
+                                </button>
+                                <AiOutlineInfoCircle
+                                  size="1rem"
+                                  className=" text-black"
+                                />
+                              </div>
+                              <AiOutlineEdit
+                                size="1.5rem"
+                                className=" text-black"
+                              />
+                              <AiOutlineDelete
+                                onClick={() =>
+                                  deleteAndUpdateEvent(eventDetails._id)
+                                }
+                                size="1.5rem"
+                                className="cursor-pointer text-red-500"
+                              />
+                            </td>
+                          </tr>
+                        ))
+                      : null}
                   </tbody>
                 </table>
               </div>
@@ -148,7 +152,10 @@ function EventsPage({ getEvents, events, deleteEvent }) {
         <AddEventModal isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
       )}
       {isUploadOpen && (
-        <UploadModal isOpen={isUploadOpen} setIsOpen={setIsUploadOpen} />
+        <UploadModal
+          isOpen={isUploadOpen}
+          setIsOpen={setIsUploadOpen}
+        />
       )}
     </div>
   );
@@ -159,6 +166,7 @@ EventsPage.propTypes = {
 };
 const mapStateToProps = createStructuredSelector({
   events: makeSelectEvents(),
+  isUploading: makeSelectisUploading(),
 });
 
 function mapDispatchToProps(dispatch) {

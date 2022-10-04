@@ -9,7 +9,7 @@ import { useInjectSaga } from "../../utils/injectSaga";
 import reducer from "../../containers/EventsPage/reducer";
 import saga from "../../containers/EventsPage/saga";
 
-function UploadModal({ isOpen, setIsOpen, addEvent }) {
+function AddEventModal({ isOpen, setIsOpen, addEvent }) {
   useInjectReducer({ key: "eventsPage", reducer });
   useInjectSaga({ key: "eventsPage", saga });
   const [input, setInput] = useState({
@@ -172,4 +172,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo
-)(UploadModal);
+)(AddEventModal);

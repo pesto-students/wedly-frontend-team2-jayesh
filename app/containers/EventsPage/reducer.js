@@ -6,6 +6,7 @@
 import produce from "immer";
 import {
   ADD_EVENT_SUCCESS,
+  ADD_MULTIPLE_EVENTS_SUCCESS,
   DELETE_EVENT_SUCCESS,
   GET_EVENT_SUCCESS,
 } from "./constants";
@@ -24,6 +25,10 @@ const eventsPageReducer = (state = initialState, action) =>
 
       case ADD_EVENT_SUCCESS:
         draft.events.push(action.response.data.addedEvent);
+        break;
+
+      case ADD_MULTIPLE_EVENTS_SUCCESS:
+        draft.events.push(action.response.data.addedEvents);
         break;
 
       case DELETE_EVENT_SUCCESS:

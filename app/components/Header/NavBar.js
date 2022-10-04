@@ -31,16 +31,25 @@ function NavBar({ user, success, onToggleModal, logout }) {
         {success ? (
           <>
             <div className="flex items-center justify-evenly w-2/5">
-              <a className="font-semibold" href="">
+              <button
+                onClick={() => history.push("/events")}
+                className="font-semibold"
+              >
                 Events
-              </a>
-              <a className="font-semibold" href="">
+              </button>
+              <button
+                onClick={() => history.push("/guests")}
+                className="font-semibold"
+              >
                 Guests
-              </a>
-              <a className="font-semibold" href="">
+              </button>
+              <button
+                onClick={() => history.push("/")}
+                className="font-semibold"
+              >
                 E-Invites
-              </a>
-              <a className="font-semibold" href="#contactUs">
+              </button>
+              <a className="font-semibold" href="/#contactUs">
                 Contact Us
               </a>
             </div>

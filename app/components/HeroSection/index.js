@@ -9,6 +9,7 @@ import H3 from "../H3";
 import { toggleModal } from "../../containers/App/actions";
 import { makeSelectAuth } from "../../containers/HomePage/selectors";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import history from "../../utils/history";
 
 function HeroSection({ onToggleModal, success }) {
   return (
