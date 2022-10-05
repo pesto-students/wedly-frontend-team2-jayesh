@@ -22,6 +22,8 @@ import Footer from "components/Footer";
 import CoupleDetailsPage from "../CoupleDetailsPage/index.js";
 import EventsPage from "../EventsPage/index.js";
 import GuestsPage from "../GuestsPage";
+import EinvitePage from "../EinvitePage";
+import EinviteEditPage from "../EinviteEditPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
@@ -44,7 +46,7 @@ function App({ checkAuthState }) {
   // };
 
   return (
-    <div className="bg-mainTheme overflow-x-hidden min-h-screen relative">
+    <div className="bg-mainTheme overflow-x-hidden min-h-screen relative overflow-auto">
       <Helmet>
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
@@ -69,6 +71,8 @@ function App({ checkAuthState }) {
         <Route path="/coupleDetails" component={CoupleDetailsPage} />
         <Route path="/events" component={EventsPage} />
         <Route path="/guests" component={GuestsPage} />
+        <Route path="/einvites" component={EinvitePage} />
+        <Route path="/einviteEdit/:id" component={EinviteEditPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
