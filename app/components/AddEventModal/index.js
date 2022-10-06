@@ -3,23 +3,37 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { options } from "../../utils/constants";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { ADD_EVENT, GET_EVENT } from "../../containers/EventsPage/constants";
+import { ADD_EVENT, UPDATE_EVENT } from "../../containers/EventsPage/constants";
 import { useInjectReducer } from "../../utils/injectReducer";
 import { useInjectSaga } from "../../utils/injectSaga";
 import reducer from "../../containers/EventsPage/reducer";
 import saga from "../../containers/EventsPage/saga";
 
-function AddEventModal({ isOpen, setIsOpen, addEvent }) {
+function AddEventModal({
+  isOpen,
+  setIsOpen,
+  addEvent,
+  role,
+  eventDetails,
+  index,
+  updateEvent,
+}) {
   useInjectReducer({ key: "eventsPage", reducer });
   useInjectSaga({ key: "eventsPage", saga });
   const [input, setInput] = useState({
-    category: "Category",
-    date: "",
-    time: "",
-    eventVenue: "",
-    customEvent: "",
+    category:
+      role === "add"
+        ? "Category"
+        : eventDetails.category
+        ? eventDetails.category
+        : "Other",
+    date: role === "add" ? "" : eventDetails.date.split("T")[0],
+    time: role === "add" ? "" : eventDetails.time,
+    eventVenue: role === "add" ? "" : eventDetails.venue,
+    customEvent: role === "add" ? "" : eventDetails.customEvent,
   });
 
+  console.log(input);
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setInput((prev) => ({
@@ -30,23 +44,45 @@ function AddEventModal({ isOpen, setIsOpen, addEvent }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await addEvent(
-      input.category,
-      input.customEvent,
-      input.date,
-      input.time,
-      input.eventVenue
-    );
+    if (role === "add") {
+      await addEvent(
+        input.category,
+        input.customEvent,
+        input.date,
+        input.time,
+        input.eventVenue
+      );
+    } else {
+      await updateEvent({
+        id: eventDetails._id,
+        category: input.category,
+        customEvent: input.customEvent,
+        date: input.date,
+        time: input.time,
+        venue: input.eventVenue,
+      });
+      window.location.reload();
+    }
+  };
+
+  const handleClick = (index) => {
+    if (role === "add") {
+      setIsOpen(!isOpen);
+    } else {
+      setIsOpen((prevState) =>
+        prevState.map((item, idx) => (idx === index ? !item : item))
+      );
+    }
   };
 
   return (
     <div className="overflow-y-hidden overflow-x-hidden fixed top-1/2 left-1/2 z-50 w-1/3 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-4 pl-8 rounded-lg">
       <AiOutlineCloseCircle
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => handleClick(index)}
         className="absolute top-0 right-0 m-2"
       />
       <h3 className="mt-3 mb-2 md:mb-4 text-xl font-medium text-gray-900">
-        Add Event
+        {role === "add" ? "Add" : "Update"} Event
       </h3>
       <form
         class="space-y-3 md:space-y-6"
@@ -148,7 +184,7 @@ function AddEventModal({ isOpen, setIsOpen, addEvent }) {
         </div>
         <div className="w-11/12 flex justify-end">
           <button className="bg-pink rounded-lg text-white py-3 px-4">
-            Add
+            {role === "add" ? "Add" : "Update"}
           </button>
         </div>
       </form>
@@ -160,6 +196,9 @@ export function mapDispatchToProps(dispatch) {
   return {
     addEvent: (category, customEvent, date, time, venue) => {
       dispatch({ type: ADD_EVENT, category, customEvent, date, time, venue });
+    },
+    updateEvent: (updateObj) => {
+      dispatch({ type: UPDATE_EVENT, updateObj });
     },
   };
 }

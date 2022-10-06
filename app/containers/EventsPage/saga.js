@@ -1,4 +1,4 @@
-import { call, put, takeLatest, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 import {
   ADD_EVENT,
@@ -13,6 +13,9 @@ import {
   ADD_MULTIPLE_EVENTS_SUCCESS,
   ADD_MULTIPLE_EVENTS_FAILURE,
   ADD_MULTIPLE_EVENTS,
+  UPDATE_EVENT,
+  UPDATE_EVENT_FAILURE,
+  UPDATE_EVENT_SUCCESS,
 } from "./constants";
 import { addEventSuccessToast, addEventFailureToast } from "../../utils/toast";
 
@@ -56,6 +59,15 @@ export async function addMultipleEvents(arrayOfEvents) {
   const requestURL = `http://localhost:7000/api/event/multiple`;
 
   const response = await axios.post(requestURL, arrayOfEvents, {
+    withCredentials: true,
+  });
+  return response;
+}
+
+export async function updateEvent(updateObj) {
+  const requestURL = `http://localhost:7000/api/event`;
+
+  const response = await axios.patch(requestURL, updateObj, {
     withCredentials: true,
   });
   return response;
@@ -106,6 +118,16 @@ function* getEventSaga() {
   }
 }
 
+function* updateEventSaga(action) {
+  try {
+    const response = yield call(updateEvent, action.updateObj);
+
+    yield put({ type: UPDATE_EVENT_SUCCESS, response });
+  } catch (err) {
+    yield put({ type: UPDATE_EVENT_FAILURE, err });
+  }
+}
+
 function* deleteEventSaga(action) {
   try {
     const response = yield call(deleteEvent, action.id);
@@ -123,4 +145,5 @@ export default function* watcherSaga() {
   yield takeEvery(GET_EVENT, getEventSaga);
   yield takeEvery(DELETE_EVENT, deleteEventSaga);
   yield takeEvery(ADD_MULTIPLE_EVENTS, addMultipleEventsSaga);
+  yield takeEvery(UPDATE_EVENT, updateEventSaga);
 }

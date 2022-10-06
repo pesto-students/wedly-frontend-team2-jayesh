@@ -1,9 +1,8 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
-
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import reducer from "./reducer";
@@ -17,16 +16,20 @@ import { BsPlusLg } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
 import UploadModal from "../../components/UploadModal";
 import AddGuestModal from "../../components/AddGuestModal";
-import { guests } from "../../utils/constants";
-import makeSelectGuestsPage from "./selectors";
+import { makeSelectGuests, makeSelectIsLoading } from "./selectors";
+import { DELETE_GUEST, GET_GUEST } from "./constants";
 
 const tableHeaders = ["Guest Name", "Guest Contact Number", "Guest Email"];
-export function GuestsPage() {
+export function GuestsPage({ guests, getGuests, deleteGuest, isLoading }) {
   useInjectReducer({ key: "guestsPage", reducer });
   useInjectSaga({ key: "guestsPage", saga });
-
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(new Array(100).fill(false));
+
+  useEffect(() => {
+    getGuests();
+  }, []);
 
   return (
     <div>
@@ -48,7 +51,6 @@ export function GuestsPage() {
                   type="search"
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-lg"
                   placeholder="Enter guest's name"
-                  required
                 />
                 <button
                   type="submit"
@@ -111,47 +113,68 @@ export function GuestsPage() {
                     </tr>
                   </thead>
                   <tbody className="bg-white">
-                    {guests.map((guest, index) => (
-                      <tr className={index % 2 && `bg-[#f7f8ff]`}>
-                        <td className="px-6 py-4 whitespace-no-wrap ">
-                          <input type="checkbox" />
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap ">
-                          <div className="text-sm leading-5 text-gray-900">
-                            {guest.name}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap ">
-                          <div className="text-sm leading-5 text-gray-900">
-                            {guest.mobile}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap ">
-                          <div className="text-sm leading-5 text-gray-900">
-                            {guest.email}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
-                          <div className="flex items-center justify-between">
-                            <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
-                              Invite
-                            </button>
-                            <AiOutlineInfoCircle
-                              size="1rem"
-                              className=" text-black"
-                            />
-                          </div>
-                          <AiOutlineEdit
-                            size="1.5rem"
-                            className=" text-black"
-                          />
-                          <AiOutlineDelete
-                            size="1.5rem"
-                            className=" text-red-500"
-                          />
-                        </td>
-                      </tr>
-                    ))}
+                    {guests.length !== 0
+                      ? guests.map((guest, index) => {
+                          return (
+                            <tr className={index % 2 && `bg-[#f7f8ff]`}>
+                              <td className="px-6 py-4 whitespace-no-wrap ">
+                                <input type="checkbox" />
+                              </td>
+                              <td className="px-6 py-4 whitespace-no-wrap ">
+                                <div className="text-sm leading-5 text-gray-900">
+                                  {guest.name}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-no-wrap ">
+                                <div className="text-sm leading-5 text-gray-900">
+                                  {guest.mobile}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-no-wrap ">
+                                <div className="text-sm leading-5 text-gray-900">
+                                  {guest.email}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
+                                <div className="flex items-center justify-between">
+                                  <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
+                                    Invite
+                                  </button>
+                                  <AiOutlineInfoCircle
+                                    size="1rem"
+                                    className=" text-black"
+                                  />
+                                </div>
+                                <AiOutlineEdit
+                                  onClick={() =>
+                                    setIsUpdate((prevState) =>
+                                      prevState.map((item, idx) =>
+                                        idx === index ? !item : item
+                                      )
+                                    )
+                                  }
+                                  size="1.5rem"
+                                  className="cursor-pointer text-black"
+                                />
+                                <AiOutlineDelete
+                                  onClick={() => deleteGuest(guest._id)}
+                                  size="1.5rem"
+                                  className="cursor-pointer text-red-500"
+                                />
+                              </td>
+                              {isUpdate[index] && (
+                                <AddGuestModal
+                                  role="update"
+                                  index={index}
+                                  guest={guest}
+                                  isOpen={isUpdate}
+                                  setIsOpen={setIsUpdate}
+                                />
+                              )}
+                            </tr>
+                          );
+                        })
+                      : null}
                   </tbody>
                 </table>
               </div>
@@ -160,34 +183,40 @@ export function GuestsPage() {
         </div>
       </div>
       {isAddOpen && (
-        <AddGuestModal isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
+        <AddGuestModal role="add" isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
       )}
       {isUploadOpen && (
-        <UploadModal isOpen={isUploadOpen} setIsOpen={setIsUploadOpen} />
+        <UploadModal
+          role="guest"
+          isOpen={isUploadOpen}
+          setIsOpen={setIsUploadOpen}
+        />
       )}
     </div>
   );
 }
 
-GuestsPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
+GuestsPage.propTypes = { dispatch: PropTypes.func.isRequired };
 
 const mapStateToProps = createStructuredSelector({
-  guestsPage: makeSelectGuestsPage(),
+  guests: makeSelectGuests(),
+  isLoading: makeSelectIsLoading(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getGuests: () => {
+      dispatch({ type: GET_GUEST });
+    },
+    deleteGuest: (id) => {
+      dispatch({ type: DELETE_GUEST, id });
+    },
   };
 }
-
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 );
-
 export default compose(
   withConnect,
   memo

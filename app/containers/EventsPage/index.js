@@ -6,7 +6,7 @@ import { compose } from "redux";
 
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
-import { makeSelectEvents, makeSelectisUploading } from "./selectors";
+import { makeSelectEvents } from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
 import {
@@ -27,6 +27,7 @@ function EventsPage({ getEvents, events, deleteEvent }) {
 
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(new Array(100).fill(false));
   useEffect(() => {
     getEvents();
   }, []);
@@ -127,6 +128,13 @@ function EventsPage({ getEvents, events, deleteEvent }) {
                                 />
                               </div>
                               <AiOutlineEdit
+                                onClick={() =>
+                                  setIsUpdate((prevState) =>
+                                    prevState.map((item, idx) =>
+                                      idx === index ? !item : item
+                                    )
+                                  )
+                                }
                                 size="1.5rem"
                                 className=" text-black"
                               />
@@ -138,6 +146,15 @@ function EventsPage({ getEvents, events, deleteEvent }) {
                                 className="cursor-pointer text-red-500"
                               />
                             </td>
+                            {isUpdate[index] && (
+                              <AddEventModal
+                                role="update"
+                                index={index}
+                                eventDetails={eventDetails}
+                                isOpen={isUpdate}
+                                setIsOpen={setIsUpdate}
+                              />
+                            )}
                           </tr>
                         ))
                       : null}
@@ -149,10 +166,11 @@ function EventsPage({ getEvents, events, deleteEvent }) {
         </div>
       </div>
       {isAddOpen && (
-        <AddEventModal isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
+        <AddEventModal role="add" isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
       )}
       {isUploadOpen && (
         <UploadModal
+          role="event"
           isOpen={isUploadOpen}
           setIsOpen={setIsUploadOpen}
         />
@@ -166,7 +184,6 @@ EventsPage.propTypes = {
 };
 const mapStateToProps = createStructuredSelector({
   events: makeSelectEvents(),
-  isUploading: makeSelectisUploading(),
 });
 
 function mapDispatchToProps(dispatch) {

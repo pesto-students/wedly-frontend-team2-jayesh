@@ -2,21 +2,28 @@ import React, { memo, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { ADD_EVENT, GET_EVENT } from "../../containers/EventsPage/constants";
 import { useInjectReducer } from "../../utils/injectReducer";
 import { useInjectSaga } from "../../utils/injectSaga";
 import reducer from "../../containers/EventsPage/reducer";
 import saga from "../../containers/EventsPage/saga";
+import { ADD_GUEST, UPDATE_GUEST } from "../../containers/GuestsPage/constants";
 
-function UploadModal({ isOpen, setIsOpen, addEvent }) {
+function UploadModal({
+  isOpen,
+  setIsOpen,
+  addGuest,
+  role,
+  guest,
+  index,
+  updateGuest,
+}) {
   useInjectReducer({ key: "eventsPage", reducer });
   useInjectSaga({ key: "eventsPage", saga });
   const [input, setInput] = useState({
-    name:"",
-    email:"",
-    mobile:"",
+    name: role === "add" ? "" : guest.name,
+    email: role === "add" ? "" : guest.email,
+    mobile: role === "add" ? "" : guest.mobile,
   });
-
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setInput((prev) => ({
@@ -25,25 +32,40 @@ function UploadModal({ isOpen, setIsOpen, addEvent }) {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleClick = (index) => {
+    if (role === "add") {
+      setIsOpen(!isOpen);
+    } else {
+      setIsOpen((prevState) =>
+        prevState.map((item, idx) => (idx === index ? !item : item))
+      );
+    }
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    addEvent(
-      input.category,
-      input.customEvent,
-      input.date,
-      input.time,
-      input.eventVenue
-    );
+    if (role === "add") {
+      await addGuest(input.name, input.mobile, input.email);
+    } else {
+      await updateGuest({
+        id: guest._id,
+        name: input.name,
+        mobile: input.mobile,
+        email: input.email,
+      });
+      window.location.reload();
+    }
   };
 
   return (
     <div className="overflow-y-hidden overflow-x-hidden fixed top-1/2 left-1/2 z-50 w-1/3 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-4 pl-8 rounded-lg">
       <AiOutlineCloseCircle
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => handleClick(index)}
         className="absolute top-0 right-0 m-2"
       />
       <h3 className="mt-3 mb-2 md:mb-4 text-xl font-medium text-gray-900">
-        Add Guest
+        {role === "add" ? "Add " : "Update "}
+        Guest
       </h3>
       <form
         class="space-y-3 md:space-y-6"
@@ -108,7 +130,7 @@ function UploadModal({ isOpen, setIsOpen, addEvent }) {
         </div>
         <div className="w-11/12 flex justify-end">
           <button className="bg-pink rounded-lg text-white py-3 px-4">
-            Add
+            {role === "add" ? "Add" : "Update"}
           </button>
         </div>
       </form>
@@ -118,8 +140,11 @@ function UploadModal({ isOpen, setIsOpen, addEvent }) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    addEvent: (category, customEvent, date, time, venue) => {
-      dispatch({ type: ADD_EVENT, category, customEvent, date, time, venue });
+    addGuest: (name, mobile, email) => {
+      dispatch({ type: ADD_GUEST, name, mobile, email });
+    },
+    updateGuest: (updateObj) => {
+      dispatch({ type: UPDATE_GUEST, updateObj });
     },
   };
 }

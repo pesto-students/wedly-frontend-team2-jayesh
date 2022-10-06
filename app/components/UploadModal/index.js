@@ -7,8 +7,15 @@ import { useInjectReducer } from "../../utils/injectReducer";
 import { useInjectSaga } from "../../utils/injectSaga";
 import reducer from "../../containers/EventsPage/reducer";
 import saga from "../../containers/EventsPage/saga";
+import { ADD_MULTIPLE_GUESTS } from "../../containers/GuestsPage/constants";
 
-function UploadModal({ isOpen, setIsOpen, addMultipleEvents }) {
+function UploadModal({
+  isOpen,
+  setIsOpen,
+  addMultipleEvents,
+  addMultipleGuests,
+  role,
+}) {
   useInjectReducer({ key: "eventsPage", reducer });
   useInjectSaga({ key: "eventsPage", saga });
   const upload = () => {
@@ -16,6 +23,7 @@ function UploadModal({ isOpen, setIsOpen, addMultipleEvents }) {
     if (typeof FileReader !== undefined) {
       let reader = new FileReader();
       let arrayOfEvents = [];
+      let arrayOfGuests = [];
       reader.onload = async function(e) {
         let rows = await e.target.result.split("\n");
         for (var i = 0; i < rows.length; i++) {
@@ -23,19 +31,29 @@ function UploadModal({ isOpen, setIsOpen, addMultipleEvents }) {
             let cells = await rows[i].split(",");
             console.log(cells);
             const eventBody = {};
-            if (cells[0] !== "Other") {
-              eventBody["category"] = cells[0];
+            const guestBody = {};
+            if (role === "event") {
+              if (cells[0] !== "Other") {
+                eventBody["category"] = cells[0];
+              }
+              if (cells[1] !== "") {
+                eventBody["customEvent"] = cells[1];
+              }
+              eventBody["date"] = cells[2];
+              eventBody["time"] = cells[3];
+              eventBody["venue"] = cells[4];
+              arrayOfEvents.push(eventBody);
+            } else {
+              guestBody["name"] = cells[0];
+              guestBody["mobile"] = cells[1];
+              guestBody["email"] = cells[2];
+              arrayOfGuests.push(guestBody);
             }
-            if (cells[1] !== "") {
-              eventBody["customEvent"] = cells[1];
-            }
-            eventBody["date"] = cells[2];
-            eventBody["time"] = cells[3];
-            eventBody["venue"] = cells[4];
-            arrayOfEvents.push(eventBody);
           }
         }
-        await addMultipleEvents(arrayOfEvents);
+        role === "event"
+          ? await addMultipleEvents(arrayOfEvents)
+          : await addMultipleGuests(arrayOfGuests);
       };
       reader.readAsText(fileUpload.files[0]);
     }
@@ -84,6 +102,9 @@ export function mapDispatchToProps(dispatch) {
   return {
     addMultipleEvents: (arrayOfEvents) => {
       dispatch({ type: ADD_MULTIPLE_EVENTS, arrayOfEvents });
+    },
+    addMultipleGuests: (arrayOfGuests) => {
+      dispatch({ type: ADD_MULTIPLE_GUESTS, arrayOfGuests });
     },
   };
 }

@@ -21,9 +21,4 @@ const makeSelectEvents = () =>
     (substate) => substate.events
   );
 
-const makeSelectisUploading = () =>
-  createSelector(
-    selectEventsPageDomain,
-    (substate) => substate.isUploading
-  );
-export { selectEventsPageDomain, makeSelectEvents, makeSelectisUploading };
+export { selectEventsPageDomain, makeSelectEvents };

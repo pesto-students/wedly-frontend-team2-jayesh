@@ -5,7 +5,7 @@ import { initialState } from "./reducer";
  * Direct selector to the guestsPage state domain
  */
 
-const selectGuestsPageDomain = state => state.guestsPage || initialState;
+const selectGuestsPageDomain = (state) => state.guestsPage || initialState;
 
 /**
  * Other specific selectors
@@ -15,11 +15,15 @@ const selectGuestsPageDomain = state => state.guestsPage || initialState;
  * Default selector used by GuestsPage
  */
 
-const makeSelectGuestsPage = () =>
+const makeSelectGuests = () =>
   createSelector(
     selectGuestsPageDomain,
-    substate => substate
+    (substate) => substate.guests
   );
 
-export default makeSelectGuestsPage;
-export { selectGuestsPageDomain };
+const makeSelectIsLoading = () =>
+  createSelector(
+    selectGuestsPageDomain,
+    (substate) => substate.isLoading
+  );
+export { selectGuestsPageDomain, makeSelectGuests, makeSelectIsLoading };
