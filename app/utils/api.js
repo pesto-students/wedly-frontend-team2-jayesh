@@ -2,11 +2,11 @@ import axios from "axios";
 
 export const logout = async (success, user) => {
   if (user) {
-    window.open("http://localhost:7000/api/google/logout", "_self");
+    window.open(`${process.env.SERVER_URL}/google/logout`, "_self");
   }
   if (success || document.cookie.length !== 0) {
     await axios.post(
-      "http://localhost:7000/api/logout",
+      `${process.env.SERVER_URL}/logout`,
       {},
       { withCredentials: true }
     );
@@ -16,7 +16,7 @@ export const logout = async (success, user) => {
 
 export const getUser = async () => {
   try {
-    const response = await fetch("http://localhost:7000/api/google/success", {
+    const response = await fetch(`${process.env.SERVER_URL}/google/success`, {
       method: "GET",
       credentials: "include",
       headers: {

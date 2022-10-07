@@ -5,7 +5,7 @@ import { signupFailureToast, signupSuccessToast } from "../../utils/toast";
 import history from "../../utils/history";
 
 export async function signup(name, email, password) {
-  const requestURL = `http://localhost:7000/api/signup`;
+  const requestURL = `${process.env.SERVER_URL}/signup`;
   const response = await axios.post(
     requestURL,
     {

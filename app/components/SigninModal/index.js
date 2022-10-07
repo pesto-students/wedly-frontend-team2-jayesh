@@ -23,7 +23,7 @@ function SigninModal({ signInModal, onToggleModal }) {
   }
 
   const google = () => {
-    window.open("http://localhost:7000/api/google", "_self");
+    window.open(`${process.env.SERVER_URL}/google`, "_self");
   };
 
   return (
@@ -57,7 +57,9 @@ function SigninModal({ signInModal, onToggleModal }) {
             <span class="sr-only">Close modal</span>
           </button>
           <div className="py-6 px-6 lg:px-8">
-            <h3 className="mb-2 md:mb-4 text-xl font-medium text-gray-900">Login</h3>
+            <h3 className="mb-2 md:mb-4 text-xl font-medium text-gray-900">
+              Login
+            </h3>
             <div className="flex justify-center mb-2 md:mb-4">
               <button
                 type="submit"
