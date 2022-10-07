@@ -85,7 +85,7 @@ module.exports = require("./webpack.base.babel")({
       inject: true,
     }),
     new webpack.EnvironmentPlugin({
-      SERVER_URL: "https://wedly-backend.herokuapp.com",
+      SERVER_URL: "https://wedly-backend.herokuapp.com/api",
     }),
 
     // Put it in the end to capture all the HtmlWebpackPlugin's
