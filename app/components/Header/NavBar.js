@@ -16,6 +16,7 @@ import history from "../../utils/history";
 import { SIGNOUT } from "../../containers/HomePage/constants";
 
 function NavBar({ user, success, onToggleModal, logout }) {
+  console.log(success);
   const [clicked, setClicked] = useState(false);
   return (
     <div className="hidden md:block">
@@ -44,7 +45,7 @@ function NavBar({ user, success, onToggleModal, logout }) {
                 Guests
               </button>
               <button
-                onClick={() => history.push("/")}
+                onClick={() => history.push("/einvites")}
                 className="font-semibold"
               >
                 E-Invites

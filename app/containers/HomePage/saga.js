@@ -17,6 +17,7 @@ import {
   signinSuccessToast,
   signoutSuccessToast,
 } from "../../utils/toast";
+import history from "../../utils/history";
 
 export async function signIn(email, password) {
   console.log(process.env.SERVER_URL);
@@ -64,6 +65,7 @@ function* signoutSaga() {
     const response = yield call(signOut);
     yield put({ type: SIGNOUT_SUCCESS, response });
     yield signoutSuccessToast();
+    yield history.push("/");
   } catch (err) {
     yield put({ type: SIGNOUT_FAILURE });
     yield signoutFailureToast();

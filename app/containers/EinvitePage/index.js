@@ -16,6 +16,7 @@ import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import makeSelectEinvitePage from "./selectors";
 import reducer from "./reducer";
+import homeReducer from "../HomePage/reducer";
 import saga from "./saga";
 import messages from "./messages";
 import { templates } from "../../utils/eInviteTemplates";
@@ -23,6 +24,7 @@ import history from "../../utils/history";
 
 export function EinvitePage() {
   useInjectReducer({ key: "einvitePage", reducer });
+  useInjectReducer({ key: "home", reducer: homeReducer });
   useInjectSaga({ key: "einvitePage", saga });
 
   return (

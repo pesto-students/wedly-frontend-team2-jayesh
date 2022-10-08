@@ -7,7 +7,8 @@ import { compose } from "redux";
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import { makeSelectEvents } from "./selectors";
-import reducer from "./reducer";
+import reducer1 from "./reducer";
+import homeReducer from "../HomePage/reducer";
 import saga from "./saga";
 import {
   AiOutlineInfoCircle,
@@ -22,7 +23,8 @@ import { GET_EVENT, DELETE_EVENT } from "./constants";
 
 const tableHeaders = ["Event Name", "Event Date", "Event Time", "Event Venue"];
 function EventsPage({ getEvents, events, deleteEvent }) {
-  useInjectReducer({ key: "eventsPage", reducer });
+  useInjectReducer({ key: "eventsPage", reducer:reducer1 });
+  useInjectReducer({ key: "home", reducer:homeReducer });
   useInjectSaga({ key: "eventsPage", saga });
 
   const [isAddOpen, setIsAddOpen] = useState(false);

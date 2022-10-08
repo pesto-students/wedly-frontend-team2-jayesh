@@ -14,6 +14,7 @@ import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import makeSelectEinviteEditPage from "./selectors";
 import reducer from "./reducer";
+import homeReducer from "../HomePage/reducer";
 import saga from "./saga";
 import { templates } from "../../utils/eInviteTemplates";
 import EinviteFirstPage from "../../components/EinviteFirstPage";
@@ -24,6 +25,7 @@ export function EinviteEditPage() {
   let array = location.split("/");
   let id = array[array.length - 1];
   useInjectReducer({ key: "einviteEditPage", reducer });
+  useInjectReducer({ key: "home", reducer: homeReducer });
   useInjectSaga({ key: "einviteEditPage", saga });
   const template = templates[id - 1];
   const [selectedPage, setSelectedPage] = useState(1);

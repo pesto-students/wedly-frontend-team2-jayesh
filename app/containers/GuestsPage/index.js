@@ -6,6 +6,7 @@ import { compose } from "redux";
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import reducer from "./reducer";
+import homeReducer from "../HomePage/reducer";
 import saga from "./saga";
 import {
   AiOutlineInfoCircle,
@@ -22,6 +23,7 @@ import { DELETE_GUEST, GET_GUEST } from "./constants";
 const tableHeaders = ["Guest Name", "Guest Contact Number", "Guest Email"];
 export function GuestsPage({ guests, getGuests, deleteGuest, isLoading }) {
   useInjectReducer({ key: "guestsPage", reducer });
+  useInjectReducer({ key: "home", reducer:homeReducer });
   useInjectSaga({ key: "guestsPage", saga });
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
