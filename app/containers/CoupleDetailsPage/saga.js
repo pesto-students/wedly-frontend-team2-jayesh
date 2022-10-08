@@ -23,7 +23,7 @@ export async function addCoupleDtails(
   groomState,
   groomCity
 ) {
-  const requestURL = `http://localhost:7000/api/weddingDetails`;
+  const requestURL = `${process.env.SERVER_URL}/weddingDetails`;
   const response = await axios.post(
     requestURL,
     {
@@ -46,7 +46,7 @@ export async function addCoupleDtails(
 }
 
 // export async function getEvents() {
-//   const requestURL = `http://localhost:7000/api/event`;
+//   const requestURL = `${process.env.SERVER_URL}/event`;
 //   const response = await axios.get(requestURL, { withCredentials: true });
 //   return response;
 // }

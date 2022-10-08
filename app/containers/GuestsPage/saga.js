@@ -20,7 +20,7 @@ import {
 // import { addEventSuccessToast, addEventFailureToast } from "../../utils/toast";
 
 export async function addGuest(name, mobile, email) {
-  const requestURL = `http://localhost:7000/api/guest/single`;
+  const requestURL = `${process.env.SERVER_URL}/guest/single`;
   const response = await axios.post(
     requestURL,
     { name, mobile, email },
@@ -32,13 +32,13 @@ export async function addGuest(name, mobile, email) {
 }
 
 export async function getGuests() {
-  const requestURL = `http://localhost:7000/api/guest`;
+  const requestURL = `${process.env.SERVER_URL}/guest`;
   const response = await axios.get(requestURL, { withCredentials: true });
   return response;
 }
 
 export async function deleteGuest(id) {
-  const requestURL = `http://localhost:7000/api/guest`;
+  const requestURL = `${process.env.SERVER_URL}/guest`;
   const response = await axios({
     method: "DELETE",
     url: requestURL,
@@ -50,7 +50,7 @@ export async function deleteGuest(id) {
 }
 
 export async function addMultipleGuests(arrayOfGuests) {
-  const requestURL = `http://localhost:7000/api/guest/multiple`;
+  const requestURL = `${process.env.SERVER_URL}/guest/multiple`;
 
   const response = await axios.post(requestURL, arrayOfGuests, {
     withCredentials: true,
@@ -59,7 +59,7 @@ export async function addMultipleGuests(arrayOfGuests) {
 }
 
 export async function updateGuest(updateObj) {
-  const requestURL = `http://localhost:7000/api/guest`;
+  const requestURL = `${process.env.SERVER_URL}/guest`;
 
   const response = await axios.patch(requestURL, updateObj, {
     withCredentials: true,

@@ -30,7 +30,7 @@ export async function addEvent(category, customEvent, date, time, venue) {
   body["date"] = date;
   body["time"] = time;
   body["venue"] = venue;
-  const requestURL = `http://localhost:7000/api/event/single`;
+  const requestURL = `${process.env.SERVER_URL}/event/single`;
   const response = await axios.post(requestURL, body, {
     withCredentials: true,
   });
@@ -38,13 +38,13 @@ export async function addEvent(category, customEvent, date, time, venue) {
 }
 
 export async function getEvents() {
-  const requestURL = `http://localhost:7000/api/event`;
+  const requestURL = `${process.env.SERVER_URL}/event`;
   const response = await axios.get(requestURL, { withCredentials: true });
   return response;
 }
 
 export async function deleteEvent(id) {
-  const requestURL = `http://localhost:7000/api/event`;
+  const requestURL = `${process.env.SERVER_URL}/event`;
   const response = await axios({
     method: "DELETE",
     url: requestURL,
@@ -56,7 +56,7 @@ export async function deleteEvent(id) {
 }
 
 export async function addMultipleEvents(arrayOfEvents) {
-  const requestURL = `http://localhost:7000/api/event/multiple`;
+  const requestURL = `${process.env.SERVER_URL}/event/multiple`;
 
   const response = await axios.post(requestURL, arrayOfEvents, {
     withCredentials: true,
@@ -65,7 +65,7 @@ export async function addMultipleEvents(arrayOfEvents) {
 }
 
 export async function updateEvent(updateObj) {
-  const requestURL = `http://localhost:7000/api/event`;
+  const requestURL = `${process.env.SERVER_URL}/event`;
 
   const response = await axios.patch(requestURL, updateObj, {
     withCredentials: true,
