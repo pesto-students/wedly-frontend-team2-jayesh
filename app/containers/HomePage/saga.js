@@ -11,7 +11,8 @@ import {
   AUTH_STATE_FAILURE,
   AUTH_STATE,
 } from "./constants";
-import {signoutFailureToast, 
+import {
+  signoutFailureToast,
   signinFailureToast,
   signinSuccessToast,
   signoutSuccessToast,
@@ -33,13 +34,13 @@ export async function signIn(email, password) {
 }
 
 export async function signOut() {
-  const requestURL = `http://localhost:7000/api/logout`;
+  const requestURL = `${process.env.SERVER_URL}/logout`;
   const response = await axios.post(requestURL, {}, { withCredentials: true });
   return response;
 }
 
 export async function getAuthState() {
-  const requestURL = `http://localhost:7000/api/authState`;
+  const requestURL = `${process.env.SERVER_URL}/authState`;
   const response = await axios.get(requestURL, { withCredentials: true });
   return response;
 }
