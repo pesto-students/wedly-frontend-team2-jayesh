@@ -19,7 +19,7 @@ function SigninModal({ signInModal, onToggleModal }) {
   }
 
   const google = () => {
-    window.open("http://localhost:7000/api/google", "_self");
+    window.open(`${process.env.SERVER_URL}/google`, "_self");
   };
 
   return (

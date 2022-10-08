@@ -78,7 +78,7 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
   };
 
   const google = () => {
-    window.open("http://localhost:7000/api/google", "_self");
+    window.open(`${process.env.SERVER_URL}/google`, "_self");
   };
 
   const handleSubmit = (e) => {

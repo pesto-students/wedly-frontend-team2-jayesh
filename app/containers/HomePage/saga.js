@@ -18,7 +18,8 @@ import {signoutFailureToast,
 } from "../../utils/toast";
 
 export async function signIn(email, password) {
-  const requestURL = `http://localhost:7000/api/login`;
+  console.log(process.env.SERVER_URL);
+  const requestURL = `${process.env.SERVER_URL}/login`;
   const response = await axios.post(
     requestURL,
     {
