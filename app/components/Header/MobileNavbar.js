@@ -7,8 +7,7 @@ import { createStructuredSelector } from "reselect";
 import { toggleModal } from "../../containers/App/actions";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { makeSelectLoginSuccess } from "../../containers/HomePage/selectors";
-import { logout } from "../../utils/api.js";
+import { makeSelectAuth } from "../../containers/HomePage/selectors";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
   MdClose,
@@ -19,8 +18,9 @@ import {
   MdOutlineMarkEmailRead,
 } from "react-icons/md";
 import history from "../../utils/history";
+import { SIGNOUT } from "../../containers/HomePage/constants";
 
-function MobileNavBar({ user, success, onToggleModal }) {
+function MobileNavBar({ user, success, onToggleModal, logout }) {
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
   return (
     <div className="block md:hidden">
@@ -56,7 +56,7 @@ function MobileNavBar({ user, success, onToggleModal }) {
       {hamburgerClicked && (
         <div className="absolute bg-white p-4 w-full">
           <div className="flex flex-col text-lg font-semibold">
-            {document.cookie.length !== 0 ? (
+            {success ? (
               <>
                 <a className="flex items-center w-fit">
                   <MdEvent className="mr-1" />
@@ -82,9 +82,12 @@ function MobileNavBar({ user, success, onToggleModal }) {
             </a>
           </div>
           <div className="flex flex-col mt-2">
-            {document.cookie.length !== 0 ? (
+            {success ? (
               <button
-                onClick={() => logout(success, user)}
+                onClick={() => {
+                  logout();
+                  setHamburgerClicked(!hamburgerClicked);
+                }}
                 className="py-2 px-5 text-sm font-medium text-center text-pink rounded-lg border border-solid border-pink hover:bg-pink hover:text-white"
               >
                 Logout
@@ -117,13 +120,16 @@ function MobileNavBar({ user, success, onToggleModal }) {
 
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectIsOpen(),
-  success: makeSelectLoginSuccess(),
+  success: makeSelectAuth(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onToggleModal: () => {
       dispatch(toggleModal());
+    },
+    logout: () => {
+      dispatch({ type: SIGNOUT });
     },
   };
 }

@@ -7,12 +7,15 @@ import { createStructuredSelector } from "reselect";
 import { toggleModal } from "../../containers/App/actions";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { makeSelectLoginSuccess } from "../../containers/HomePage/selectors";
-import { logout } from "../../utils/api.js";
+import {
+  makeSelectAuth,
+  makeSelectUser,
+} from "../../containers/HomePage/selectors";
 import { MdAccountCircle } from "react-icons/md";
 import history from "../../utils/history";
+import { SIGNOUT } from "../../containers/HomePage/constants";
 
-function NavBar({ user, success, onToggleModal }) {
+function NavBar({ user, success, onToggleModal, logout }) {
   const [clicked, setClicked] = useState(false);
   return (
     <div className="hidden md:block">
@@ -25,7 +28,7 @@ function NavBar({ user, success, onToggleModal }) {
             alt="wedly logo"
           />
         </div>
-        {document.cookie.length !== 0 ? (
+        {success ? (
           <>
             <div className="flex items-center justify-evenly w-2/5">
               <a className="font-semibold" href="">
@@ -42,11 +45,11 @@ function NavBar({ user, success, onToggleModal }) {
               </a>
             </div>
             <div className="flex items-center justify-end w-1/4">
-              {user ? (
+              {user && user.google ? (
                 <img
                   onClick={() => setClicked(!clicked)}
                   className="rounded-full h-11 cursor-pointer"
-                  src={user && user.google.photo}
+                  src={user.google.photo}
                   alt="profilePicture"
                 />
               ) : (
@@ -61,7 +64,10 @@ function NavBar({ user, success, onToggleModal }) {
               <div className="flex flex-col justify-around border border-slate-400 p-2 absolute right-0 top-14 bg-white h-20 rounded-xl">
                 <h3 className="font-semibold">Account Settings</h3>
                 <h3
-                  onClick={() => logout(success, user)}
+                  onClick={() => {
+                    logout();
+                    setClicked(!clicked);
+                  }}
                   className="cursor-pointer font-semibold"
                 >
                   Logout
@@ -89,13 +95,17 @@ function NavBar({ user, success, onToggleModal }) {
 
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectIsOpen(),
-  success: makeSelectLoginSuccess(),
+  success: makeSelectAuth(),
+  user: makeSelectUser(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onToggleModal: () => {
       dispatch(toggleModal());
+    },
+    logout: () => {
+      dispatch({ type: SIGNOUT });
     },
   };
 }

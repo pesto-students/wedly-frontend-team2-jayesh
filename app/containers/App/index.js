@@ -6,8 +6,11 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { createStructuredSelector } from "reselect";
 import { Helmet } from "react-helmet";
 import { Switch, Route } from "react-router-dom";
 import HomePage from "containers/HomePage/Loadable";
@@ -19,18 +22,23 @@ import Footer from "components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
-import { getUser } from "../../utils/api";
+import saga from "../HomePage/saga.js";
+import { AUTH_STATE } from "../HomePage/constants";
+import { useInjectSaga } from "../../utils/injectSaga";
+import { makeSelectAuth, makeSelectUser } from "../HomePage/selectors";
 
-export default function App() {
-  const [user, setUser] = useState(null);
+function App({ checkAuthState }) {
+  // const [user, setUser] = useState(null);
+  const key = "app";
+  useInjectSaga({ key, saga });
   useEffect(() => {
-    getGoogleUser();
+    checkAuthState();
   }, []);
 
-  const getGoogleUser = async () => {
-    const newUser = await getUser();
-    setUser(newUser);
-  };
+  // const getGoogleUser = async () => {
+  //   const newUser = await getUser();
+  //   setUser(newUser);
+  // };
 
   return (
     <div className="bg-mainTheme overflow-x-hidden">
@@ -48,7 +56,9 @@ export default function App() {
         draggable
         pauseOnHover
       />
-      <Header user={user} />
+      <Header
+      // user={user}
+      />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
@@ -60,3 +70,21 @@ export default function App() {
     </div>
   );
 }
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    checkAuthState: () => {
+      dispatch({ type: AUTH_STATE });
+    },
+  };
+}
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  memo
+)(App);

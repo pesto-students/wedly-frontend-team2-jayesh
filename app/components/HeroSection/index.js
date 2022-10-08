@@ -7,7 +7,7 @@ import { createStructuredSelector } from "reselect";
 import H1 from "../H1";
 import H3 from "../H3";
 import { toggleModal } from "../../containers/App/actions";
-import { makeSelectLoginSuccess } from "../../containers/HomePage/selectors";
+import { makeSelectAuth } from "../../containers/HomePage/selectors";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 function HeroSection({ onToggleModal, success }) {
@@ -38,7 +38,7 @@ function HeroSection({ onToggleModal, success }) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  success: makeSelectLoginSuccess(),
+  success: makeSelectAuth(),
 });
 
 export function mapDispatchToProps(dispatch) {

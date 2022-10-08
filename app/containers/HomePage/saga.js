@@ -1,33 +1,21 @@
-/**
- * Gets the repositories of the user from Github
- */
-
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
-import { SIGNIN, SIGNIN_SUCCESS, SIGNIN_FAILURE } from "./constants";
-import { signinFailureToast, signinSuccessToast } from "../../utils/toast";
-// import { LOAD_REPOS } from "containers/App/constants";
-// import { reposLoaded, repoLoadingError } from "containers/App/actions";
-
-// import request from "utils/request";
-// import { makeSelectUsername } from "containers/HomePage/selectors";
-
-// /**
-//  * Github repos request/response handler
-//  */
-// export function* getRepos() {
-//   // Select username from store
-//   const username = yield select(makeSelectUsername());
-//   const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-
-//   try {
-//     // Call our request helper (see 'utils/request')
-//     const repos = yield call(request, requestURL);
-//     yield put(reposLoaded(repos, username));
-//   } catch (err) {
-//     yield put(repoLoadingError(err));
-//   }
-// }
+import {
+  SIGNIN,
+  SIGNIN_SUCCESS,
+  SIGNIN_FAILURE,
+  SIGNOUT_SUCCESS,
+  SIGNOUT_FAILURE,
+  SIGNOUT,
+  AUTH_STATE_SUCCESS,
+  AUTH_STATE_FAILURE,
+  AUTH_STATE,
+} from "./constants";
+import {signoutFailureToast, 
+  signinFailureToast,
+  signinSuccessToast,
+  signoutSuccessToast,
+} from "../../utils/toast";
 
 export async function signIn(email, password) {
   const requestURL = `http://localhost:7000/api/login`;
@@ -43,7 +31,19 @@ export async function signIn(email, password) {
   return response;
 }
 
-function* workerSaga(action) {
+export async function signOut() {
+  const requestURL = `http://localhost:7000/api/logout`;
+  const response = await axios.post(requestURL, {}, { withCredentials: true });
+  return response;
+}
+
+export async function getAuthState() {
+  const requestURL = `http://localhost:7000/api/authState`;
+  const response = await axios.get(requestURL, { withCredentials: true });
+  return response;
+}
+
+function* signinSaga(action) {
   try {
     const response = yield call(signIn, action.email, action.password);
 
@@ -57,17 +57,28 @@ function* workerSaga(action) {
   }
 }
 
-export default function* watcherSaga() {
-  yield takeLatest(SIGNIN, workerSaga);
+function* signoutSaga() {
+  try {
+    const response = yield call(signOut);
+    yield put({ type: SIGNOUT_SUCCESS, response });
+    yield signoutSuccessToast();
+  } catch (err) {
+    yield put({ type: SIGNOUT_FAILURE });
+    yield signoutFailureToast();
+  }
 }
 
-// /**
-//  * Root saga manages watcher lifecycle
-//  */
-// export default function* githubData() {
-//   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
-//   // By using `takeLatest` only the result of the latest API call is applied.
-//   // It returns task descriptor (just like fork) so we can continue execution
-//   // It will be cancelled automatically on component unmount
-//   yield takeLatest(LOAD_REPOS, getRepos);
-// }
+function* authStateSaga() {
+  try {
+    const response = yield call(getAuthState);
+    yield put({ type: AUTH_STATE_SUCCESS, response });
+  } catch (err) {
+    yield put({ type: AUTH_STATE_FAILURE, err });
+  }
+}
+
+export default function* watcherSaga() {
+  yield takeEvery(SIGNIN, signinSaga);
+  yield takeEvery(SIGNOUT, signoutSaga);
+  yield takeEvery(AUTH_STATE, authStateSaga);
+}
