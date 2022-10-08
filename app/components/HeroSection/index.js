@@ -21,7 +21,7 @@ function HeroSection({ onToggleModal, success }) {
         classes="text-md font-extralight text-white md:text-2xl md:font-semibold md:mb-3 mb-4"
         text={messages.subHeading}
       />
-      {document.cookie.length !== 0 ? (
+      {success ? (
         <button className="flex items-center bg-wedlyPink rounded-xl md:text-lg text-white py-2 px-5 font-semibold">
           Fill Details
           <AiOutlineArrowRight className="ml-1" />
