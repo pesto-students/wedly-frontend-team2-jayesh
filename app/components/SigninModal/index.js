@@ -4,16 +4,12 @@ import { createStructuredSelector } from "reselect";
 import { toggleModal } from "../../containers/App/actions";
 import { makeSelectIsOpen } from "../../containers/App/selectors";
 import { connect } from "react-redux";
-import { useInjectSaga } from "../../utils/injectSaga";
-import saga from "../../containers/HomePage/saga";
 import { compose } from "redux";
 import { SIGNIN } from "../../containers/HomePage/constants";
-import { makeSelectLoginSuccess } from "../../containers/HomePage/selectors";
+import { makeSelectAuth } from "../../containers/HomePage/selectors";
 import history from "../../utils/history";
 
 function SigninModal({ signInModal, onToggleModal }) {
-  const key = "signinModal";
-  useInjectSaga({ key, saga });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -66,7 +62,6 @@ function SigninModal({ signInModal, onToggleModal }) {
                 class="flex items-center text-black border border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 onClick={() => {
                   google();
-                  signinSuccessToast();
                 }}
               >
                 <img className="md:mr-2" src={googleLogo} alt="googleLogo" />
@@ -150,7 +145,7 @@ function SigninModal({ signInModal, onToggleModal }) {
 
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectIsOpen(),
-  success: makeSelectLoginSuccess(),
+  success: makeSelectAuth(),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -159,6 +154,7 @@ export function mapDispatchToProps(dispatch) {
       dispatch(toggleModal());
     },
     signInModal: (email, password) => {
+      console.log("Called");
       dispatch({ type: SIGNIN, email, password });
     },
   };

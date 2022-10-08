@@ -13,6 +13,7 @@ import {
   SIGNIN,
   SIGNIN_FAILURE,
   SIGNOUT_SUCCESS,
+  AUTH_STATE_SUCCESS,
 } from "./constants";
 
 // The initial state of the App
@@ -21,6 +22,7 @@ export const initialState = {
   password: "",
   error: false,
   success: false,
+  user: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -46,6 +48,16 @@ const homeReducer = (state = initialState, action) =>
 
       case SIGNOUT_SUCCESS:
         draft.success = false;
+        draft.user = null;
+        break;
+
+      case AUTH_STATE_SUCCESS:
+        if (action.response.data.flag) {
+          draft.success = true;
+          draft.user = action.response.data.user;
+        } else {
+          draft.success = false;
+        }
         break;
     }
   });
