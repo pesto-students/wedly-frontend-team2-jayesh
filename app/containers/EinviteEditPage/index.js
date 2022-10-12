@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -19,6 +19,7 @@ import saga from "./saga";
 import { templates } from "../../utils/eInviteTemplates";
 import EinviteFirstPage from "../../components/EinviteFirstPage";
 import EinviteOtherPage from "../../components/EinviteOtherPage";
+import axios from "axios";
 
 export function EinviteEditPage() {
   const location = window.location.href;
@@ -27,28 +28,45 @@ export function EinviteEditPage() {
   useInjectReducer({ key: "einviteEditPage", reducer });
   useInjectReducer({ key: "home", reducer: homeReducer });
   useInjectSaga({ key: "einviteEditPage", saga });
+  useEffect(() => {
+    getEvents();
+  }, []);
+
   const template = templates[id - 1];
   const [selectedPage, setSelectedPage] = useState(1);
-  const pages = [
+  const [events, setEvents] = useState([]);
+
+  const getEvents = () => {
+    axios
+      .get(`${process.env.SERVER_URL}/event`, { withCredentials: true })
+      .then((res) => {
+        setEvents(res.data.events);
+      })
+      .catch((err) => console.log(err));
+  };
+  const pageData = [
     {
       pageNumber: 1,
+      event: events[0],
     },
     {
       pageNumber: 2,
+      event: events[0],
     },
     {
       pageNumber: 3,
+      event: events[1],
     },
     {
       pageNumber: 4,
+      event: events[2],
     },
   ];
-
   return (
     <div className="py-5 px-20 flex flex-col relative h-full">
       <div>
         <div className="flex justify-between w-[500px]">
-          {pages.map((page) => (
+          {pageData.map((page) => (
             <button
               type="submit"
               className={`py-2 px-5 text-sm font-medium text-center rounded-lg border border-solid ${
@@ -66,7 +84,12 @@ export function EinviteEditPage() {
       {selectedPage === 1 ? (
         <EinviteFirstPage template={template} />
       ) : (
-        <EinviteOtherPage template={template} />
+        <EinviteOtherPage
+          pageData={
+            pageData.filter((data) => data.pageNumber === selectedPage)[0]
+          }
+          template={template}
+        />
       )}
     </div>
   );

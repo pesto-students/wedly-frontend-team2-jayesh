@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const dateOptions = {
   weekday: "long",
@@ -8,6 +9,21 @@ const dateOptions = {
 };
 export default function EinviteFirstPage({ template }) {
   const [weddingDate, setWeddingDate] = useState("");
+  useEffect(() => {
+    getEvents();
+  }, []);
+
+  const getEvents = () => {
+    axios
+      .get(`${process.env.SERVER_URL}/event`, { withCredentials: true })
+      .then((res) => {
+        const weddingEvent = res.data.events.find(
+          (event) => event.category === "Wedding"
+        );
+        setWeddingDate(weddingEvent.date.split("T")[0]);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="flex h-[800px] mt-10">
@@ -16,7 +32,9 @@ export default function EinviteFirstPage({ template }) {
           template.imageUrls.firstPage
         })] bg-center bg-contain h-[600px] pt-5 mb-2.5 w-[500px]`}
       >
-        <h1 className="text-center text-[#CCCCCC]">Anushka</h1>
+        <h2 className="text-2xl text-center text-[#CCCCCC] mt-2">Anushka</h2>
+        <h2 className="text-2xl text-center text-[#CCCCCC]">&</h2>
+        <h2 className="text-2xl text-center text-[#CCCCCC] mb-4">Virat</h2>
         <h4 className="text-center text-[#CCCCCC]">
           {weddingDate &&
             new Date(weddingDate).toLocaleDateString("en-US", dateOptions)}
