@@ -1,9 +1,3 @@
-/**
- *
- * EinviteEditPage
- *
- */
-
 import React, { memo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -34,34 +28,44 @@ export function EinviteEditPage() {
 
   const template = templates[id - 1];
   const [selectedPage, setSelectedPage] = useState(1);
-  const [events, setEvents] = useState([]);
+  const [weddingEvent, setWeddingEvent] = useState({});
+  const [otherEvents, setOtherEvents] = useState([]);
 
   const getEvents = () => {
     axios
       .get(`${process.env.SERVER_URL}/event`, { withCredentials: true })
       .then((res) => {
-        setEvents(res.data.events);
+        const weddingEvent = res.data.events.find(
+          (event) => event.category === "Wedding"
+        );
+        setWeddingEvent(weddingEvent);
+        const others = res.data.events.filter(
+          (event) => event.category !== "Wedding"
+        );
+        setOtherEvents(others);
       })
       .catch((err) => console.log(err));
   };
   const pageData = [
     {
       pageNumber: 1,
-      event: events[0],
+      event: weddingEvent,
     },
     {
       pageNumber: 2,
-      event: events[0],
+      event: weddingEvent,
     },
     {
       pageNumber: 3,
-      event: events[1],
+      event: otherEvents[0],
     },
     {
       pageNumber: 4,
-      event: events[2],
+      event: otherEvents[1],
     },
   ];
+
+
   return (
     <div className="py-5 px-20 flex flex-col relative h-full">
       <div>
@@ -87,6 +91,8 @@ export function EinviteEditPage() {
         <EinviteOtherPage
           pageData={
             pageData.filter((data) => data.pageNumber === selectedPage)[0]
+              ? pageData.filter((data) => data.pageNumber === selectedPage)[0]
+              : null
           }
           template={template}
         />

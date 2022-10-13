@@ -23,7 +23,10 @@ function HeroSection({ onToggleModal, success }) {
         text={messages.subHeading}
       />
       {success ? (
-        <button className="flex items-center bg-wedlyPink rounded-xl md:text-lg text-white py-2 px-5 font-semibold">
+        <button
+          onClick={() => history.push("/coupleDetails")}
+          className="flex items-center bg-wedlyPink rounded-xl md:text-lg text-white py-2 px-5 font-semibold"
+        >
           Fill Details
           <AiOutlineArrowRight className="ml-1" />
         </button>

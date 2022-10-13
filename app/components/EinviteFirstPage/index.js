@@ -12,7 +12,10 @@ export default function EinviteFirstPage({ template }) {
   useEffect(() => {
     getEvents();
   }, []);
-
+  let page1;
+  useEffect(() => {
+    page1 = document.getElementById("page1").outerHTML;
+  }, [weddingDate]);
   const getEvents = () => {
     axios
       .get(`${process.env.SERVER_URL}/event`, { withCredentials: true })
@@ -20,7 +23,9 @@ export default function EinviteFirstPage({ template }) {
         const weddingEvent = res.data.events.find(
           (event) => event.category === "Wedding"
         );
-        setWeddingDate(weddingEvent.date.split("T")[0]);
+        if (weddingEvent) {
+          setWeddingDate(weddingEvent.date.split("T")[0]);
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -28,6 +33,7 @@ export default function EinviteFirstPage({ template }) {
   return (
     <div className="flex h-[800px] mt-10">
       <div
+        id="page1"
         className={`bg-[url(${
           template.imageUrls.firstPage
         })] bg-center bg-contain h-[600px] pt-5 mb-2.5 w-[500px]`}

@@ -31,6 +31,7 @@ import saga from "../HomePage/saga.js";
 import { AUTH_STATE } from "../HomePage/constants";
 import { useInjectSaga } from "../../utils/injectSaga";
 import { makeSelectAuth, makeSelectUser } from "../HomePage/selectors";
+import GuestEInvite from "../GuestEInvite";
 
 function App({ checkAuthState }) {
   // const [user, setUser] = useState(null);
@@ -73,6 +74,7 @@ function App({ checkAuthState }) {
         <Route path="/guests" component={GuestsPage} />
         <Route path="/einvites" component={EinvitePage} />
         <Route path="/einviteEdit/:id" component={EinviteEditPage} />
+        <Route path="/einvite/view" component={GuestEInvite} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { options } from "../../utils/constants";
 
+const dateOptions = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+
 export default function EinviteOtherPage({ template, pageData }) {
   const [input, setInput] = useState({
     category: "",
@@ -11,13 +18,23 @@ export default function EinviteOtherPage({ template, pageData }) {
   });
 
   useEffect(() => {
-    setInput({
-      category: pageData.event.category ? pageData.event.category : "Other",
-      date: pageData.event.date.split("T")[0],
-      time: pageData.event.time,
-      eventVenue: pageData.event.venue,
-      customEvent: pageData.event.customEvent,
-    });
+    if (pageData.event) {
+      setInput({
+        category: pageData.event.category ? pageData.event.category : "Other",
+        date: pageData.event.date.split("T")[0],
+        time: pageData.event.time,
+        eventVenue: pageData.event.venue,
+        customEvent: pageData.event.customEvent,
+      });
+    } else {
+      setInput({
+        category: "",
+        date: "",
+        time: "",
+        eventVenue: "",
+        customEvent: "",
+      });
+    }
   }, [pageData]);
 
   const onInputChange = (e) => {
@@ -34,7 +51,17 @@ export default function EinviteOtherPage({ template, pageData }) {
           template.imageUrls.otherPages
         })] bg-center bg-contain h-[600px] pt-5 mb-2.5 w-[500px]`}
       >
-        {pageData.event.category || pageData.event.customEvent}
+        {pageData.event && (
+          <div className="text-center mt-24 text-[#CCCCCC]">
+            <p>Join for my</p>
+            <h1>{pageData.event.category || pageData.event.customEvent}</h1>
+            <p>
+              {new Date(input.date).toLocaleDateString("en-US", dateOptions)}
+            </p>
+            <p>@</p>
+            <p>{input.eventVenue}</p>
+          </div>
+        )}
       </div>
 
       <div className="ml-60 flex flex-col w-96">
@@ -57,7 +84,7 @@ export default function EinviteOtherPage({ template, pageData }) {
               ))}
             </select>
           </div>
-          {pageData.event.customEvent && (
+          {pageData.event && pageData.event.customEvent && (
             <div>
               <h4 className="font-semibold mb-1 text-gray-900">Event Name</h4>
               <input
