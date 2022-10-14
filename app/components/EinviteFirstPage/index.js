@@ -1,5 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { ADD_CONTENT } from "../../containers/EinviteEditPage/constants";
+import { useInjectSaga } from "../../utils/injectSaga";
+import saga from "../../containers/EinviteEditPage/saga.js";
 
 const dateOptions = {
   weekday: "long",
@@ -7,8 +12,9 @@ const dateOptions = {
   month: "long",
   day: "numeric",
 };
-export default function EinviteFirstPage({ template }) {
+function EinviteFirstPage({ template, id, addInviteDetails }) {
   const [weddingDate, setWeddingDate] = useState("");
+  useInjectSaga({ key: "einviteEditPage", saga });
   useEffect(() => {
     getEvents();
   }, []);
@@ -28,6 +34,11 @@ export default function EinviteFirstPage({ template }) {
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    addInviteDetails(id, page1);
   };
 
   return (
@@ -61,7 +72,10 @@ export default function EinviteFirstPage({ template }) {
           onChange={(e) => setWeddingDate(e.target.value)}
         />
         <div className="flex justify-end mt-2">
-          <button className="bg-pink rounded-lg text-white py-3 px-4">
+          <button
+            onClick={(e) => handleClick(e)}
+            className="bg-pink rounded-lg text-white py-3 px-4"
+          >
             Save
           </button>
         </div>
@@ -69,3 +83,34 @@ export default function EinviteFirstPage({ template }) {
     </div>
   );
 }
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    addInviteDetails: (
+      templateId,
+      page1Content,
+      page2Content,
+      page3Content,
+      page4Content
+    ) => {
+      dispatch({
+        type: ADD_CONTENT,
+        templateId,
+        page1Content,
+        page2Content,
+        page3Content,
+        page4Content,
+      });
+    },
+  };
+}
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  memo
+)(EinviteFirstPage);

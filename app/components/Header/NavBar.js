@@ -1,4 +1,5 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useRef } from "react";
+import useOnClickOutside from 'use-onclickoutside';
 import Button from "../Button";
 import messages from "./messages";
 import Logo from "./wedly_logo.svg";
@@ -17,7 +18,9 @@ import { SIGNOUT } from "../../containers/HomePage/constants";
 
 function NavBar({ user, success, onToggleModal, logout }) {
   console.log(success);
+  const ref = useRef();
   const [clicked, setClicked] = useState(false);
+  useOnClickOutside(ref, () => setClicked(false));
   return (
     <div className="hidden md:block">
       <div className="bg-white flex justify-between py-2 px-2 w-full">
@@ -71,7 +74,7 @@ function NavBar({ user, success, onToggleModal, logout }) {
             </div>
 
             {clicked && (
-              <div className="flex flex-col justify-around border border-slate-400 p-2 absolute right-0 top-14 bg-white h-20 rounded-xl">
+              <div ref={ref} className="flex flex-col justify-around border border-slate-400 p-2 absolute right-0 top-14 bg-white h-20 rounded-xl z-10">
                 <h3 className="font-semibold">Account Settings</h3>
                 <h3
                   onClick={() => {

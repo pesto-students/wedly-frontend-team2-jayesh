@@ -119,3 +119,27 @@ export const addCoupleFailureToast = () => {
     progress: undefined,
   });
 };
+
+export const addEinviteSuccessToast = () => {
+  toast.success("Successfully saved!", {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const addEinviteFailureToast = () => {
+  toast.error("Something went wrong. Please try again!", {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};

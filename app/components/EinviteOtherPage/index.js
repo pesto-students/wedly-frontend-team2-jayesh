@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { options } from "../../utils/constants";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { ADD_CONTENT } from "../../containers/EinviteEditPage/constants";
+import { useInjectSaga } from "../../utils/injectSaga";
+import saga from "../../containers/EinviteEditPage/saga.js";
 
 const dateOptions = {
   weekday: "long",
@@ -8,7 +13,7 @@ const dateOptions = {
   day: "numeric",
 };
 
-export default function EinviteOtherPage({ template, pageData }) {
+function EinviteOtherPage({ template, pageData, addInviteDetails, page, id }) {
   const [input, setInput] = useState({
     category: "",
     date: "",
@@ -16,7 +21,7 @@ export default function EinviteOtherPage({ template, pageData }) {
     eventVenue: "",
     customEvent: "",
   });
-
+  useInjectSaga({ key: "einviteEditPage", saga });
   useEffect(() => {
     if (pageData.event) {
       setInput({
@@ -37,6 +42,18 @@ export default function EinviteOtherPage({ template, pageData }) {
     }
   }, [pageData]);
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    let htmlData = document.getElementById("otherPage").outerHTML;
+    addInviteDetails(
+      id,
+      undefined,
+      page === 2 ? htmlData : undefined,
+      page === 3 ? htmlData : undefined,
+      page === 4 ? htmlData : undefined
+    );
+  };
+
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setInput((prev) => ({
@@ -47,6 +64,7 @@ export default function EinviteOtherPage({ template, pageData }) {
   return (
     <div className="flex h-[800px] mt-10">
       <div
+        id="otherPage"
         className={`bg-[url(${
           template.imageUrls.otherPages
         })] bg-center bg-contain h-[600px] pt-5 mb-2.5 w-[500px]`}
@@ -141,7 +159,10 @@ export default function EinviteOtherPage({ template, pageData }) {
             />
           </div>
           <div className="flex justify-end mt-2">
-            <button className="bg-pink rounded-lg text-white py-3 px-4">
+            <button
+              onClick={(e) => handleClick(e)}
+              className="bg-pink rounded-lg text-white py-3 px-4"
+            >
               Save
             </button>
           </div>
@@ -150,3 +171,34 @@ export default function EinviteOtherPage({ template, pageData }) {
     </div>
   );
 }
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    addInviteDetails: (
+      templateId,
+      page1Content,
+      page2Content,
+      page3Content,
+      page4Content
+    ) => {
+      dispatch({
+        type: ADD_CONTENT,
+        templateId,
+        page1Content,
+        page2Content,
+        page3Content,
+        page4Content,
+      });
+    },
+  };
+}
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  memo
+)(EinviteOtherPage);

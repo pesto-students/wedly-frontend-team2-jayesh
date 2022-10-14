@@ -65,7 +65,6 @@ export function EinviteEditPage() {
     },
   ];
 
-
   return (
     <div className="py-5 px-20 flex flex-col relative h-full">
       <div>
@@ -86,9 +85,11 @@ export function EinviteEditPage() {
         </div>
       </div>
       {selectedPage === 1 ? (
-        <EinviteFirstPage template={template} />
+        <EinviteFirstPage id={1} template={template} />
       ) : (
         <EinviteOtherPage
+          page={selectedPage}
+          id={1}
           pageData={
             pageData.filter((data) => data.pageNumber === selectedPage)[0]
               ? pageData.filter((data) => data.pageNumber === selectedPage)[0]
