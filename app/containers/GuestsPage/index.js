@@ -18,17 +18,32 @@ import { HiDownload } from "react-icons/hi";
 import UploadModal from "../../components/UploadModal";
 import AddGuestModal from "../../components/AddGuestModal";
 import { makeSelectGuests, makeSelectIsLoading } from "./selectors";
-import { DELETE_GUEST, GET_GUEST } from "./constants";
+import { DELETE_GUEST, GET_GUEST, SEND_INVITE } from "./constants";
+import { makeSelectUser } from "../HomePage/selectors";
 
 const tableHeaders = ["Guest Name", "Guest Contact Number", "Guest Email"];
-export function GuestsPage({ guests, getGuests, deleteGuest, isLoading }) {
+export function GuestsPage({
+  guests,
+  getGuests,
+  deleteGuest,
+  user,
+  sendInvite,
+}) {
   useInjectReducer({ key: "guestsPage", reducer });
-  useInjectReducer({ key: "home", reducer:homeReducer });
+  useInjectReducer({ key: "home", reducer: homeReducer });
   useInjectSaga({ key: "guestsPage", saga });
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [isUpdate, setIsUpdate] = useState(new Array(100).fill(false));
 
+  const invite = async (from, to, mobile, userId) => {
+    setIsSending(true);
+    await sendInvite(from, to, mobile, userId);
+    setIsSending(false);
+  };
+
+  console.log(isSending, "Sending");
   useEffect(() => {
     getGuests();
   }, []);
@@ -139,7 +154,17 @@ export function GuestsPage({ guests, getGuests, deleteGuest, isLoading }) {
                               </td>
                               <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
                                 <div className="flex items-center justify-between">
-                                  <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
+                                  <button
+                                    onClick={() => {
+                                      invite(
+                                        user.name,
+                                        guest.name,
+                                        guest.mobile,
+                                        user._id
+                                      );
+                                    }}
+                                    className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
+                                  >
                                     Invite
                                   </button>
                                   <AiOutlineInfoCircle
@@ -203,6 +228,7 @@ GuestsPage.propTypes = { dispatch: PropTypes.func.isRequired };
 const mapStateToProps = createStructuredSelector({
   guests: makeSelectGuests(),
   isLoading: makeSelectIsLoading(),
+  user: makeSelectUser(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -212,6 +238,9 @@ function mapDispatchToProps(dispatch) {
     },
     deleteGuest: (id) => {
       dispatch({ type: DELETE_GUEST, id });
+    },
+    sendInvite: (from, to, mobile, userId) => {
+      dispatch({ type: SEND_INVITE, from, to, mobile, userId });
     },
   };
 }

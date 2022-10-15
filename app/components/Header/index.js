@@ -4,10 +4,12 @@ import MobileNavbar from "./MobileNavbar";
 
 function Header({ user }) {
   return (
-    <>
-      <NavBar user={user} />
-      <MobileNavbar user={user} />
-    </>
+    !window.location.href.includes("/einvite/view") && (
+      <>
+        <NavBar user={user} />
+        <MobileNavbar user={user} />
+      </>
+    )
   );
 }
 

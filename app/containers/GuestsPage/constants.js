@@ -21,3 +21,6 @@ export const UPDATE_GUEST_FAILURE = "boilerplate/guests/UPDATE_GUEST_FAILURE";
 export const DELETE_GUEST = "boilerplate/guests/DELETE_GUEST";
 export const DELETE_GUEST_SUCCESS = "boilerplate/guests/DELETE_GUEST_SUCCESS";
 export const DELETE_GUEST_FAILURE = "boilerplate/guests/DELETE_GUEST_FAILURE";
+export const SEND_INVITE = "boilerplate/guests/SEND_INVITE";
+export const SEND_INVITE_SUCCESS = "boilerplate/guests/SEND_INVITE_SUCCESS";
+export const SEND_INVITE_FAILURE = "boilerplate/guests/SEND_INVITE_FAILURE";

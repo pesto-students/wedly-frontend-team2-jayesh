@@ -17,7 +17,6 @@ import history from "../../utils/history";
 import { SIGNOUT } from "../../containers/HomePage/constants";
 
 function NavBar({ user, success, onToggleModal, logout }) {
-  console.log(success);
   const ref = useRef();
   const [clicked, setClicked] = useState(false);
   useOnClickOutside(ref, () => setClicked(false));

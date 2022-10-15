@@ -45,12 +45,27 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
     validateInput(e);
   };
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
   const validateInput = (e) => {
     let { name, value } = e.target;
     setError((prev) => {
       const stateObj = { ...prev, [name]: "" };
 
       switch (name) {
+        case "email":
+          if (!value) {
+            stateObj[name] = "Please enter email.";
+          } else if (!validateEmail(value)) {
+            stateObj[name] = "Please enter a valid email address";
+          }
+          break;
         case "password":
           if (!value) {
             stateObj[name] = "Please enter Password.";
@@ -99,19 +114,7 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
         <h3 className="mb-4 block md:hidden font-medium text-gray-900">
           Create an Account
         </h3>
-        <div className="flex justify-center mb-4">
-          <button
-            type="submit"
-            className="flex items-center text-black border border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            onClick={google}
-          >
-            <img className="mr-2" src={googleLogo} alt="googleLogo" />
-            <span>Signup with Google</span>
-          </button>
-        </div>
-        <div className="flex justify-center mb-4">
-          <span className="text-gray-500">-OR-</span>
-        </div>
+
         <form
           class="space-y-6 w-full p-3 md:w-1/2"
           onSubmit={(e) => handleSubmit(e)}
@@ -165,6 +168,9 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
               value={input.email}
               onChange={onInputChange}
             />
+            {error.email && (
+              <span className="text-red-500 text-sm">{error.email}</span>
+            )}
           </div>
           <div>
             <label
@@ -211,13 +217,26 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
           <div className="flex justify-between">
             <button
               type="submit"
-              className="mx-auto text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow"
+              className="mx-auto py-2 px-5 text-sm font-medium text-center text-pink rounded-lg border border-solid border-pink  hover:bg-pink hover:text-white"
             >
               Submit
             </button>
           </div>
         </form>
-        <div class="text-sm mt-4 font-medium text-center text-black">
+        <div className="flex justify-center mb-4">
+          <span className="text-gray-500">-OR-</span>
+        </div>
+        <div className="flex justify-center mb-4">
+          <button
+            type="submit"
+            className="flex items-center hover:border-gray-500 text-black border border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            onClick={google}
+          >
+            <img className="mr-2" src={googleLogo} alt="googleLogo" />
+            <span>Signup with Google</span>
+          </button>
+        </div>
+        <div className="text-sm mt-4 font-medium text-center text-black">
           Don't have an account?{" "}
           <button
             onClick={() => onToggleModal()}

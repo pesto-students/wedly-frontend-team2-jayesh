@@ -16,8 +16,11 @@ import {
   UPDATE_GUEST_SUCCESS,
   UPDATE_GUEST_FAILURE,
   UPDATE_GUEST,
+  SEND_INVITE_SUCCESS,
+  SEND_INVITE_FAILURE,
+  SEND_INVITE,
 } from "./constants";
-// import { addEventSuccessToast, addEventFailureToast } from "../../utils/toast";
+import { inviteFailureToast, inviteSuccessToast } from "../../utils/toast";
 
 export async function addGuest(name, mobile, email) {
   const requestURL = `${process.env.SERVER_URL}/guest/single`;
@@ -64,6 +67,53 @@ export async function updateGuest(updateObj) {
   const response = await axios.patch(requestURL, updateObj, {
     withCredentials: true,
   });
+  return response;
+}
+
+export async function sendInvite(from, to, mobile, userId) {
+  const requestURL = `https://graph.facebook.com/v14.0/109962048563832/messages`;
+
+  const response = await axios.post(
+    requestURL,
+    {
+      messaging_product: "whatsapp",
+      to: `91${mobile}`,
+      type: "template",
+      template: {
+        name: "e_invite",
+        language: {
+          code: "en",
+        },
+        components: [
+          {
+            type: "body",
+            parameters: [
+              {
+                type: "text",
+                text: `${to}`,
+              },
+              {
+                type: "text",
+                text: `${from}`,
+              },
+              {
+                type: "text",
+                text: `http://localhost:3000/einvite/view/${userId}`,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      headers: {
+        Authorization:
+          "Bearer EAALnfn2bArEBAMOxrIgg4BTiPvPr9ZAqAZC8KJj8jLla1WxbETashEcWmneZAV2uhofomPdCmWCdnfYaEyC4nhxQZCcAuWFy9y2MWmHfagoqmlVLXJOaIyYbr9uZAeXjPDOwd1DlxrpJz5JOrVvxQiATxKTu9pHdPyajZAlT4oHKW3zFner4zBLTmIEXr0f7zGlPzpqX45nQZDZD",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
   return response;
 }
 
@@ -132,10 +182,30 @@ function* deleteGuestSaga(action) {
   }
 }
 
+function* inviteSaga(action) {
+  try {
+    const response = yield call(
+      sendInvite,
+      action.from,
+      action.to,
+      action.mobile,
+      action.userId
+    );
+
+    yield put({ type: SEND_INVITE_SUCCESS, response });
+    yield inviteSuccessToast();
+    // yield history.push("/");
+  } catch (error) {
+    yield put({ type: SEND_INVITE_FAILURE, error });
+    yield inviteFailureToast();
+  }
+}
+
 export default function* watcherSaga() {
   yield takeEvery(ADD_GUEST, addGuestSaga);
   yield takeEvery(GET_GUEST, getGuestSaga);
   yield takeEvery(DELETE_GUEST, deleteGuestSaga);
   yield takeEvery(ADD_MULTIPLE_GUESTS, addMultipleGuestsSaga);
   yield takeEvery(UPDATE_GUEST, updateGuestSaga);
+  yield takeEvery(SEND_INVITE, inviteSaga);
 }

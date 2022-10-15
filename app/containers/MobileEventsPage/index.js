@@ -14,7 +14,7 @@ import {
   AiOutlineEdit,
   AiOutlineDelete,
 } from "react-icons/ai";
-import { BsPlusLg } from "react-icons/bs";
+import { BsPlusLg, BsThreeDotsVertical } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
 import UploadModal from "../../components/UploadModal";
 import AddEventModal from "../../components/AddEventModal";
@@ -75,8 +75,9 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
             <div className="p-2 flex flex-wrap gap-2 justify-center mb-[100px]">
               {events.length > 0 &&
                 events.map((eventDetails,index) => (
-                  <div className="p-2 flex flex-col bg-white w-[45%] rounded-md justify-between">
+                  <div className="p-1.5 flex flex-col bg-white w-[45%] rounded-md justify-between">
                     <div>
+                    <BsThreeDotsVertical size="1rem" className="float-right text-black"/>
                     <h3 className="text-sm font-semibold text-gray-900">
                       {eventDetails.customEvent || eventDetails.category}
                     </h3>
