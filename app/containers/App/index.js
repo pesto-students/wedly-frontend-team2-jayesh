@@ -66,7 +66,7 @@ function App({ checkAuthState, user }) {
         <Route path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignupPage} />
         <Route path="/coupleDetails" component={CoupleDetailsPage} />
-        <Route path="/events" component={EventsPage} />
+        <Route path="/events" component={MobileEventsPage} />
         <Route path="/guests" component={GuestsPage} />
         <Route path="/einvites" component={EinvitePage} />
         <Route path="/einviteEdit/:id" component={EinviteEditPage} />
