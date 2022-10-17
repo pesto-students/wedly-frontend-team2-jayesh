@@ -21,7 +21,6 @@ import UploadModal from "../../components/UploadModal";
 import AddEventModal from "../../components/AddEventModal";
 import { GET_EVENT, DELETE_EVENT } from "../EventsPage/constants";
 
-const tableHeaders = ["Event Name", "Event Date", "Event Time", "Event Venue"];
 function MobileEventsPage({ getEvents, events, deleteEvent }) {
   useInjectReducer({ key: "eventsPage", reducer: reducer1 });
   useInjectReducer({ key: "home", reducer: homeReducer });
@@ -32,13 +31,13 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
   const ref = useRef();
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
-  const [isUpdateOrDelete, setIsUpdateOrDelete]  = useState([]);
-
+  const [isUpdateOrDelete, setIsUpdateOrDelete] = useState([]);
+  const [isUpdate, setIsUpdate] = useState([]);
   useEffect(() => {
-      setIsUpdateOrDelete(new Array(events.length).fill(false));
-  }, [events])
+    setIsUpdateOrDelete(new Array(events.length).fill(false));
+    setIsUpdate(new Array(events.length).fill(false));
+  }, [events]);
 
-  const [clicked, setClicked] = useState(false);
   useOnClickOutside(ref, () =>
     setIsUpdateOrDelete(new Array(events.length).fill(false))
   );
@@ -51,38 +50,35 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
     <div>
       <div
         className={`${
-          isAddOpen || isUploadOpen ? "opacity-50" : "opacity-100"
+          isAddOpen || isUploadOpen || isUpdate.filter((item) => item).length
+            ? "opacity-50 pointer-events-none"
+            : "opacity-100"
         } w-full bg-gray-100 relative`}
       >
         <div className="mx-auto sm:px-6 lg:px-8 mt-12">
           <div className="flex flex-col">
-            <div className="flex flex-wrap flex-grow justify-between mb-2">
-              <div className="flex items-center py-2">
-                <h3 className="text-xl font-semibold text-gray-900">
-                  Event Details
-                </h3>
-              </div>
+            <div className="flex justify-between items-center mb-2 px-2">
+              <p className="text-xl font-semibold text-gray-900">
+                Event Details
+              </p>
 
-              <div className="flex py-2">
-                <button
-                  type="submit"
-                  className="flex items-center text-white bg-[#44A300] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow mr-4"
-                  onClick={() => setIsUploadOpen(!isUploadOpen)}
-                >
-                  <HiDownload size="1.1rem" className="mr-1" />
-                  Import
-                </button>
-                <button
-                  type="submit"
-                  className="flex items-center text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow"
-                  onClick={() => setIsAddOpen(!isAddOpen)}
-                >
-                  <BsPlusLg size="0.7rem" className="mr-1" />
-                  Add an Event
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="flex items-center text-white bg-[#44A300] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-sm px-5 py-1.5 text-center shadow"
+                onClick={() => setIsUploadOpen(!isUploadOpen)}
+              >
+                <HiDownload size="1rem" />
+                Import
+              </button>
             </div>
             <div className="p-2 flex flex-wrap gap-2 justify-center mb-[100px]">
+              <div
+                className="p-1.5 flex flex-col bg-pink w-[45%] rounded-md justify-center items-center text-white font-semibold space-y-2"
+                onClick={() => setIsAddOpen(!isAddOpen)}
+              >
+                <BsPlusLg size="1.5rem" />
+                <div className="text-center">Add an event </div>
+              </div>
               {events.length > 0 &&
                 events.map((eventDetails, index) => (
                   <div
@@ -106,18 +102,27 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
                           ref={ref}
                           className="flex flex-col p-1.5 space-y-1 absolute right-4 top-3 bg-mainTheme rounded-md z-10"
                         >
-                          <h6 className="font-normal text-xs flex items-center">
+                          <h6
+                            className="font-normal text-xs flex items-center"
+                            onClick={() => {
+                              setIsUpdate((prevState) =>
+                                prevState.map((item, idx) =>
+                                  idx === index ? !item : item
+                                )
+                              );
+                            }}
+                          >
                             <AiOutlineEdit
                               className="mr-1 text-black"
                               size="1rem"
-                            />{" "}
+                            />
                             Edit
                           </h6>
                           <h6
-                            onClick={() => {
-                              setClicked(!clicked);
-                            }}
                             className="cursor-pointer font-normal text-xs flex items-center"
+                            onClick={() =>
+                              deleteAndUpdateEvent(eventDetails._id)
+                            }
                           >
                             <AiOutlineDelete
                               className="mr-1 text-red-500"
@@ -159,22 +164,27 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
             </div>
           </div>
         </div>
-
-        {isAddOpen && (
-          <AddEventModal
-            role="add"
-            isOpen={isAddOpen}
-            setIsOpen={setIsAddOpen}
-          />
-        )}
-        {isUploadOpen && (
-          <UploadModal
-            role="event"
-            isOpen={isUploadOpen}
-            setIsOpen={setIsUploadOpen}
-          />
-        )}
       </div>
+
+      {isAddOpen && (
+        <AddEventModal role="add" isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
+      )}
+      {isUploadOpen && (
+        <UploadModal
+          role="event"
+          isOpen={isUploadOpen}
+          setIsOpen={setIsUploadOpen}
+        />
+      )}
+      {isUpdate.indexOf(true) >= 0 && (
+        <AddEventModal
+          role="update"
+          index={isUpdate.indexOf(true)}
+          eventDetails={events[isUpdate.indexOf(true)]}
+          isOpen={isUpdate}
+          setIsOpen={setIsUpdate}
+        />
+      )}
     </div>
   );
 }
