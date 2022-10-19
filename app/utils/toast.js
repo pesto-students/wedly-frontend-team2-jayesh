@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export const signinSuccessToast = () => {
   toast.success("Login Successful!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -14,7 +14,7 @@ export const signinSuccessToast = () => {
 
 export const signinFailureToast = () => {
   toast.error("Error Signing in!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -25,8 +25,35 @@ export const signinFailureToast = () => {
 };
 
 export const signupSuccessToast = () => {
-  toast.info("Signup Successful! Please login to continue!", {
-    position: "bottom-center",
+  toast.info(
+    "Signup Successful! Please check your email to verify your account!",
+    {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    }
+  );
+};
+
+export const verifyEmailSuccessToast = () => {
+  toast.success("Email verification successful! Please login to continue.", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const verifyEmailFailureToast = () => {
+  toast.error("Email verification was not successful! Please try again.", {
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -38,7 +65,7 @@ export const signupSuccessToast = () => {
 
 export const signupFailureToast = () => {
   toast.error("Error Signing Up!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -50,7 +77,7 @@ export const signupFailureToast = () => {
 
 export const signoutSuccessToast = () => {
   toast.success("Logged out Successfully!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -62,7 +89,7 @@ export const signoutSuccessToast = () => {
 
 export const addEventSuccessToast = () => {
   toast.success("Event was successfully added!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -74,7 +101,7 @@ export const addEventSuccessToast = () => {
 
 export const signoutFailureToast = () => {
   toast.error("Logout failed!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -86,7 +113,7 @@ export const signoutFailureToast = () => {
 
 export const addEventFailureToast = () => {
   toast.error("Something went wrong! Please try again", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -98,7 +125,7 @@ export const addEventFailureToast = () => {
 
 export const addCoupleSuccessToast = () => {
   toast.success("Couple Details succesfully added!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -110,7 +137,7 @@ export const addCoupleSuccessToast = () => {
 
 export const addCoupleFailureToast = () => {
   toast.error("Some error adding details. Please try again!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -122,7 +149,7 @@ export const addCoupleFailureToast = () => {
 
 export const addEinviteSuccessToast = () => {
   toast.success("Successfully saved!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -134,7 +161,7 @@ export const addEinviteSuccessToast = () => {
 
 export const addEinviteFailureToast = () => {
   toast.error("Something went wrong. Please try again!", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -146,7 +173,7 @@ export const addEinviteFailureToast = () => {
 
 export const inviteSuccessToast = () => {
   toast.success("Invite was successfully sent", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -158,7 +185,7 @@ export const inviteSuccessToast = () => {
 
 export const inviteFailureToast = () => {
   toast.error("Invite was not sent. Please try again", {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
