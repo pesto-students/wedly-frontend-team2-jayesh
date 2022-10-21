@@ -23,6 +23,7 @@ import CoupleDetailsPage from "../CoupleDetailsPage/index.js";
 import EventsPage from "../EventsPage/index.js";
 import MobileEventsPage from "../MobileEventsPage/index.js";
 import GuestsPage from "../GuestsPage";
+import MobileGuestsPage from "../MobileGuestsPage";
 import EinvitePage from "../EinvitePage";
 import EinviteEditPage from "../EinviteEditPage";
 import { ToastContainer } from "react-toastify";
@@ -67,7 +68,7 @@ function App({ checkAuthState, user }) {
         <Route path="/signup" component={SignupPage} />
         <Route path="/coupleDetails" component={CoupleDetailsPage} />
         <Route path="/events" component={MobileEventsPage} />
-        <Route path="/guests" component={GuestsPage} />
+        <Route path="/guests" component={MobileGuestsPage} />
         <Route path="/einvites" component={EinvitePage} />
         <Route path="/einviteEdit/:id" component={EinviteEditPage} />
         <Route path="/einvite/view/:id" component={GuestEInvite} />

@@ -60,7 +60,7 @@ function UploadModal({
     setIsOpen(!isOpen);
   };
   return (
-    <div className="overflow-y-hidden overflow-x-hidden fixed top-1/3 left-1/2 z-50 w-1/4 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col items-center p-2 rounded-lg text-center">
+    <div className="overflow-y-hidden overflow-x-hidden fixed top-1/3 left-1/2 z-40 w-4/5 lg:w-1/4 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col items-center p-2 rounded-lg text-center">
       <AiOutlineCloseCircle
         onClick={() => setIsOpen(!isOpen)}
         className="absolute top-0 right-0 m-2"

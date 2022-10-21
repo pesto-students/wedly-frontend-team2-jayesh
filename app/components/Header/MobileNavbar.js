@@ -54,7 +54,7 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
       </div>
 
       {hamburgerClicked && (
-        <div className="absolute bg-white p-4 w-full">
+        <div className="absolute bg-white p-4 w-full z-50 ">
           <div className="flex flex-col text-lg font-semibold">
             {success ? (
               <>
