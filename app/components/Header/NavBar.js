@@ -33,7 +33,7 @@ function NavBar({ user, success, onToggleModal, logout }) {
         </div>
         {success ? (
           <>
-            <div className="flex items-center justify-evenly w-2/5">
+            <div className="flex items-center justify-evenly md:w-3/5 lg:w-2/5">
               <button
                 onClick={() => history.push("/events")}
                 className="font-semibold"

@@ -8,6 +8,7 @@ import { useInjectReducer } from "../../utils/injectReducer";
 import { useInjectSaga } from "../../utils/injectSaga";
 import reducer from "../../containers/EventsPage/reducer";
 import saga from "../../containers/EventsPage/saga";
+import { getMinDate } from "../../utils/functions";
 
 function AddEventModal({
   isOpen,
@@ -32,8 +33,6 @@ function AddEventModal({
     eventVenue: role === "add" ? "" : eventDetails.venue,
     customEvent: role === "add" ? "" : eventDetails.customEvent,
   });
-
-  console.log(input);
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setInput((prev) => ({
@@ -145,6 +144,7 @@ function AddEventModal({
             required
             value={input.date}
             onChange={onInputChange}
+            min={getMinDate()}
           />
         </div>
         <div>

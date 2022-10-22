@@ -8,7 +8,7 @@ export default function FeaturesSection() {
           className="p-3 flex w-full justify-center md:w-fit items-center"
           key={Math.random()}
         >
-          <img className="w-9 md:w-fit" src={logo} alt={`${text}.logo`} />
+          <img className="w-9 lg:w-fit" src={logo} alt={`${text}.logo`} />
           <p className="ml-4 w-1/2 md:w-fit font-semibold text-menuGrey">{text}</p>
         </div>
       ))}

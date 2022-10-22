@@ -116,7 +116,7 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
         </h3>
 
         <form
-          class="space-y-6 w-full p-3 md:w-1/2"
+          class="space-y-6 w-full p-3 md:w-4/5 lg:w-1/2"
           onSubmit={(e) => handleSubmit(e)}
         >
           <div>

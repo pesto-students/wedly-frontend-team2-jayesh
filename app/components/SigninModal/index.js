@@ -27,7 +27,7 @@ function SigninModal({ signInModal, onToggleModal }) {
       id="authentication-modal"
       tabindex="-1"
       aria-hidden="true"
-      className="overflow-y-auto overflow-x-hidden fixed top-24 right-0 md:left-1/3 z-50 w-full h-modal md:h-full"
+      className="overflow-y-auto overflow-x-hidden fixed top-24 right-0 sm:left-1/4 lg:left-1/3 z-50 w-full h-modal lg:h-full"
     >
       <div class="relative p-6 md:p-4 w-full max-w-md h-full md:h-auto">
         <div class="relative bg-white rounded-md   shadow">

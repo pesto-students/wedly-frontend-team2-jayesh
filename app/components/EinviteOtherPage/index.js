@@ -62,7 +62,7 @@ function EinviteOtherPage({ template, pageData, addInviteDetails, page, id }) {
     }));
   };
   return (
-    <div className="flex h-[800px] mt-10">
+    <div className="flex flex-col md:flex-row h-[800px] mt-10">
       <div
         id="otherPage"
         className={`bg-[url(${

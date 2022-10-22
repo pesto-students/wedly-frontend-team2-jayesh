@@ -58,25 +58,55 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
           <div className="flex flex-col text-lg font-semibold">
             {success ? (
               <>
-                <a className="flex items-center w-fit">
+                <a
+                  onClick={() => {
+                    history.push("/events");
+                    setHamburgerClicked(!hamburgerClicked);
+                  }}
+                  className="flex items-center w-fit"
+                >
                   <MdEvent className="mr-1" />
                   <span>Events</span>
                 </a>
-                <a className="flex items-center w-fit">
+                <a
+                  onClick={() => {
+                    history.push("/guests");
+                    setHamburgerClicked(!hamburgerClicked);
+                  }}
+                  className="flex items-center w-fit"
+                >
                   <MdPersonAddAlt className="mr-1" />
                   <span>Guests</span>
                 </a>
-                <a className="flex items-center w-fit">
+                <a
+                  onClick={() => {
+                    history.push("/einvites");
+                    setHamburgerClicked(!hamburgerClicked);
+                  }}
+                  className="flex items-center w-fit"
+                >
                   <MdOutlineMarkEmailRead className="mr-1" />
                   <span>E-Invites</span>
                 </a>
               </>
             ) : null}
-            <a href="#aboutUs" className="flex items-center w-fit">
+            <a
+              onClick={() => {
+                setHamburgerClicked(!hamburgerClicked);
+              }}
+              href="/#aboutUs"
+              className="flex items-center w-fit"
+            >
               <MdInfoOutline className="mr-1" />
               <span>About Us</span>
             </a>
-            <a href="#contactUs" className="flex items-center w-fit">
+            <a
+              onClick={() => {
+                setHamburgerClicked(!hamburgerClicked);
+              }}
+              href="/#contactUs"
+              className="flex items-center w-fit"
+            >
               <MdOutlineSettingsPhone className="mr-1" />
               <span>Contact Us</span>
             </a>

@@ -15,17 +15,17 @@ function HeroSection({ onToggleModal, success }) {
   return (
     <div className="hero-background hero-background-mobile flex flex-col justify-end items-center p-4">
       <H1
-        classes="text-2xl font-semibold mt-6 text-white md:text-4xl md:font-extrabold md:leading-3"
+        classes="text-2xl font-semibold mt-6 text-white md:text-3xl lg:text-4xl lg:font-extrabold lg:leading-3"
         text={messages.heading}
       />
       <H3
-        classes="text-md font-extralight text-white md:text-2xl md:font-semibold md:mb-3 mb-4"
+        classes="text-lg font-extralight text-white md:text-xl lg:text-2xl lg:font-semibold lg:mb-3 mb-4"
         text={messages.subHeading}
       />
       {success ? (
         <button
           onClick={() => history.push("/coupleDetails")}
-          className="flex items-center bg-wedlyPink rounded-xl md:text-lg text-white py-2 px-5 font-semibold"
+          className="flex items-center bg-wedlyPink rounded-xl lg:text-lg text-white py-2 px-5 font-semibold"
         >
           Fill Details
           <AiOutlineArrowRight className="ml-1" />

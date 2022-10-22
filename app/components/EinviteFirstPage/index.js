@@ -42,7 +42,7 @@ function EinviteFirstPage({ template, id, addInviteDetails }) {
   };
 
   return (
-    <div className="flex h-[800px] mt-10">
+    <div className="flex flex-col md:flex-row h-[800px] mt-10">
       <div
         id="page1"
         className={`bg-[url(${

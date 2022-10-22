@@ -22,7 +22,17 @@
   margin-bottom: 10px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
+  .hero-background {
+    background-image: url("../../components/HeroSection/hero_background.png");
+    background-size: cover;
+    min-height: 300px;
+    width: 100vw;
+  }
+}
+
+
+@media (min-width: 1024px) {
   .hero-background {
     background-image: url("../../components/HeroSection/hero_background.png");
     background-size: cover;

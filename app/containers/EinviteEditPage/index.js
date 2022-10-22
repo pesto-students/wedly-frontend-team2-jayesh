@@ -28,7 +28,7 @@ export function EinviteEditPage() {
 
   const template = templates[id - 1];
   const [selectedPage, setSelectedPage] = useState(1);
-  const [weddingEvent, setWeddingEvent] = useState({});
+  const [weddingEvent, setWeddingEvent] = useState(null);
   const [otherEvents, setOtherEvents] = useState([]);
 
   const getEvents = () => {
@@ -66,13 +66,13 @@ export function EinviteEditPage() {
   ];
 
   return (
-    <div className="py-5 px-20 flex flex-col relative h-full">
+    <div className="py-5 md:px-5 lg:px-20 flex flex-col relative h-full">
       <div>
-        <div className="flex justify-between w-[500px]">
+        <div className="flex justify-around w-full md:w-[400px] lg:w-[500px]">
           {pageData.map((page) => (
             <button
               type="submit"
-              className={`py-2 px-5 text-sm font-medium text-center rounded-lg border border-solid ${
+              className={`py-1 md:py-2 px-3 md:px-5 text-sm font-medium text-center rounded-lg border border-solid ${
                 page.pageNumber === selectedPage
                   ? "border-pink  bg-[#FFEDF2]"
                   : "bg-[#F4F4F4]"

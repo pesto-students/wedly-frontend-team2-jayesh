@@ -66,12 +66,12 @@ function CoupleDetailsPage({ addCoupleDetails }) {
       <h3 className="pl-4 mb-4 text-xl font-semibold text-gray-900">
         Fill the wedding details to start inviting people to your wedding.
       </h3>
-      <div className="flex">
+      <div className="flex flex-col md:flex-row">
         <Details
           role="Groom"
           input={groomInput}
           setInput={setGroomInput}
-          classes="mr-24"
+          classes="lg:mr-24"
         />
         <Details role="Bride" input={brideInput} setInput={setBrideInput} />
       </div>
