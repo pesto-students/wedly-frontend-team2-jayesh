@@ -1,26 +1,19 @@
-/**
- *
- * GuestEInvite
- *
- */
-
 import React, { memo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
-// import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import makeSelectGuestEInvite from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
 import axios from "axios";
+import { paymentSucessToast } from "../../utils/toast";
 
 function GuestEInvite() {
+  const [isClicked, setIsClicked] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState(null);
   useInjectReducer({ key: "guestEInvite", reducer });
   useInjectSaga({ key: "guestEInvite", saga });
   let slideIndex = 1;
@@ -48,11 +41,10 @@ function GuestEInvite() {
   };
 
   const loadInvite = async () => {
-    const res = await axios.post(
-      `${process.env.SERVER_URL}/geteinvite`,
-      { templateId: 1 },
-      { withCredentials: true }
-    );
+    const res = await axios.post(`${process.env.SERVER_URL}/geteinvite`, {
+      hostId: window.location.href.split("/")[5],
+    });
+    console.log(res);
     const page1HTML = new DOMParser().parseFromString(
       res.data.einvite.page1Content,
       "text/html"
@@ -83,6 +75,45 @@ function GuestEInvite() {
     fourthPage.style.display = "none";
   };
 
+  const initPayment = (data) => {
+    const options = {
+      key: process.env.RAZORPAY_KEY,
+      amount: data.amount,
+      currency: data.currency,
+      description: "Test Transaction",
+      order_id: data.id,
+      handler: async (response) => {
+        try {
+          const verifyUrl = `${process.env.SERVER_URL}/eaashirvaad/verify`;
+          const { data } = await axios.post(verifyUrl, response);
+          console.log(data);
+          paymentSucessToast(Number(paymentAmount));
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+  const handlePayment = async () => {
+    try {
+      const aashirvaadUrl = `${process.env.SERVER_URL}/eaashirvaad`;
+      const { data } = await axios.post(aashirvaadUrl, {
+        amount: Number(paymentAmount),
+      });
+      console.log(data);
+      initPayment(data.data);
+      setIsClicked(false);
+      setPaymentAmount("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div id="page" className="flex justify-center">
       <a
@@ -97,6 +128,32 @@ function GuestEInvite() {
       >
         &#10095;
       </a>
+      {!isClicked ? (
+        <button
+          onClick={() => {
+            setIsClicked(true);
+          }}
+          className="absolute bottom-14 border rounded-lg px-10 py-3 text-[#44a030] border-[#44a030]"
+        >
+          Send Aashirvaad
+        </button>
+      ) : (
+        <div className="absolute bottom-14">
+          <input
+            className="px-2 py-3 mr-4 border rounded-lg border-[#44a030]"
+            placeholder="Enter the amount..."
+            type="text"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+          />
+          <button
+            onClick={handlePayment}
+            className="border rounded-lg px-4 py-3 text-[#44a030] border-[#44a030]"
+          >
+            Pay Now
+          </button>
+        </div>
+      )}
     </div>
   );
 }
