@@ -42,12 +42,12 @@ function EinviteFirstPage({ template, id, addInviteDetails }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-[800px] mt-10">
+    <div className="flex mt-10 flex-col lg:flex-row">
       <div
         id="page1"
         className={`bg-[url(${
           template.imageUrls.firstPage
-        })] bg-center bg-contain h-[600px] pt-5 mb-2.5 w-[500px]`}
+        })] bg-center bg-contain h-[500px] lg:[h-600px] lg:w-[500px] pt-5 mb-2.5`}
       >
         <h2 className="text-2xl text-center text-[#CCCCCC] mt-2">Anushka</h2>
         <h2 className="text-2xl text-center text-[#CCCCCC]">&</h2>
@@ -57,7 +57,8 @@ function EinviteFirstPage({ template, id, addInviteDetails }) {
             new Date(weddingDate).toLocaleDateString("en-US", dateOptions)}
         </h4>
       </div>
-      <div className="ml-60 flex flex-col justify-center h-1/2 w-96">
+      <div className="flex justify-center items-center">
+      <div className=" flex flex-col lg:ml-40 h-1/2 w-96">
         <h3 className="mb-4 text-xl font-semibold text-gray-900">
           Edit Details
         </h3>
@@ -79,6 +80,7 @@ function EinviteFirstPage({ template, id, addInviteDetails }) {
             Save
           </button>
         </div>
+      </div>
       </div>
     </div>
   );

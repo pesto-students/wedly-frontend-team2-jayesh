@@ -73,7 +73,7 @@ function NavBar({ user, success, onToggleModal, logout }) {
             </div>
 
             {clicked && (
-              <div ref={ref} className="flex flex-col justify-around border border-slate-400 p-2 absolute right-0 top-14 bg-white h-20 rounded-xl z-10">
+              <div ref={ref} className="flex flex-col justify-around border border-slate-400 p-2 absolute right-2 top-14 bg-white h-20 rounded-xl z-10">
                 <h3 className="font-semibold">Account Settings</h3>
                 <h3
                   onClick={() => {

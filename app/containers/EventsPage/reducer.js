@@ -9,6 +9,7 @@ import {
   ADD_MULTIPLE_EVENTS_SUCCESS,
   DELETE_EVENT_SUCCESS,
   GET_EVENT_SUCCESS,
+  UPDATE_EVENT_SUCCESS,
 } from "./constants";
 
 export const initialState = {
@@ -29,6 +30,18 @@ const eventsPageReducer = (state = initialState, action) =>
 
       case ADD_MULTIPLE_EVENTS_SUCCESS:
         draft.events.push(action.response.data.addedEvents);
+        break;
+
+      case UPDATE_EVENT_SUCCESS:
+        draft.events = JSON.parse(
+          JSON.stringify(
+            draft.events.map((event) => {
+              return event._id === action.response.data.updatedEvent._id
+                ? action.response.data.updatedEvent
+                : event;
+            })
+          )
+        );
         break;
 
       case DELETE_EVENT_SUCCESS:

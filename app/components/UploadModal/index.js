@@ -63,7 +63,7 @@ function UploadModal({
     <div className="overflow-y-hidden overflow-x-hidden fixed top-1/3 left-1/2 z-40 w-4/5 lg:w-1/4 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col items-center p-2 rounded-lg text-center">
       <AiOutlineCloseCircle
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute top-0 right-0 m-2"
+        className="absolute top-0 right-0 m-2 cursor-pointer"
       />
       <AiOutlineCloudUpload
         size="3rem"

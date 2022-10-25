@@ -66,9 +66,9 @@ export function EinviteEditPage() {
   ];
 
   return (
-    <div className="py-5 md:px-5 lg:px-20 flex flex-col relative h-full">
-      <div>
-        <div className="flex justify-around w-full md:w-[400px] lg:w-[500px]">
+    <div className=" flex flex-col">
+      {/* <div>
+        <div className="flex justify-between w-[500px]">
           {pageData.map((page) => (
             <button
               type="submit"
@@ -83,7 +83,7 @@ export function EinviteEditPage() {
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
       {selectedPage === 1 ? (
         <EinviteFirstPage id={1} template={template} />
       ) : (

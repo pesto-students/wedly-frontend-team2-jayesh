@@ -22,13 +22,8 @@ export const initialState = {
 const guestsPageReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case GET_GUEST:
-        draft.isLoading = true;
-        break;
-
       case GET_GUEST_SUCCESS:
         draft.guests = action.response.data.guests;
-        draft.isLoading = false;
         break;
 
       case ADD_GUEST_SUCCESS:
@@ -40,6 +35,11 @@ const guestsPageReducer = (state = initialState, action) =>
         break;
 
       case UPDATE_GUEST_SUCCESS:
+        draft.guests = JSON.parse(JSON.stringify(draft.guests.map((guest) => {
+          return guest._id === action.response.data.updatedGuest._id
+            ? action.response.data.updatedGuest
+            : guest;
+        })));
         break;
 
       case DELETE_GUEST_SUCCESS:

@@ -1,15 +1,5 @@
-import React, { useState, memo, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useOnClickOutside from "use-onclickoutside";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { compose } from "redux";
-
-import { useInjectSaga } from "utils/injectSaga";
-import { useInjectReducer } from "utils/injectReducer";
-import { makeSelectEvents } from "../EventsPage/selectors";
-import reducer1 from "../EventsPage/reducer";
-import homeReducer from "../HomePage/reducer";
-import saga from "../EventsPage/saga";
 import {
   AiOutlineInfoCircle,
   AiOutlineEdit,
@@ -17,17 +7,10 @@ import {
 } from "react-icons/ai";
 import { BsPlusLg, BsThreeDotsVertical } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
-import UploadModal from "../../components/UploadModal";
-import AddEventModal from "../../components/AddEventModal";
-import { GET_EVENT, DELETE_EVENT } from "../EventsPage/constants";
+import UploadModal from "components/UploadModal";
+import AddEventModal from "components/AddEventModal";
 
-function MobileEventsPage({ getEvents, events, deleteEvent }) {
-  useInjectReducer({ key: "eventsPage", reducer: reducer1 });
-  useInjectReducer({ key: "home", reducer: homeReducer });
-  useInjectSaga({ key: "eventsPage", saga });
-  useEffect(() => {
-    getEvents();
-  }, []);
+export default function MobileEventsSection({ events, deleteEvent }) {
   const ref = useRef();
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -42,12 +25,8 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
     setIsUpdateOrDelete(new Array(events.length).fill(false))
   );
 
-  const deleteAndUpdateEvent = async (id) => {
-    await deleteEvent(id);
-  };
-
   return (
-    <div>
+    <div className="block lg:hidden">
       <div
         className={`${
           isAddOpen || isUploadOpen || isUpdate.filter((item) => item).length
@@ -73,7 +52,7 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
             </div>
             <div className="p-2 flex flex-wrap gap-2 justify-center mb-[100px]">
               <div
-                className="p-1.5 flex flex-col bg-pink w-[45%] rounded-md justify-center items-center text-white font-semibold space-y-2"
+                className="p-1.5 flex flex-col bg-pink w-[45%] rounded-md justify-center items-center text-white font-semibold space-y-2 cursor-pointer"
                 onClick={() => setIsAddOpen(!isAddOpen)}
               >
                 <BsPlusLg size="1.5rem" />
@@ -121,7 +100,7 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
                           <h6
                             className="cursor-pointer font-normal text-xs flex items-center"
                             onClick={() =>
-                              deleteAndUpdateEvent(eventDetails._id)
+                              deleteEvent(eventDetails._id)
                             }
                           >
                             <AiOutlineDelete
@@ -179,37 +158,13 @@ function MobileEventsPage({ getEvents, events, deleteEvent }) {
       {isUpdate.indexOf(true) >= 0 && (
         <AddEventModal
           role="update"
-          index={isUpdate.indexOf(true)}
+          index={isUpdate.indexOf(true) >= 0}
           eventDetails={events[isUpdate.indexOf(true)]}
-          isOpen={isUpdate}
-          setIsOpen={setIsUpdate}
+          isUpdate={isUpdate}
+          setIsUpdate={setIsUpdate}
+          events={events}
         />
       )}
     </div>
   );
 }
-
-const mapStateToProps = createStructuredSelector({
-  events: makeSelectEvents(),
-});
-
-function mapDispatchToProps(dispatch) {
-  return {
-    getEvents: () => {
-      dispatch({ type: GET_EVENT });
-    },
-    deleteEvent: (id) => {
-      dispatch({ type: DELETE_EVENT, id });
-    },
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
-
-export default compose(
-  withConnect,
-  memo
-)(MobileEventsPage);

@@ -6,8 +6,7 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React, { useEffect, useState, memo } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, memo } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
@@ -21,9 +20,7 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 import CoupleDetailsPage from "../CoupleDetailsPage/index.js";
 import EventsPage from "../EventsPage/index.js";
-import MobileEventsPage from "../MobileEventsPage/index.js";
 import GuestsPage from "../GuestsPage";
-import MobileGuestsPage from "../MobileGuestsPage";
 import EinvitePage from "../EinvitePage";
 import EinviteEditPage from "../EinviteEditPage";
 import { ToastContainer } from "react-toastify";

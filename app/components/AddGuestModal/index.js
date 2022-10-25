@@ -2,23 +2,18 @@ import React, { memo, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { useInjectReducer } from "../../utils/injectReducer";
-import { useInjectSaga } from "../../utils/injectSaga";
-import reducer from "../../containers/EventsPage/reducer";
-import saga from "../../containers/EventsPage/saga";
 import { ADD_GUEST, UPDATE_GUEST } from "../../containers/GuestsPage/constants";
 
-function UploadModal({
+function AddGuestModal({
   isOpen,
   setIsOpen,
   addGuest,
   role,
   guest,
-  index,
   updateGuest,
+  setIsUpdate,
+  guests
 }) {
-  useInjectReducer({ key: "eventsPage", reducer });
-  useInjectSaga({ key: "eventsPage", saga });
   const [input, setInput] = useState({
     name: role === "add" ? "" : guest.name,
     email: role === "add" ? "" : guest.email,
@@ -32,13 +27,11 @@ function UploadModal({
     }));
   };
 
-  const handleClick = (index) => {
+  const handleClick = () => {
     if (role === "add") {
       setIsOpen(!isOpen);
     } else {
-      setIsOpen((prevState) =>
-        prevState.map((item, idx) => (idx === index ? !item : item))
-      );
+      setIsUpdate(new Array(guests.length).fill(false));
     }
   };
 
@@ -46,6 +39,7 @@ function UploadModal({
     event.preventDefault();
     if (role === "add") {
       await addGuest(input.name, input.mobile, input.email);
+      setIsOpen(!isOpen);
     } else {
       await updateGuest({
         id: guest._id,
@@ -53,30 +47,29 @@ function UploadModal({
         mobile: input.mobile,
         email: input.email,
       });
-      window.location.reload();
+      setIsUpdate(new Array(guests.length).fill(false));
     }
   };
 
   return (
     <div className="overflow-y-hidden overflow-x-hidden fixed top-1/2 left-1/2 z-40 w-4/5 lg:w-1/3 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-4 pl-8 rounded-lg">
       <AiOutlineCloseCircle
-        onClick={() => handleClick(index)}
-        className="absolute top-0 right-0 m-2"
+        onClick={() => handleClick()}
+        className="absolute top-0 right-0 m-2 cursor-pointer"
       />
       <h3 className="mt-3 mb-2 md:mb-4 text-xl font-medium text-gray-900">
         {role === "add" ? "Add " : "Update "}
         Guest
       </h3>
       <form
-        class="space-y-3 md:space-y-6"
+        className="space-y-3 md:space-y-6"
         onSubmit={(event) => {
           handleSubmit(event);
-          setIsOpen(!isOpen);
         }}
       >
         <div>
           <label
-            for="name"
+            htmlFor="name"
             className="block mb-1 md:mb-2 text-sm font-medium text-gray-900"
           >
             Guest Name
@@ -94,7 +87,7 @@ function UploadModal({
         </div>
         <div>
           <label
-            for="mobile"
+            htmlFor="mobile"
             className="block mb-1 md:mb-2 text-sm font-medium text-gray-900"
           >
             Guest Contact Number
@@ -112,7 +105,7 @@ function UploadModal({
         </div>
         <div>
           <label
-            for="email"
+            htmlFor="email"
             className="block mb-1 md:mb-2 text-sm font-medium text-gray-900"
           >
             Guest Email
@@ -157,4 +150,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo
-)(UploadModal);
+)(AddGuestModal);
