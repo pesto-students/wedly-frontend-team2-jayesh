@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import {
   AiOutlineInfoCircle,
   AiOutlineEdit,
@@ -10,9 +10,14 @@ import { HiDownload } from "react-icons/hi";
 import UploadModal from "../UploadModal";
 import AddGuestModal from "../AddGuestModal";
 import searchByName from "../../utils/searchByName";
+import ReactTooltip from "react-tooltip";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { UPDATE_GUEST } from "../../containers/GuestsPage/constants";
+import LoadingIndicator from "../LoadingIndicator";
 
 const tableHeaders = ["Guest Name", "Guest Contact Number", "Guest Email"];
-export default function GuestsSection({
+function GuestsSection({
   guests,
   deleteGuest,
   user,
@@ -21,15 +26,20 @@ export default function GuestsSection({
   setSelectedGuests,
   searchTerm,
   setSearchTerm,
-  handleChange
+  handleChange,
+  updateGuest,
 }) {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [isUpdate, setIsUpdate] = useState([]);
-  const invite = async (from, to, mobile, userId) => {
+  const invite = async (guestId, from, to, mobile, userId) => {
     setIsSending(true);
     await sendInvite(from, to, mobile, userId);
+    await updateGuest({
+      id: guestId,
+      isInvited: true,
+    });
     setIsSending(false);
   };
   useEffect(() => {
@@ -91,70 +101,76 @@ export default function GuestsSection({
                 </button>
               </div>
             </div>
-            <div className="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-24">
-              <div className="align-middle inline-block w-full shadow overflow-x-auto sm:rounded-lg border-b border-gray-200">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="bg-gray-50 border-b border-gray-200 text-xs leading-4 text-gray-500 tracking-wider">
-                      <th className="px-6 py-3 text-left">
-                        <input
-                          type="checkbox"
-                          name="allSelect"
-                          checked={(!selectedGuests.some((guest) => guest.isChecked !== true)) || false}
-                onChange={handleChange}
-                        />
-                      </th>
-                      {tableHeaders.map((tableHeader, index) => (
-                        <th
-                          className="px-6 py-3 text-left font-medium"
-                          key={index}
-                        >
-                          {tableHeader}
+            {selectedGuests.length !== 0 ? (
+              <div className="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-24">
+                <div className="align-middle inline-block w-full shadow overflow-x-auto sm:rounded-lg border-b border-gray-200">
+                  <table className="min-w-full">
+                    <thead>
+                      <tr className="bg-gray-50 border-b border-gray-200 text-xs leading-4 text-gray-500 tracking-wider">
+                        <th className="px-6 py-3 text-left">
+                          <input
+                            type="checkbox"
+                            name="allSelect"
+                            checked={
+                              !selectedGuests.some(
+                                (guest) => guest.isChecked !== true
+                              ) || false
+                            }
+                            onChange={handleChange}
+                          />
                         </th>
-                      ))}
-                      <th className="px-6 py-3 text-center font-medium">
-                        <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
-                          Invite selected guests
-                        </button>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white">
-                    {selectedGuests.length !== 0
-                      ? selectedGuests.map((guest, index) => {
-                          return (
-                            <tr
-                              className={index % 2 && `bg-[#f7f8ff]`}
-                              key={guest._id}
-                            >
-                              <td className="px-6 py-4 whitespace-no-wrap ">
-                                <input
-                                  type="checkbox"
-                                  name={guest._id}
-                                  checked={guest.isChecked || false}
-                                  onChange={handleChange}
-                                />
-                              </td>
-                              <td className="px-6 py-4 whitespace-no-wrap ">
-                                <div className="text-sm leading-5 text-gray-900">
-                                  {guest.name}
-                                </div>
-                              </td>
-                              <td className="px-6 py-4 whitespace-no-wrap ">
-                                <div className="text-sm leading-5 text-gray-900">
-                                  {guest.mobile}
-                                </div>
-                              </td>
-                              <td className="px-6 py-4 whitespace-no-wrap ">
-                                <div className="text-sm leading-5 text-gray-900">
-                                  {guest.email}
-                                </div>
-                              </td>
-                              <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
-                                <div className="flex items-center justify-between">
+                        {tableHeaders.map((tableHeader, index) => (
+                          <th
+                            className="px-6 py-3 text-left font-medium"
+                            key={index}
+                          >
+                            {tableHeader}
+                          </th>
+                        ))}
+                        <th className="px-6 py-3 text-center font-medium">
+                          <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
+                            Invite selected guests
+                          </button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white">
+                      {selectedGuests.map((guest, index) => {
+                        return (
+                          <tr
+                            className={index % 2 && `bg-[#f7f8ff]`}
+                            key={guest._id}
+                          >
+                            <td className="px-6 py-4 whitespace-no-wrap ">
+                              <input
+                                type="checkbox"
+                                name={guest._id}
+                                checked={guest.isChecked || false}
+                                onChange={handleChange}
+                              />
+                            </td>
+                            <td className="px-6 py-4 whitespace-no-wrap ">
+                              <div className="text-sm leading-5 text-gray-900">
+                                {guest.name}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-no-wrap ">
+                              <div className="text-sm leading-5 text-gray-900">
+                                {guest.mobile}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-no-wrap ">
+                              <div className="text-sm leading-5 text-gray-900">
+                                {guest.email}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
+                              <div className="flex items-center justify-between">
+                                {!guest.isInvited ? (
                                   <button
                                     onClick={() => {
                                       invite(
+                                        guest._id,
                                         user.name,
                                         guest.name,
                                         guest.mobile,
@@ -165,36 +181,55 @@ export default function GuestsSection({
                                   >
                                     Invite
                                   </button>
+                                ) : (
+                                  <button
+                                    disabled
+                                    className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
+                                  >
+                                    Invited
+                                  </button>
+                                )}
+                                <button data-tip data-for="invite">
                                   <AiOutlineInfoCircle
                                     size="1rem"
-                                    className=" text-black"
+                                    className="cursor-pointer text-black"
                                   />
-                                </div>
-                                <AiOutlineEdit
-                                  onClick={() =>
-                                    setIsUpdate((prevState) =>
-                                      prevState.map((item, idx) =>
-                                        idx === index ? !item : item
-                                      )
+                                </button>
+                                <ReactTooltip
+                                  id="invite"
+                                  place="top"
+                                  effect="solid"
+                                >
+                                  Sends invitation to the given Whatsapp number
+                                </ReactTooltip>
+                              </div>
+                              <AiOutlineEdit
+                                onClick={() =>
+                                  setIsUpdate((prevState) =>
+                                    prevState.map((item, idx) =>
+                                      idx === index ? !item : item
                                     )
-                                  }
-                                  size="1.5rem"
-                                  className="cursor-pointer text-black"
-                                />
-                                <AiOutlineDelete
-                                  onClick={() => deleteGuest(guest._id)}
-                                  size="1.5rem"
-                                  className="cursor-pointer text-red-500"
-                                />
-                              </td>
-                            </tr>
-                          );
-                        })
-                      : null}
-                  </tbody>
-                </table>
+                                  )
+                                }
+                                size="1.5rem"
+                                className="cursor-pointer text-black"
+                              />
+                              <AiOutlineDelete
+                                onClick={() => deleteGuest(guest._id)}
+                                size="1.5rem"
+                                className="cursor-pointer text-red-500"
+                              />
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            ) : (
+              <LoadingIndicator />
+            )}
           </div>
         </div>
       </div>
@@ -221,3 +256,21 @@ export default function GuestsSection({
     </div>
   );
 }
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    updateGuest: (updateObj) => {
+      dispatch({ type: UPDATE_GUEST, updateObj });
+    },
+  };
+}
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  memo
+)(GuestsSection);

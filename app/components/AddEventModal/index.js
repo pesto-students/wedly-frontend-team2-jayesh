@@ -8,7 +8,7 @@ import { useInjectReducer } from "../../utils/injectReducer";
 import { useInjectSaga } from "../../utils/injectSaga";
 import reducer from "../../containers/EventsPage/reducer";
 import saga from "../../containers/EventsPage/saga";
-import { getMinDate } from "../../utils/functions";
+import { getMinDate, getTime, getTodaysDate } from "../../utils/functions";
 
 function AddEventModal({
   isOpen,
@@ -20,6 +20,8 @@ function AddEventModal({
   updateEvent,
   isUpdate,
   setIsUpdate,
+  isLoading,
+  setIsLoading,
   events,
 }) {
   useInjectReducer({ key: "eventsPage", reducer });
@@ -39,13 +41,12 @@ function AddEventModal({
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setInput((prev) => {
-      if(name === "category" && value !== "other")
-      {
+      if (name === "category" && value !== "other") {
         return {
           ...prev,
           [name]: value,
-          "customEvent": "",
-        }; 
+          customEvent: "",
+        };
       }
       return {
         ...prev,
@@ -57,6 +58,7 @@ function AddEventModal({
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (role === "add") {
+      setIsLoading(!isLoading);
       await addEvent(
         input.category,
         input.customEvent,
@@ -175,6 +177,11 @@ function AddEventModal({
             required
             value={input.time}
             onChange={onInputChange}
+            min={
+              input.date !== "" && getTodaysDate() === input.date
+                ? getTime()
+                : null
+            }
           />
         </div>
         <div>

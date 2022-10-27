@@ -8,3 +8,18 @@ export const getMinDate = () => {
   let minDate = year + "-" + month + "-" + day;
   return minDate;
 };
+
+export const getTodaysDate = () => {
+  let today = new Date();
+  let date = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+  return `${year}-${month}-${date}`;
+};
+
+export const getTime = () => {
+  let today = new Date();
+  let hr = today.getHours() + 2;
+  let min = today.getMinutes();
+  return `${hr}:${min}`;
+};

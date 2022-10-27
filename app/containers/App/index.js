@@ -19,7 +19,7 @@ import SignupPage from "../SignupPage";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import CoupleDetailsPage from "../CoupleDetailsPage/index.js";
-import EventsPage from "../EventsPage/index.js";
+import EventsPage from "../EventsPage/Loadable";
 import GuestsPage from "../GuestsPage";
 import EinvitePage from "../EinvitePage";
 import EinviteEditPage from "../EinviteEditPage";
