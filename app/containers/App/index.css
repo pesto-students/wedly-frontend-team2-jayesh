@@ -14,7 +14,25 @@
   width: 100vw;
 }
 
-@media (min-width: 768px) {
+.einvite-background {
+  background-image: url("https://image.wedmegood.com/e-invite-images/b6c97b4d-fd62-403e-85ed-219db391d1bd-bgImage.JPEG");
+  background-position: center center;
+  background-size: contain;
+  height: 600px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 640px) {
+  .hero-background {
+    background-image: url("../../components/HeroSection/hero_background.png");
+    background-size: cover;
+    min-height: 300px;
+    width: 100vw;
+  }
+}
+
+
+@media (min-width: 1024px) {
   .hero-background {
     background-image: url("../../components/HeroSection/hero_background.png");
     background-size: cover;

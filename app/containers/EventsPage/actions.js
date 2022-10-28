@@ -1,0 +1,6 @@
+/*
+ *
+ * EventsPage actions
+ *
+ */
+

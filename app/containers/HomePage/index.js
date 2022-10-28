@@ -11,17 +11,9 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
-
+import history from "../../utils/history";
 import { useInjectReducer } from "utils/injectReducer";
 import { useInjectSaga } from "utils/injectSaga";
-import H2 from "components/H2";
-import ReposList from "components/ReposList";
-import AtPrefix from "./AtPrefix";
-import CenteredSection from "./CenteredSection";
-import Form from "./Form";
-import Input from "./Input";
-import Section from "./Section";
-import messages from "./messages";
 import { toggleModal } from "../App/actions";
 import { makeSelectIsOpen } from "../App/selectors";
 import reducer from "./reducer";
@@ -30,11 +22,25 @@ import FeaturesSection from "../../components/FeaturesSection";
 import FeedbackSection from "../../components/FeedbackSection";
 import InfoSection from "../../components/InfoSection";
 import SigninModal from "../../components/SigninModal";
+import {
+  verifyEmailFailureToast,
+  verifyEmailSuccessToast,
+} from "../../utils/toast";
 
 const key = "home";
 
 export function HomePage({ isOpen }) {
   useInjectReducer({ key, reducer });
+  useEffect(() => {
+    if (history.location.search === "?success=true") {
+      verifyEmailSuccessToast();
+    } else if (
+      history.location.search === "?success=false&errorCode=2" ||
+      history.location.search === "?success=false&errorCode=1"
+    ) {
+      verifyEmailFailureToast();
+    }
+  }, []);
   return (
     <article>
       <Helmet>

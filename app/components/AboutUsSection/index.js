@@ -2,7 +2,7 @@ import React from "react";
 
 function AboutUs() {
   return (
-    <section id="aboutUs" className="w-full md:w-1/2">
+    <section id="aboutUs" className="mb-12 w-full md:w-1/2">
       <div className="py-2 md:py-16 px-4">
         <h2 className="mb-4 text-xl font-semibold">About Us</h2>
         <p className="leading-6 md:leading-8 mt-4">

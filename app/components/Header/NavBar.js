@@ -1,4 +1,5 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useRef } from "react";
+import useOnClickOutside from 'use-onclickoutside';
 import Button from "../Button";
 import messages from "./messages";
 import Logo from "./wedly_logo.svg";
@@ -16,7 +17,9 @@ import history from "../../utils/history";
 import { SIGNOUT } from "../../containers/HomePage/constants";
 
 function NavBar({ user, success, onToggleModal, logout }) {
+  const ref = useRef();
   const [clicked, setClicked] = useState(false);
+  useOnClickOutside(ref, () => setClicked(false));
   return (
     <div className="hidden md:block">
       <div className="bg-white flex justify-between py-2 px-2 w-full">
@@ -30,17 +33,26 @@ function NavBar({ user, success, onToggleModal, logout }) {
         </div>
         {success ? (
           <>
-            <div className="flex items-center justify-evenly w-2/5">
-              <a className="font-semibold" href="">
+            <div className="flex items-center justify-evenly md:w-3/5 lg:w-2/5">
+              <button
+                onClick={() => history.push("/events")}
+                className="font-semibold"
+              >
                 Events
-              </a>
-              <a className="font-semibold" href="">
+              </button>
+              <button
+                onClick={() => history.push("/guests")}
+                className="font-semibold"
+              >
                 Guests
-              </a>
-              <a className="font-semibold" href="">
+              </button>
+              <button
+                onClick={() => history.push("/einvites")}
+                className="font-semibold"
+              >
                 E-Invites
-              </a>
-              <a className="font-semibold" href="#contactUs">
+              </button>
+              <a className="font-semibold" href="/#contactUs">
                 Contact Us
               </a>
             </div>
@@ -61,7 +73,7 @@ function NavBar({ user, success, onToggleModal, logout }) {
             </div>
 
             {clicked && (
-              <div className="flex flex-col justify-around border border-slate-400 p-2 absolute right-0 top-14 bg-white h-20 rounded-xl">
+              <div ref={ref} className="flex flex-col justify-around border border-slate-400 p-2 absolute right-2 top-14 bg-white h-20 rounded-xl z-10">
                 <h3 className="font-semibold">Account Settings</h3>
                 <h3
                   onClick={() => {

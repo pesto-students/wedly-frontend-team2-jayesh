@@ -27,10 +27,10 @@ function SigninModal({ signInModal, onToggleModal }) {
       id="authentication-modal"
       tabindex="-1"
       aria-hidden="true"
-      className="overflow-y-auto overflow-x-hidden fixed top-24 right-0 md:left-1/3 z-50 w-full h-modal md:h-full"
+      className="overflow-y-auto overflow-x-hidden fixed top-24 right-0 sm:left-1/4 lg:left-1/3 z-50 w-full h-modal lg:h-full"
     >
       <div class="relative p-6 md:p-4 w-full max-w-md h-full md:h-auto">
-        <div class="relative bg-white rounded-2xl shadow">
+        <div class="relative bg-white rounded-md   shadow">
           <button
             type="button"
             className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -59,7 +59,7 @@ function SigninModal({ signInModal, onToggleModal }) {
             <div className="flex justify-center mb-2 md:mb-4">
               <button
                 type="submit"
-                class="flex items-center text-black border border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                class="flex items-center text-black border hover:border-gray-500 border-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 onClick={() => {
                   google();
                 }}
@@ -89,7 +89,7 @@ function SigninModal({ signInModal, onToggleModal }) {
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12 px-1.5 py-2 md:px-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-1.5 py-2 md:px-2.5 w-full"
                   placeholder="Enter Email Address"
                   required
                   value={email}
@@ -108,7 +108,7 @@ function SigninModal({ signInModal, onToggleModal }) {
                   name="password"
                   id="password"
                   placeholder="Enter your password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12 p-1.5 py-2 md:p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 py-2 md:p-2.5 w-full"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -118,7 +118,7 @@ function SigninModal({ signInModal, onToggleModal }) {
               <div className="flex justify-between">
                 <button
                   type="submit"
-                  className="mx-auto text-white bg-pink focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center shadow"
+                  className="mx-auto text-white bg-pink focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center shadow border border-solid border-pink  hover:bg-inherit hover:text-pink"
                 >
                   Login
                 </button>

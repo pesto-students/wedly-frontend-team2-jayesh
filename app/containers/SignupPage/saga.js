@@ -15,7 +15,6 @@ export async function signup(name, email, password) {
     },
     { withCredentials: true }
   );
-  console.log(response);
   return response;
 }
 
@@ -28,12 +27,10 @@ function* workerSaga(action) {
       action.password
     );
 
-    // dispatch a success action to the store with the new dog
     yield put({ type: SIGNUP_SUCCESS, response });
     yield signupSuccessToast();
     yield history.push("/");
   } catch (error) {
-    // dispatch a failure action to the store with the error
     yield put({ type: SIGNUP_FAILURE, error });
     yield signupFailureToast();
   }
