@@ -194,3 +194,15 @@ export const inviteFailureToast = () => {
     progress: undefined,
   });
 };
+
+export const paymentSucessToast = (amount) => {
+  toast.success(`₹${amount} aashirvaad sent successfully!`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
