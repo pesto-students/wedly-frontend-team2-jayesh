@@ -29,7 +29,6 @@ function UploadModal({
         for (var i = 0; i < rows.length; i++) {
           if (rows[i].length > 0) {
             let cells = await rows[i].split(",");
-            console.log(cells);
             const eventBody = {};
             const guestBody = {};
             if (role === "event") {

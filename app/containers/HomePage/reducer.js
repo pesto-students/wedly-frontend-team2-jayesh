@@ -22,7 +22,7 @@ export const initialState = {
   password: "",
   error: false,
   success: false,
-  user: null,
+  user: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -48,7 +48,7 @@ const homeReducer = (state = initialState, action) =>
 
       case SIGNOUT_SUCCESS:
         draft.success = false;
-        draft.user = null;
+        draft.user = {};
         break;
 
       case AUTH_STATE_SUCCESS:

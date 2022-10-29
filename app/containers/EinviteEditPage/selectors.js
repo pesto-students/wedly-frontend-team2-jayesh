@@ -5,7 +5,7 @@ import { initialState } from "./reducer";
  * Direct selector to the einviteEditPage state domain
  */
 
-const selectEinviteEditPageDomain = state =>
+const selectEinviteEditPageDomain = (state) =>
   state.einviteEditPage || initialState;
 
 /**
@@ -16,11 +16,20 @@ const selectEinviteEditPageDomain = state =>
  * Default selector used by EinviteEditPage
  */
 
-const makeSelectEinviteEditPage = () =>
+const makeSelectEinviteFirstPage = () =>
   createSelector(
     selectEinviteEditPageDomain,
-    substate => substate
+    (substate) => substate.firstPage
   );
 
-export default makeSelectEinviteEditPage;
-export { selectEinviteEditPageDomain };
+const makeSelectEinviteOtherPages = () =>
+  createSelector(
+    selectEinviteEditPageDomain,
+    (substate) => substate.otherPages
+  );
+
+export {
+  makeSelectEinviteFirstPage,
+  selectEinviteEditPageDomain,
+  makeSelectEinviteOtherPages,
+};
