@@ -88,7 +88,6 @@ function SigninModal({ signInModal, onToggleModal }) {
                 <input
                   type="email"
                   name="email"
-                  id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-1.5 py-2 md:px-2.5 w-full"
                   placeholder="Enter Email Address"
                   required
@@ -154,7 +153,6 @@ export function mapDispatchToProps(dispatch) {
       dispatch(toggleModal());
     },
     signInModal: (email, password) => {
-      console.log("Called");
       dispatch({ type: SIGNIN, email, password });
     },
   };

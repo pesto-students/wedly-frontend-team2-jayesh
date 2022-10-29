@@ -19,8 +19,7 @@ const selectCoupleDetailsPageDomain = state =>
 const makeSelectCoupleDetailsPage = () =>
   createSelector(
     selectCoupleDetailsPageDomain,
-    substate => substate
+    substate => substate.coupleDetails
   );
 
-export default makeSelectCoupleDetailsPage;
-export { selectCoupleDetailsPageDomain };
+export { selectCoupleDetailsPageDomain, makeSelectCoupleDetailsPage };

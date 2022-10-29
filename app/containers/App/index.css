@@ -22,6 +22,12 @@
   margin-bottom: 10px;
 }
 
+.select-arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 @media (min-width: 640px) {
   .hero-background {
     background-image: url("../../components/HeroSection/hero_background.png");
