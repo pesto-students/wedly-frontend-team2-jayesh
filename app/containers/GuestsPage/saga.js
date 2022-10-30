@@ -108,7 +108,7 @@ export async function sendInvite(from, to, mobile, userId) {
     {
       headers: {
         Authorization:
-          "Bearer EAALnfn2bArEBAAHnnpTKAYplDGoxZBhfUAIbcnmpHtHfvlXC5aAOsoN9irVXuYrAFahdRRTnL9oNpfINkCHAGHIicZBPQZCtPLxn4cfZBVaXZBWTjCUl50Pu5gJY7ea27IDCziZBXJqcGFgZCfqsIAbX9nFM9PtuJte1Xl9arMuzOxlZAKf76DNf4LZCcZAZBkpbUyw2cnJJq0ZAUQZDZD",
+          `Bearer ${process.env.WHATSAPP_TOKEN}`,
         "Content-Type": "application/json",
       },
     }

@@ -27,20 +27,12 @@ function GuestsSection({
   searchTerm,
   setSearchTerm,
   handleChange,
-  updateGuest,
 }) {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
-  const [isSending, setIsSending] = useState(false);
   const [isUpdate, setIsUpdate] = useState([]);
   const invite = async (guestId, from, to, mobile, userId) => {
-    setIsSending(true);
     await sendInvite(from, to, mobile, userId);
-    await updateGuest({
-      id: guestId,
-      isInvited: true,
-    });
-    setIsSending(false);
   };
   useEffect(() => {
     setIsUpdate(new Array(selectedGuests.length).fill(false));

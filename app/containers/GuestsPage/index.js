@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { useDebounce } from 'use-debounce';
+import { useDebounce } from "use-debounce";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
@@ -10,6 +10,7 @@ import homeReducer from "../HomePage/reducer";
 import saga from "./saga";
 import { makeSelectGuests } from "./selectors";
 import { DELETE_GUEST, GET_GUEST, SEND_INVITE } from "./constants";
+import { AUTH_STATE } from "../HomePage/constants";
 import { makeSelectUser } from "../HomePage/selectors";
 import GuestsSection from "../../components/GuestsSection";
 import MobileGuestsSection from "../../components/MobileGuestsSection";
@@ -21,6 +22,7 @@ export function GuestsPage({
   deleteGuest,
   user,
   sendInvite,
+  checkAuthState,
 }) {
   useInjectReducer({ key: "guestsPage", reducer });
   useInjectReducer({ key: "home", reducer: homeReducer });
@@ -29,17 +31,19 @@ export function GuestsPage({
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
   useEffect(() => {
-    getGuests();
+    checkAuthState();
   }, []);
+  useEffect(() => {
+    if (Object.keys(user).length > 0) getGuests();
+  }, [user]);
 
   useEffect(() => {
-    if(debouncedSearchTerm){
-    setSelectedGuests(searchByName(guests,debouncedSearchTerm));
-    }
-    else {
+    if (debouncedSearchTerm) {
+      setSelectedGuests(searchByName(guests, debouncedSearchTerm));
+    } else {
       setSelectedGuests(guests);
     }
-  }, [debouncedSearchTerm,guests]);
+  }, [debouncedSearchTerm, guests]);
 
   const handleChange = (e) => {
     const { name, checked } = e.target;
@@ -74,8 +78,29 @@ export function GuestsPage({
 
   return (
     <>
-      <GuestsSection guests={guests} getGuests={getGuests} deleteGuest={deleteGuest} user={user} sendInvite={sendInvite} searchTerm={searchTerm} setSearchTerm={setSearchTerm} selectedGuests={selectedGuests} setSelectedGuests={setSelectedGuests} handleChange={handleChange}/>
-      <MobileGuestsSection guests={guests} getGuests={getGuests} deleteGuest={deleteGuest} user={user} sendInvite={sendInvite} searchTerm={searchTerm} setSearchTerm={setSearchTerm} selectedGuests={selectedGuests} setSelectedGuests={setSelectedGuests} />
+      <GuestsSection
+        guests={guests}
+        getGuests={getGuests}
+        deleteGuest={deleteGuest}
+        user={user}
+        sendInvite={sendInvite}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectedGuests={selectedGuests}
+        setSelectedGuests={setSelectedGuests}
+        handleChange={handleChange}
+      />
+      <MobileGuestsSection
+        guests={guests}
+        getGuests={getGuests}
+        deleteGuest={deleteGuest}
+        user={user}
+        sendInvite={sendInvite}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectedGuests={selectedGuests}
+        setSelectedGuests={setSelectedGuests}
+      />
     </>
   );
 }
@@ -95,6 +120,9 @@ function mapDispatchToProps(dispatch) {
     },
     sendInvite: (from, to, mobile, userId) => {
       dispatch({ type: SEND_INVITE, from, to, mobile, userId });
+    },
+    checkAuthState: () => {
+      dispatch({ type: AUTH_STATE });
     },
   };
 }

@@ -35,7 +35,7 @@ module.exports = require("./webpack.base.babel")({
     new webpack.EnvironmentPlugin({
       SERVER_URL: "http://localhost:7000/api",
       RAZORPAY_KEY: "rzp_test_RLM7fjm2Fi8KdM",
-      WHATSAPP_TOKEN: "EAALnfn2bArEBAAp9PmDfKTg8hmNKt0kw8k8G2Y6N1PD1M6eNlrhqGqxYXWQfshWOEtN4rIAVlI0UCVMtj9GzGRMdMMZAdI9461FuGSJMek5q3t6dNkcikZBvTdyeUugpsHC4RRYbeOATkZAXd8MIOgcY4v2q1EjEts3fHwUGZAVA7QeEOsEDC5d77r3VvCOXjHNRKV6MuAZDZD",
+      WHATSAPP_TOKEN: "EAALnfn2bArEBAPRZCiXwt0onalnLFCJNGOKenBnfOVtWMeiN0tP0bRn8ZCBSOyIZAsoQQ9JHVNSsoH04qVj4YgZA4RUvPuzitsPpqjDXxLbMZAnUe5t0IOIIwVv6iibHJBlDaoHG8RcZAKL5A9YniMM4KlkE7y4LJNI3QKrPze6oSnI9ARQ2XPZAfdxhbvlmHe6sSzE0fpMCAZDZD",
       APP_URL:'http://localhost:3000'
     }),
     new HtmlWebpackPlugin({

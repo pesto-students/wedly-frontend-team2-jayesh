@@ -29,7 +29,6 @@ function MobileGuestsSection({
   const ref = useRef();
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
-  const [isSending, setIsSending] = useState(false);
   const [isUpdate, setIsUpdate] = useState([]);
   const [isUpdateOrDelete, setIsUpdateOrDelete] = useState([]);
 
@@ -42,13 +41,7 @@ function MobileGuestsSection({
     setIsUpdateOrDelete(new Array(selectedGuests.length).fill(false))
   );
   const invite = async (guestId, from, to, mobile, userId) => {
-    setIsSending(true);
     await sendInvite(from, to, mobile, userId);
-    await updateGuest({
-      id: guestId,
-      isInvited: true,
-    });
-    setIsSending(false);
   };
   return (
     <div className="block lg:hidden">
