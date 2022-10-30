@@ -88,14 +88,13 @@ export default function Details({ input, setInput, role, classes }) {
             >
               State
             </label>
-            <input
-              type="text"
+            <select
               name="state"
               placeholder="State"
               className={inputStyles}
               value={input.state}
               onChange={onInputChange}
-            />
+            ></select>
           </div>
         </div>
       </form>

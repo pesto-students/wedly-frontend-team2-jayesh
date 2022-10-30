@@ -4,8 +4,7 @@
  *
  */
 
-import React, { memo, useState } from "react";
-import PropTypes from "prop-types";
+import React, { memo, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
@@ -15,10 +14,14 @@ import { makeSelectCoupleDetailsPage } from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
 import Details from "../../components/Details";
-import { ADD_COUPLE_DETAILS } from "./constants";
+import { ADD_COUPLE_DETAILS, GET_COUPLE_DETAILS } from "./constants";
 import history from "../../utils/history";
 
-function CoupleDetailsPage({ addCoupleDetails }) {
+function CoupleDetailsPage({
+  addCoupleDetails,
+  coupleDetailsPage,
+  getCoupleDetails,
+}) {
   useInjectReducer({ key: "coupleDetailsPage", reducer });
   useInjectSaga({ key: "coupleDetailsPage", saga });
 
@@ -38,6 +41,30 @@ function CoupleDetailsPage({ addCoupleDetails }) {
     state: "",
   });
 
+  useEffect(() => {
+    getCoupleDetails();
+  }, []);
+
+  useEffect(() => {
+    console.log(coupleDetailsPage);
+    if(Object.keys(coupleDetailsPage).length > 0) {
+    const { bride, groom } = coupleDetailsPage;
+    setGroomInput({
+      fullName: groom.name,
+      fatherName: groom.fatherName,
+      motherName: groom.motherName,
+      city: groom.city,
+      state: groom.state,
+    });
+    setBrideInput({
+      fullName: bride.name,
+      fatherName: bride.fatherName,
+      motherName: bride.motherName,
+      city: bride.city,
+      state: bride.state,
+    });}
+  }, [coupleDetailsPage]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await addCoupleDetails(
@@ -50,7 +77,7 @@ function CoupleDetailsPage({ addCoupleDetails }) {
       groomInput.motherName,
       groomInput.fatherName,
       groomInput.state,
-      groomInput.city,   
+      groomInput.city
     );
     history.push("/events");
   };
@@ -81,10 +108,6 @@ function CoupleDetailsPage({ addCoupleDetails }) {
     </div>
   );
 }
-
-CoupleDetailsPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = createStructuredSelector({
   coupleDetailsPage: makeSelectCoupleDetailsPage(),
@@ -117,6 +140,9 @@ export function mapDispatchToProps(dispatch) {
         groomState,
         groomCity,
       });
+    },
+    getCoupleDetails: () => {
+      dispatch({ type: GET_COUPLE_DETAILS });
     },
   };
 }
