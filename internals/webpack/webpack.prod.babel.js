@@ -88,7 +88,8 @@ module.exports = require("./webpack.base.babel")({
       SERVER_URL: "https://wedly-backend.herokuapp.com/api",
       RAZORPAY_KEY: "rzp_test_RLM7fjm2Fi8KdM",
       WHATSAPP_TOKEN:
-        "EAALnfn2bArEBADQOsp2BE6yvhQssexZCR0qk9SARu7tEu0LAkjl6qRGW7nZBWIfmdDsS3iOEGTf1OBE4xIcskkZB4XCmg6W3X7K8d6eyrkpMs5sYZB3VaQeEbOTKXKLUXNdYD9AZAAEpVifcW9yZAgSIZCwdBbFZC3TP2vyQYEm8DH7EmJEpg4OYNM42yMg7ECM823cOuErIIgZDZD",
+        "EAALnfn2bArEBAAp9PmDfKTg8hmNKt0kw8k8G2Y6N1PD1M6eNlrhqGqxYXWQfshWOEtN4rIAVlI0UCVMtj9GzGRMdMMZAdI9461FuGSJMek5q3t6dNkcikZBvTdyeUugpsHC4RRYbeOATkZAXd8MIOgcY4v2q1EjEts3fHwUGZAVA7QeEOsEDC5d77r3VvCOXjHNRKV6MuAZDZD",
+      APP_URL: 'https://wedly-frontend.netlify.app'
     }),
 
     // Put it in the end to capture all the HtmlWebpackPlugin's
