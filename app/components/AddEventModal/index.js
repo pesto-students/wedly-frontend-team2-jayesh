@@ -9,6 +9,7 @@ import { useInjectSaga } from "../../utils/injectSaga";
 import reducer from "../../containers/EventsPage/reducer";
 import saga from "../../containers/EventsPage/saga";
 import { getMinDate, getTime, getTodaysDate } from "../../utils/functions";
+import PlacesAutocomplete from "react-places-autocomplete";
 
 function AddEventModal({
   isOpen,
@@ -20,10 +21,9 @@ function AddEventModal({
   updateEvent,
   isUpdate,
   setIsUpdate,
-  isLoading,
-  setIsLoading,
   events,
 }) {
+  const [venue, setVenue] = useState(role === "add" ? "" : eventDetails.venue);
   useInjectReducer({ key: "eventsPage", reducer });
   useInjectSaga({ key: "eventsPage", saga });
   const [input, setInput] = useState({
@@ -35,7 +35,6 @@ function AddEventModal({
         : "Other",
     date: role === "add" ? "" : eventDetails.date.split("T")[0],
     time: role === "add" ? "" : eventDetails.time,
-    eventVenue: role === "add" ? "" : eventDetails.venue,
     customEvent: role === "add" ? "" : eventDetails.customEvent,
   });
   const onInputChange = (e) => {
@@ -55,16 +54,19 @@ function AddEventModal({
     });
   };
 
+  const handleSelect = (value) => {
+    setVenue(value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (role === "add") {
-      setIsLoading(!isLoading);
       await addEvent(
         input.category,
         input.customEvent,
         input.date,
         input.time,
-        input.eventVenue
+        venue
       );
       setIsOpen(!isOpen);
     } else {
@@ -74,7 +76,7 @@ function AddEventModal({
         customEvent: input.customEvent,
         date: input.date,
         time: input.time,
-        venue: input.eventVenue,
+        venue: venue,
       });
       setIsUpdate(new Array(events.length).fill(false));
     }
@@ -184,7 +186,7 @@ function AddEventModal({
             }
           />
         </div>
-        <div>
+        {/* <div>
           <label
             htmlFor="eventVenue"
             className="block mb-1 md:mb-2 text-sm font-medium text-gray-900"
@@ -201,6 +203,47 @@ function AddEventModal({
             value={input.eventVenue}
             onChange={onInputChange}
           />
+        </div> */}
+        <div>
+          <PlacesAutocomplete
+            value={venue}
+            onChange={setVenue}
+            onSelect={handleSelect}
+          >
+            {({
+              getInputProps,
+              suggestions,
+              getSuggestionItemProps,
+              loading,
+            }) => (
+              <div>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12 p-1.5 py-2 md:p-2.5"
+                  {...getInputProps({ placeholder: "Enter the venue of event" })}
+                />
+                <div>
+                  {loading ? <div>Loading...</div> : null}
+
+                  {suggestions.map((suggestion) => {
+                    console.log(suggestions);
+                    const style = {
+                      backgroundColor: suggestion.active ? "#FF477E" : "#fff",
+                      color: suggestion.active ? "#fff" : "black",
+                    };
+
+                    return (
+                      <div
+                        className="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12 p-1.5 py-2 md:p-2.5"
+                        {...getSuggestionItemProps(suggestion, { style })}
+                      >
+                        {suggestion.description}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </PlacesAutocomplete>
         </div>
         <div className="w-11/12 flex justify-end">
           <button className="bg-pink rounded-lg text-white py-3 px-4">

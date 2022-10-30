@@ -21,4 +21,10 @@ const makeSelectEvents = () =>
     (substate) => substate.events
   );
 
-export { selectEventsPageDomain, makeSelectEvents };
+const makeSelectEventLoader = () =>
+  createSelector(
+    selectEventsPageDomain,
+    (substate) => substate.loading
+  );
+
+export { selectEventsPageDomain, makeSelectEvents, makeSelectEventLoader };

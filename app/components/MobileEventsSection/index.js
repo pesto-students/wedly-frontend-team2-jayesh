@@ -10,7 +10,7 @@ import { HiDownload } from "react-icons/hi";
 import UploadModal from "components/UploadModal";
 import AddEventModal from "components/AddEventModal";
 
-export default function MobileEventsSection({ events, deleteEvent }) {
+export default function MobileEventsSection({ events, deleteEvent, loading }) {
   const ref = useRef();
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -26,7 +26,9 @@ export default function MobileEventsSection({ events, deleteEvent }) {
   );
 
   return (
-    <div className="block lg:hidden">
+    <div
+      className={`block lg:hidden  ${loading ? "opacity-50" : "opacity-100"}`}
+    >
       <div
         className={`${
           isAddOpen || isUploadOpen || isUpdate.filter((item) => item).length
@@ -99,9 +101,7 @@ export default function MobileEventsSection({ events, deleteEvent }) {
                           </h6>
                           <h6
                             className="cursor-pointer font-normal text-xs flex items-center"
-                            onClick={() =>
-                              deleteEvent(eventDetails._id)
-                            }
+                            onClick={() => deleteEvent(eventDetails._id)}
                           >
                             <AiOutlineDelete
                               className="mr-1 text-red-500"
