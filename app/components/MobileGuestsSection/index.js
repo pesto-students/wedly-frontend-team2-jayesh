@@ -10,9 +10,13 @@ import { BsPlusLg, BsThreeDotsVertical } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
 import UploadModal from "../UploadModal";
 import AddGuestModal from "../AddGuestModal";
+import ReactTooltip from "react-tooltip";
 import searchByName from "../../utils/searchByName";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { UPDATE_GUEST } from "../../containers/GuestsPage/constants";
 
-export default function MobileGuestsSection({
+function MobileGuestsSection({
   guests,
   deleteGuest,
   user,
@@ -20,7 +24,7 @@ export default function MobileGuestsSection({
   selectedGuests,
   searchTerm,
   setSearchTerm,
-  setSelectedGuests
+  setSelectedGuests,
 }) {
   const ref = useRef();
   const [isAddOpen, setIsAddOpen] = useState(false);
@@ -37,9 +41,13 @@ export default function MobileGuestsSection({
   useOnClickOutside(ref, () =>
     setIsUpdateOrDelete(new Array(selectedGuests.length).fill(false))
   );
-  const invite = async (from, to, mobile, userId) => {
+  const invite = async (guestId, from, to, mobile, userId) => {
     setIsSending(true);
     await sendInvite(from, to, mobile, userId);
+    await updateGuest({
+      id: guestId,
+      isInvited: true,
+    });
     setIsSending(false);
   };
   return (
@@ -104,7 +112,10 @@ export default function MobileGuestsSection({
               {selectedGuests.length !== 0 &&
                 selectedGuests.map((guestDetails, index) => {
                   return (
-                    <div className="p-1.5 flex flex-col bg-white w-[45%] rounded-md justify-between relative" key={guestDetails._id}>
+                    <div
+                      className="p-1.5 flex flex-col bg-white w-[45%] rounded-md justify-between relative"
+                      key={guestDetails._id}
+                    >
                       <div>
                         <BsThreeDotsVertical
                           size="1rem"
@@ -161,23 +172,38 @@ export default function MobileGuestsSection({
                         </div>
                       </div>
                       <div className="flex justify-center items-center mt-2">
-                        <button
-                          className="bg-pink rounded-xl text-white py-1 px-2 text-xs xs:w-1/2"
-                          onClick={() => {
-                            invite(
-                              user.name,
-                              guestDetails.name,
-                              guestDetails.mobile,
-                              user._id
-                            );
-                          }}
-                        >
-                          Invite
+                        {!guestDetails.isInvited ? (
+                          <button
+                            onClick={() => {
+                              invite(
+                                guestDetails._id,
+                                user.name,
+                                guestDetails.name,
+                                guestDetails.mobile,
+                                user._id
+                              );
+                            }}
+                            className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
+                          >
+                            Invite
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
+                          >
+                            Invited
+                          </button>
+                        )}
+                        <button data-tip data-for="invite">
+                          <AiOutlineInfoCircle
+                            size="1rem"
+                            className=" text-black"
+                          />
                         </button>
-                        <AiOutlineInfoCircle
-                          size="1rem"
-                          className=" text-black"
-                        />
+                        <ReactTooltip id="invite" place="bottom" effect="solid">
+                          Sends invitation to the given Whatsapp number
+                        </ReactTooltip>
                       </div>
                     </div>
                   );
@@ -209,3 +235,21 @@ export default function MobileGuestsSection({
     </div>
   );
 }
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    updateGuest: (updateObj) => {
+      dispatch({ type: UPDATE_GUEST, updateObj });
+    },
+  };
+}
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  memo
+)(MobileGuestsSection);

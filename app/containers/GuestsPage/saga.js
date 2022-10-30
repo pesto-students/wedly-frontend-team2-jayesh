@@ -98,7 +98,7 @@ export async function sendInvite(from, to, mobile, userId) {
               },
               {
                 type: "text",
-                text: `http://localhost:3000/einvite/view/${userId}`,
+                text: `${process.env.APP_URL}/einvite/view/${userId}`,
               },
             ],
           },

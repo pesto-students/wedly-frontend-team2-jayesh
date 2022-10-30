@@ -16,6 +16,9 @@ import {
   UPDATE_EVENT,
   UPDATE_EVENT_FAILURE,
   UPDATE_EVENT_SUCCESS,
+  REMIND_EVENT_SUCCESS,
+  REMIND_EVENT_FAILURE,
+  REMIND_EVENT,
 } from "./constants";
 import { addEventSuccessToast, addEventFailureToast } from "../../utils/toast";
 
@@ -70,6 +73,72 @@ export async function updateEvent(updateObj) {
   const response = await axios.patch(requestURL, updateObj, {
     withCredentials: true,
   });
+  return response;
+}
+
+export async function sendReminder(
+  guestName,
+  hostName,
+  eventName,
+  date,
+  time,
+  venue,
+  mobile
+) {
+  const requestURL = `https://graph.facebook.com/v14.0/109962048563832/messages`;
+
+  const response = await axios.post(
+    requestURL,
+    {
+      messaging_product: "whatsapp",
+      to: `91${mobile}`,
+      type: "template",
+      template: {
+        name: "event",
+        language: {
+          code: "en",
+        },
+        components: [
+          {
+            type: "body",
+            parameters: [
+              {
+                type: "text",
+                text: `${guestName}`,
+              },
+              {
+                type: "text",
+                text: `${hostName}`,
+              },
+              {
+                type: "text",
+                text: `${eventName}`,
+              },
+              {
+                type: "text",
+                text: `${date}`,
+              },
+              {
+                type: "text",
+                text: `${time}`,
+              },
+              {
+                type: "text",
+                text: `${venue}`,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
   return response;
 }
 
@@ -140,10 +209,33 @@ function* deleteEventSaga(action) {
   }
 }
 
+function* remindSaga(action) {
+  try {
+    const response = yield call(
+      sendReminder,
+      action.guestName,
+      action.hostName,
+      action.eventName,
+      action.date,
+      action.time,
+      action.venue,
+      action.mobile
+    );
+
+    yield put({ type: REMIND_EVENT_SUCCESS, response });
+    // yield inviteSuccessToast();
+    // yield history.push("/");
+  } catch (error) {
+    yield put({ type: REMIND_EVENT_FAILURE, error });
+    // yield inviteFailureToast();
+  }
+}
+
 export default function* watcherSaga() {
   yield takeEvery(ADD_EVENT, addEventSaga);
   yield takeEvery(GET_EVENT, getEventSaga);
   yield takeEvery(DELETE_EVENT, deleteEventSaga);
   yield takeEvery(ADD_MULTIPLE_EVENTS, addMultipleEventsSaga);
   yield takeEvery(UPDATE_EVENT, updateEventSaga);
+  yield takeEvery(REMIND_EVENT, remindSaga);
 }

@@ -26,10 +26,21 @@ import {
   verifyEmailFailureToast,
   verifyEmailSuccessToast,
 } from "../../utils/toast";
+import { makeSelectLoading } from "./selectors";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const key = "home";
 
-export function HomePage({ isOpen }) {
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "20%",
+  left: "50%",
+  zIndex: 1000,
+};
+
+export function HomePage({ isOpen, loading }) {
+  console.log(loading, "sdkh;ksd");
   useInjectReducer({ key, reducer });
   useEffect(() => {
     if (history.location.search === "?success=true") {
@@ -50,13 +61,16 @@ export function HomePage({ isOpen }) {
           content="A React.js Boilerplate application homepage"
         />
       </Helmet>
-      <div className={isOpen ? `opacity-50` : `opacity-100`}>
+      <div className={isOpen || loading ? `opacity-50` : `opacity-100`}>
         <HeroSection />
         <FeaturesSection />
         <FeedbackSection />
         <InfoSection />
       </div>
       {isOpen && <SigninModal />}
+      {loading ? (
+        <MoonLoader cssOverride={override} size={40} loading={loading} />
+      ) : null}
     </article>
   );
 }
@@ -68,6 +82,7 @@ HomePage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectIsOpen(),
+  loading: makeSelectLoading(),
 });
 
 export function mapDispatchToProps(dispatch) {

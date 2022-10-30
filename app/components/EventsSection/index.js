@@ -12,16 +12,40 @@ import ReactTooltip from "react-tooltip";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
 const tableHeaders = ["Event Name", "Event Date", "Event Time", "Event Venue"];
-export default function EventsSection({ events, deleteEvent }) {
+export default function EventsSection({
+  events,
+  deleteEvent,
+  guests,
+  remindEvent,
+  loading,
+}) {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
+
   useEffect(() => {
     setIsUpdate(new Array(events.length).fill(false));
   }, [events]);
+
+  const sendReminderofEvent = async (eventName, date, time, venue) => {
+    console.log("reminder Called");
+    for (let guest of guests) {
+      console.log(guest);
+      await remindEvent(
+        guest.name,
+        "Shivanshu Amitabh",
+        eventName,
+        date,
+        time,
+        venue,
+        guest.mobile
+      );
+    }
+  };
   return (
-    <div className="hidden lg:block">
+    <div
+      className={`hidden lg:block ${loading ? "opacity-50" : "opacity-100"}`}
+    >
       <div
         className={`${
           isAddOpen || isUploadOpen || isUpdate.filter((item) => item).length
@@ -114,7 +138,18 @@ export default function EventsSection({ events, deleteEvent }) {
                           </td>
                           <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
                             <div className="flex items-center justify-between">
-                              <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
+                              <button
+                                onClick={() =>
+                                  sendReminderofEvent(
+                                    eventDetails.category ||
+                                      eventDetails.customEvent,
+                                    eventDetails.date,
+                                    eventDetails.time,
+                                    eventDetails.venue
+                                  )
+                                }
+                                className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
+                              >
                                 Remind
                               </button>
                               <button data-tip data-for="remind">
@@ -161,13 +196,7 @@ export default function EventsSection({ events, deleteEvent }) {
         </div>
       </div>
       {isAddOpen && (
-        <AddEventModal
-          isLoading={isLoading}
-          setIsLoading={setisLoading}
-          role="add"
-          isOpen={isAddOpen}
-          setIsOpen={setIsAddOpen}
-        />
+        <AddEventModal role="add" isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
       )}
       {isUploadOpen && (
         <UploadModal
@@ -186,7 +215,6 @@ export default function EventsSection({ events, deleteEvent }) {
           events={events}
         />
       )}
-      {isLoading ? <h1>Yrue</h1> : <h1>False</h1>}
     </div>
   );
 }
