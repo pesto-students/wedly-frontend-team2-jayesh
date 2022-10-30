@@ -8,6 +8,14 @@ import React, { memo, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from 'react-accessible-accordion';
+import 'react-accessible-accordion/dist/fancy-example.css';
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import { makeSelectCoupleDetailsPage, makeSelectLoading } from "./selectors";
@@ -59,20 +67,22 @@ function CoupleDetailsPage({
     console.log(coupleDetailsPage);
     if (Object.keys(coupleDetailsPage).length > 0) {
       const { bride, groom } = coupleDetailsPage;
-      setGroomInput({
-        fullName: groom.name,
-        fatherName: groom.fatherName,
-        motherName: groom.motherName,
-        city: groom.city,
-        state: groom.state,
-      });
-      setBrideInput({
-        fullName: bride.name,
-        fatherName: bride.fatherName,
-        motherName: bride.motherName,
-        city: bride.city,
-        state: bride.state,
-      });
+      if (groom)
+        setGroomInput({
+          fullName: groom.name,
+          fatherName: groom.fatherName,
+          motherName: groom.motherName,
+          city: groom.city,
+          state: groom.state,
+        });
+      if (bride)
+        setBrideInput({
+          fullName: bride.name,
+          fatherName: bride.fatherName,
+          motherName: bride.motherName,
+          city: bride.city,
+          state: bride.state,
+        });
     }
   }, [coupleDetailsPage]);
 
@@ -98,7 +108,7 @@ function CoupleDetailsPage({
       <h3 className="pl-4 mb-4 text-xl font-semibold text-gray-900">
         Fill the wedding details to start inviting people to your wedding.
       </h3>
-      <div className="flex flex-col md:flex-row">
+      <div className="hidden md:flex">
         <Details
           role="Groom"
           input={groomInput}
@@ -107,6 +117,33 @@ function CoupleDetailsPage({
         />
         <Details role="Bride" input={brideInput} setInput={setBrideInput} />
       </div>
+      <Accordion className="md:hidden" allowZeroExpanded>
+            <AccordionItem>
+                <AccordionItemHeading>
+                    <AccordionItemButton>
+                        Groom Details
+                    </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                <Details
+          role="Groom"
+          input={groomInput}
+          setInput={setGroomInput}
+          classes="lg:mr-24"
+        />
+                </AccordionItemPanel>
+            </AccordionItem>
+            <AccordionItem>
+                <AccordionItemHeading>
+                    <AccordionItemButton>
+                        Bride Details
+                    </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                <Details role="Bride" input={brideInput} setInput={setBrideInput} />
+                </AccordionItemPanel>
+            </AccordionItem>
+        </Accordion>
       <div className="flex justify-end px-4 my-12">
         <button
           type="submit"

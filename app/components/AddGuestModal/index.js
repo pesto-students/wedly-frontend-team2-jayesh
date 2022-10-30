@@ -52,7 +52,7 @@ function AddGuestModal({
   };
 
   return (
-    <div className="overflow-y-hidden overflow-x-hidden fixed top-1/2 left-1/2 z-40 w-4/5 lg:w-1/3 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-4 pl-8 rounded-lg">
+    <div className="guest-modal overflow-y-auto overflow-x-hidden fixed top-1/2 left-1/2 z-40 w-4/5 lg:w-1/3 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-4 pl-8 rounded-lg">
       <AiOutlineCloseCircle
         onClick={() => handleClick()}
         className="absolute top-0 right-0 m-2 cursor-pointer"

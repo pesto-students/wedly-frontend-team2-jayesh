@@ -81,7 +81,7 @@ function EinviteFirstPage({
         const weddingEvent = events.find(
           (event) => event.category === "Wedding"
         );
-        setWeddingDate(weddingEvent.date.split("T")[0]);
+        if (weddingEvent) setWeddingDate(weddingEvent.date.split("T")[0]);
       }
     }
   }, [Object.keys(user).length, firstPageDetails, coupleDetails, events]);

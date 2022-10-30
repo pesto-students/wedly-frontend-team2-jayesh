@@ -1,7 +1,8 @@
 import React from "react";
+import { states, cities } from "utils/states_cities";
 
 const inputStyles =
-    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5";
+  "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5";
 
 export default function Details({ input, setInput, role, classes }) {
   const onInputChange = (e) => {
@@ -11,9 +12,11 @@ export default function Details({ input, setInput, role, classes }) {
       [name]: value,
     }));
   };
+console.log(input.city.trim())
   return (
-    <div className={`p-4 pt-1 w-full h-full md:h-auto flex items-start flex-col ${classes}`}>
-      <h4 className="mb-1 text-lg font-medium text-gray-900">{role} Details</h4>
+    <div
+      className={`p-4 pt-1 w-full h-full md:h-auto flex items-start flex-col ${classes}`}
+    >
       <form className="space-y-6 w-full" onSubmit={(e) => console.log(e)}>
         <div>
           <label
@@ -72,14 +75,22 @@ export default function Details({ input, setInput, role, classes }) {
             >
               City
             </label>
-            <input
-              type="text"
+            <select
               name="city"
-              className={inputStyles}
-              placeholder="City"
               value={input.city}
               onChange={onInputChange}
-            />
+              className="select-arrow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 py-2 md:p-2.5 w-full"
+            >
+              <option>City</option>
+              {input.state &&
+                cities[states.indexOf(input.state) + 1]
+                  .split("|")
+                  .map((option, index) => (
+                    <option value={option.trim()} key={index}>
+                      {option.trim()}
+                    </option>
+                  ))}
+            </select>
           </div>
           <div className="w-2/5">
             <label
@@ -90,11 +101,17 @@ export default function Details({ input, setInput, role, classes }) {
             </label>
             <select
               name="state"
-              placeholder="State"
-              className={inputStyles}
               value={input.state}
               onChange={onInputChange}
-            ></select>
+              className="select-arrow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 py-2 md:p-2.5 w-full"
+            >
+              <option>State</option>
+              {states.map((option, index) => (
+                <option value={option} key={index}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </form>

@@ -82,13 +82,14 @@ function EinviteOtherPage({
           const weddingEvent = events.find(
             (event) => event.category === "Wedding"
           );
-          setInput({
-            category: weddingEvent.category,
-            date: weddingEvent.date && weddingEvent.date.split("T")[0],
-            time: weddingEvent.time,
-            eventVenue: weddingEvent.venue,
-            customEvent: weddingEvent.customEvent,
-          });
+          if (weddingEvent)
+            setInput({
+              category: weddingEvent.category,
+              date: weddingEvent.date && weddingEvent.date.split("T")[0],
+              time: weddingEvent.time,
+              eventVenue: weddingEvent.venue,
+              customEvent: weddingEvent.customEvent,
+            });
         } else {
           const otherEvents = events.filter(
             (event) => event.category !== "Wedding"

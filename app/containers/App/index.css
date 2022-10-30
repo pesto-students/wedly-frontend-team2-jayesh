@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
 
 * {
@@ -44,5 +41,17 @@
     background-size: cover;
     min-height: 528px;
     width: 100vw;
+  }
+}
+
+@media (max-height: 500px) {
+  .event-modal {
+    height: 100%;
+  }
+}
+
+@media (max-height: 400px) {
+  .guest-modal {
+    height: 100%;
   }
 }
