@@ -133,7 +133,7 @@ export async function sendReminder(
     },
     {
       headers: {
-        Authorization: `Bearer EAALnfn2bArEBAJbXQ7vFExwZBxrB7i3hOxeIlHespNl6aifvMnpd7LrZCcbTI18ktlWFC1GiTROMuyCLZCucp9b2RbZAcKICk1bF0aW6hnAbGVTXZAirmdxvZC8xHEP7Qrl2uPgJZBjrXVQL3YT9O1pIDp7qo8v8DvZCgBtheLzhAL7ZAWZBn5hN2RhIEdnsY05zZC6zRH1ukXZBfAZDZD`,
+        Authorization: `Bearer EAALnfn2bArEBAJ7gv9uFcSlZBioEQA3ZCL1ZBn04qvOELz5GffHh7uuOLUCKf1XCuDo6Re8d2MDT4nZBLFFLLVy0X6eIKOlX8ui7ZAlOAOYm4ZBH2Bq3vRjIutNabUs5DEfdpw6oOxDjKjZBMZB1QsUI0aZBZCIOc7Jg82898CJw0zXrwNobfOxOZBmTDDgcfEyBfwWHuTy4FQZB8wZDZD`,
         "Content-Type": "application/json",
       },
     }
