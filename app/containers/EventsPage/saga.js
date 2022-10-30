@@ -133,7 +133,7 @@ export async function sendReminder(
     },
     {
       headers: {
-        Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+        Authorization: `Bearer EAALnfn2bArEBAJbXQ7vFExwZBxrB7i3hOxeIlHespNl6aifvMnpd7LrZCcbTI18ktlWFC1GiTROMuyCLZCucp9b2RbZAcKICk1bF0aW6hnAbGVTXZAirmdxvZC8xHEP7Qrl2uPgJZBjrXVQL3YT9O1pIDp7qo8v8DvZCgBtheLzhAL7ZAWZBn5hN2RhIEdnsY05zZC6zRH1ukXZBfAZDZD`,
         "Content-Type": "application/json",
       },
     }

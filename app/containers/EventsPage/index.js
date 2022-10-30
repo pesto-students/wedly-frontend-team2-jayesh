@@ -56,7 +56,7 @@ function EventsPage({
         getEvents={getEvents}
         events={events}
         deleteEvent={deleteEvent}
-        guests={guests.filter((guest) => guest.isInvited)}
+        guests={guests}
         remindEvent={remindEvent}
       />
       <MobileEventsSection
