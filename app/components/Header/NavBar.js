@@ -1,5 +1,5 @@
 import React, { memo, useState, useRef } from "react";
-import useOnClickOutside from 'use-onclickoutside';
+import useOnClickOutside from "use-onclickoutside";
 import Button from "../Button";
 import messages from "./messages";
 import Logo from "./wedly_logo.svg";
@@ -16,7 +16,7 @@ import { MdAccountCircle } from "react-icons/md";
 import history from "../../utils/history";
 import { SIGNOUT } from "../../containers/HomePage/constants";
 
-function NavBar({ user, success, onToggleModal, logout }) {
+function NavBar({ user, success, onToggleModal, logout, loading }) {
   const ref = useRef();
   const [clicked, setClicked] = useState(false);
   useOnClickOutside(ref, () => setClicked(false));
@@ -73,7 +73,10 @@ function NavBar({ user, success, onToggleModal, logout }) {
             </div>
 
             {clicked && (
-              <div ref={ref} className="flex flex-col justify-around border border-slate-400 p-2 absolute right-2 top-14 bg-white h-20 rounded-xl z-10">
+              <div
+                ref={ref}
+                className="flex flex-col justify-around border border-slate-400 p-2 absolute right-2 top-14 bg-white h-20 rounded-xl z-10"
+              >
                 <h3 className="font-semibold">Account Settings</h3>
                 <h3
                   onClick={() => {

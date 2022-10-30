@@ -10,6 +10,7 @@ import {
   DELETE_GUEST_SUCCESS,
   GET_GUEST,
   GET_GUEST_SUCCESS,
+  SEND_INVITE_SUCCESS,
   UPDATE_GUEST_SUCCESS,
 } from "./constants";
 
@@ -35,11 +36,15 @@ const guestsPageReducer = (state = initialState, action) =>
         break;
 
       case UPDATE_GUEST_SUCCESS:
-        draft.guests = JSON.parse(JSON.stringify(draft.guests.map((guest) => {
-          return guest._id === action.response.data.updatedGuest._id
-            ? action.response.data.updatedGuest
-            : guest;
-        })));
+        draft.guests = JSON.parse(
+          JSON.stringify(
+            draft.guests.map((guest) => {
+              return guest._id === action.response.data.updatedGuest._id
+                ? action.response.data.updatedGuest
+                : guest;
+            })
+          )
+        );
         break;
 
       case DELETE_GUEST_SUCCESS:

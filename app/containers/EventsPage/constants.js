@@ -21,3 +21,6 @@ export const UPDATE_EVENT_FAILURE = "boilerplate/guests/UPDATE_EVENT_FAILURE";
 export const DELETE_EVENT = "boilerplate/Events/DELETE_EVENT";
 export const DELETE_EVENT_SUCCESS = "boilerplate/Events/DELETE_EVENT_SUCCESS";
 export const DELETE_EVENT_FAILURE = "boilerplate/Events/DELETE_EVENT_FAILURE";
+export const REMIND_EVENT = "boilerplate/Events/REMIND_EVENT";
+export const REMIND_EVENT_SUCCESS = "boilerplate/Events/REMIND_EVENT_SUCCESS";
+export const REMIND_EVENT_FAILURE = "boilerplate/Events/REMIND_EVENT_FAILURE";

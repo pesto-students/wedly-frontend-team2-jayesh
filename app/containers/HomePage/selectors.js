@@ -25,4 +25,16 @@ const makeSelectUser = () =>
     (homeState) => homeState.user
   );
 
-export { selectHome, makeSelectUsername, makeSelectAuth, makeSelectUser };
+const makeSelectLoading = () =>
+  createSelector(
+    selectHome,
+    (homeState) => homeState.loading
+  );
+
+export {
+  selectHome,
+  makeSelectUsername,
+  makeSelectAuth,
+  makeSelectUser,
+  makeSelectLoading,
+};

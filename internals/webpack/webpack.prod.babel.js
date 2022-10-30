@@ -87,6 +87,8 @@ module.exports = require("./webpack.base.babel")({
     new webpack.EnvironmentPlugin({
       SERVER_URL: "https://wedly-backend.herokuapp.com/api",
       RAZORPAY_KEY: "rzp_test_RLM7fjm2Fi8KdM",
+      WHATSAPP_TOKEN:
+        "EAALnfn2bArEBADQOsp2BE6yvhQssexZCR0qk9SARu7tEu0LAkjl6qRGW7nZBWIfmdDsS3iOEGTf1OBE4xIcskkZB4XCmg6W3X7K8d6eyrkpMs5sYZB3VaQeEbOTKXKLUXNdYD9AZAAEpVifcW9yZAgSIZCwdBbFZC3TP2vyQYEm8DH7EmJEpg4OYNM42yMg7ECM823cOuErIIgZDZD",
     }),
 
     // Put it in the end to capture all the HtmlWebpackPlugin's
