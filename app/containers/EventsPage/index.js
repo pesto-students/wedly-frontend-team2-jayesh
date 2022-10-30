@@ -14,9 +14,11 @@ import guestsSaga from "../GuestsPage/saga";
 import EventsSection from "components/EventsSection";
 import MobileEventsSection from "components/MobileEventsSection";
 import { GET_EVENT, DELETE_EVENT, REMIND_EVENT } from "./constants";
+import { AUTH_STATE } from "../HomePage/constants";
 import { GET_GUEST } from "../GuestsPage/constants";
 import { makeSelectGuests } from "../GuestsPage/selectors";
 import MoonLoader from "react-spinners/MoonLoader";
+import { makeSelectUser } from "../HomePage/selectors";
 
 const override = {
   display: "block",
@@ -32,7 +34,9 @@ function EventsPage({
   deleteEvent,
   getGuests,
   guests,
+  user,
   remindEvent,
+  checkAuthState,
   loading,
 }) {
   useInjectReducer({ key: "eventsPage", reducer });
@@ -42,17 +46,21 @@ function EventsPage({
   useInjectSaga({ key: "guestsPage", saga: guestsSaga });
 
   useEffect(() => {
-    getEvents();
+    checkAuthState();
   }, []);
+  useEffect(() => {
+    if (Object.keys(user).length > 0) getEvents();
+  }, [user]);
 
   useEffect(() => {
-    getGuests();
-  }, []);
+    if (Object.keys(user).length > 0) getGuests();
+  }, [user]);
 
   return (
     <>
       <EventsSection
         loading={loading}
+        user={user}
         getEvents={getEvents}
         events={events}
         deleteEvent={deleteEvent}
@@ -63,6 +71,7 @@ function EventsPage({
         loading={loading}
         getEvents={getEvents}
         events={events}
+        user={user}
         deleteEvent={deleteEvent}
         guests={guests}
         getGuests={getGuests}
@@ -79,6 +88,7 @@ const mapStateToProps = createStructuredSelector({
   events: makeSelectEvents(),
   guests: makeSelectGuests(),
   loading: makeSelectEventLoader(),
+  user: makeSelectUser(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -111,6 +121,9 @@ function mapDispatchToProps(dispatch) {
         venue,
         mobile,
       });
+    },
+    checkAuthState: () => {
+      dispatch({ type: AUTH_STATE });
     },
   };
 }

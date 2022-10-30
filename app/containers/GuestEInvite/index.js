@@ -168,7 +168,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
             onClick={() => {
               setIsClicked(true);
             }}
-            className="border rounded-lg px-10 py-3 text-[#44a030] border-[#44a030]"
+            className="border rounded-lg px-10 py-2 lg:py-3 text-[#44a030] border-[#44a030]"
           >
             Send Aashirvaad
           </button>
@@ -176,7 +176,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
       ) : (
         <div className="flex justify-center mt-10">
           <input
-            className="px-2 py-3 mr-4 border rounded-lg border-[#44a030]"
+            className="px-2 lg:py-2 py-1 mr-4 border rounded-lg border-[#44a030]"
             placeholder="Enter the amount..."
             type="text"
             value={paymentAmount}
@@ -184,7 +184,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
           />
           <button
             onClick={handlePayment}
-            className="border rounded-lg px-4 py-3 text-[#44a030] border-[#44a030]"
+            className="border rounded-lg text-sm lg:text-lg px-2 lg:px-4 py-1 lg:py-2 text-[#44a030] border-[#44a030]"
           >
             Pay Now
           </button>

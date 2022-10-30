@@ -20,7 +20,18 @@ import {
   SEND_INVITE_FAILURE,
   SEND_INVITE,
 } from "./constants";
-import { inviteFailureToast, inviteSuccessToast } from "../../utils/toast";
+import {
+  addGuestFailureToast,
+  addGuestSuccessToast,
+  addMultipleGuestsFailureToast,
+  addMultipleGuestsSuccessToast,
+  deleteGuestFailureToast,
+  deleteGuestSuccessToast,
+  inviteFailureToast,
+  inviteSuccessToast,
+  updateGuestFailureToast,
+  updateGuestSuccessToast,
+} from "../../utils/toast";
 
 export async function addGuest(name, mobile, email) {
   const requestURL = `${process.env.SERVER_URL}/guest/single`;
@@ -124,36 +135,29 @@ function* addGuestSaga(action) {
       action.mobile,
       action.email
     );
-
     yield put({ type: ADD_GUEST_SUCCESS, response });
-    // yield addEventSuccessToast();
-    // yield history.push("/");
+    yield addGuestSuccessToast();
   } catch (error) {
     yield put({ type: ADD_GUEST_FAILURE, error });
-    // yield addEventFailureToast();
+    yield addGuestFailureToast();
   }
 }
 
 function* addMultipleGuestsSaga(action) {
   try {
     const response = yield call(addMultipleGuests, action.arrayOfGuests);
-
     yield put({ type: ADD_MULTIPLE_GUESTS_SUCCESS, response });
-    // yield addEventSuccessToast();
-    // yield history.push("/");
+    yield addMultipleGuestsSuccessToast();
   } catch (error) {
     yield put({ type: ADD_MULTIPLE_GUESTS_FAILURE, error });
-    // yield addEventFailureToast();
+    yield addMultipleGuestsFailureToast();
   }
 }
 
 function* getGuestSaga() {
   try {
     const response = yield call(getGuests);
-
     yield put({ type: GET_GUEST_SUCCESS, response });
-
-    // yield history.push("/");
   } catch (error) {
     yield put({ type: GET_GUEST_FAILURE, error });
   }
@@ -162,22 +166,22 @@ function* getGuestSaga() {
 function* updateGuestSaga(action) {
   try {
     const response = yield call(updateGuest, action.updateObj);
-
     yield put({ type: UPDATE_GUEST_SUCCESS, response });
+    yield updateGuestSuccessToast();
   } catch (err) {
     yield put({ type: UPDATE_GUEST_FAILURE, err });
+    yield updateGuestFailureToast();
   }
 }
 
 function* deleteGuestSaga(action) {
   try {
     const response = yield call(deleteGuest, action.id);
-
     yield put({ type: DELETE_GUEST_SUCCESS, response });
-
-    // yield history.push("/");
+    yield deleteGuestSuccessToast();
   } catch (error) {
     yield put({ type: DELETE_GUEST_FAILURE, error });
+    yield deleteGuestFailureToast();
   }
 }
 
@@ -190,10 +194,8 @@ function* inviteSaga(action) {
       action.mobile,
       action.userId
     );
-
     yield put({ type: SEND_INVITE_SUCCESS, response });
     yield inviteSuccessToast();
-    // yield history.push("/");
   } catch (error) {
     yield put({ type: SEND_INVITE_FAILURE, error });
     yield inviteFailureToast();

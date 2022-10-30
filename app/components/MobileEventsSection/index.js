@@ -10,7 +10,14 @@ import { HiDownload } from "react-icons/hi";
 import UploadModal from "components/UploadModal";
 import AddEventModal from "components/AddEventModal";
 
-export default function MobileEventsSection({ events, deleteEvent, loading }) {
+export default function MobileEventsSection({
+  guests,
+  events,
+  deleteEvent,
+  remindEvent,
+  loading,
+  user,
+}) {
   const ref = useRef();
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -24,6 +31,21 @@ export default function MobileEventsSection({ events, deleteEvent, loading }) {
   useOnClickOutside(ref, () =>
     setIsUpdateOrDelete(new Array(events.length).fill(false))
   );
+
+  const sendReminderofEvent = async (eventName, date, time, venue) => {
+    console.log("reminder Called");
+    for (let guest of guests) {
+      await remindEvent(
+        guest.name,
+        user.name,
+        eventName,
+        date,
+        time,
+        venue,
+        guest.mobile
+      );
+    }
+  };
 
   return (
     <div
@@ -130,7 +152,21 @@ export default function MobileEventsSection({ events, deleteEvent, loading }) {
                       </div>
                     </div>
                     <div className="flex justify-center items-center">
-                      <button className="bg-pink rounded-xl text-white py-1 px-2 text-xs xs:w-1/2">
+                      <button
+                        onClick={() =>
+                          sendReminderofEvent(
+                            eventDetails.category || eventDetails.customEvent,
+                            eventDetails.date
+                              .split("T")[0]
+                              .split("-")
+                              .reverse()
+                              .join("-"),
+                            eventDetails.time,
+                            eventDetails.venue
+                          )
+                        }
+                        className="bg-pink rounded-xl text-white py-1 px-2 text-xs xs:w-1/2"
+                      >
                         Remind
                       </button>
                       <AiOutlineInfoCircle

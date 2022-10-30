@@ -99,6 +99,54 @@ export const addEventSuccessToast = () => {
   });
 };
 
+export const deleteEventSuccessToast = () => {
+  toast.success("Event was successfully deleted!", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const addMultipleEventsSuccessToast = () => {
+  toast.success("Events were successfully added!", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const remindEventSuccessToast = () => {
+  toast.success("Reminders were succesfully sent!", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const remindEventFailureToast = () => {
+  toast.success("Reminders were not sent! Please try again", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
 export const signoutFailureToast = () => {
   toast.error("Logout failed!", {
     position: "top-right",
@@ -112,6 +160,30 @@ export const signoutFailureToast = () => {
 };
 
 export const addEventFailureToast = () => {
+  toast.error("Something went wrong! Please try again", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const addMultipleEventsFailureToast = () => {
+  toast.error("Something went wrong! Please try again", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const deleteEventFailureToast = () => {
   toast.error("Something went wrong! Please try again", {
     position: "top-right",
     autoClose: 3000,
@@ -209,6 +281,126 @@ export const paymentSucessToast = (amount) => {
 
 export const paymentFailureToast = (amount) => {
   toast.error(`Aashirvaad was not sent! Please try again`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const addGuestSuccessToast = () => {
+  toast.success(`Guest was succesfully added`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const addMultipleGuestsSuccessToast = () => {
+  toast.success(`Guests were succesfully added`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const deleteGuestSuccessToast = () => {
+  toast.success(`Guest was succesfully deleted!`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const updateGuestSuccessToast = () => {
+  toast.success(`Guest was succesfully updated`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const addGuestFailureToast = () => {
+  toast.error(`Guest was not added`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const addMultipleGuestsFailureToast = () => {
+  toast.error(`Guests were not added`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const deleteGuestFailureToast = () => {
+  toast.error(`Guest was not deleted!`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const updateGuestFailureToast = () => {
+  toast.error(`Guest was not succesfully updated`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const updateEventSuccessToast = () => {
+  toast.success(`Event was updated successfully`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const updateEventFailureToast = () => {
+  toast.error(`Event was not updated!`, {
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,

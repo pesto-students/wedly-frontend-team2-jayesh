@@ -20,7 +20,18 @@ import {
   REMIND_EVENT_FAILURE,
   REMIND_EVENT,
 } from "./constants";
-import { addEventSuccessToast, addEventFailureToast } from "../../utils/toast";
+import {
+  addEventSuccessToast,
+  addEventFailureToast,
+  addMultipleEventsSuccessToast,
+  addMultipleEventsFailureToast,
+  deleteEventSuccessToast,
+  deleteEventFailureToast,
+  remindEventSuccessToast,
+  remindEventFailureToast,
+  updateEventSuccessToast,
+  updateEventFailureToast,
+} from "../../utils/toast";
 
 export async function addEvent(category, customEvent, date, time, venue) {
   const body = {};
@@ -155,7 +166,6 @@ function* addEventSaga(action) {
 
     yield put({ type: ADD_EVENT_SUCCESS, response });
     yield addEventSuccessToast();
-    // yield history.push("/");
   } catch (error) {
     yield put({ type: ADD_EVENT_FAILURE, error });
     yield addEventFailureToast();
@@ -165,23 +175,18 @@ function* addEventSaga(action) {
 function* addMultipleEventsSaga(action) {
   try {
     const response = yield call(addMultipleEvents, action.arrayOfEvents);
-
     yield put({ type: ADD_MULTIPLE_EVENTS_SUCCESS, response });
-    // yield addEventSuccessToast();
-    // yield history.push("/");
+    yield addMultipleEventsSuccessToast();
   } catch (error) {
     yield put({ type: ADD_MULTIPLE_EVENTS_FAILURE, error });
-    // yield addEventFailureToast();
+    yield addMultipleEventsFailureToast();
   }
 }
 
 function* getEventSaga() {
   try {
     const response = yield call(getEvents);
-
     yield put({ type: GET_EVENT_SUCCESS, response });
-
-    // yield history.push("/");
   } catch (error) {
     yield put({ type: GET_EVENT_FAILURE, error });
   }
@@ -190,10 +195,11 @@ function* getEventSaga() {
 function* updateEventSaga(action) {
   try {
     const response = yield call(updateEvent, action.updateObj);
-
     yield put({ type: UPDATE_EVENT_SUCCESS, response });
+    yield updateEventSuccessToast();
   } catch (err) {
     yield put({ type: UPDATE_EVENT_FAILURE, err });
+    yield updateEventFailureToast();
   }
 }
 
@@ -202,10 +208,10 @@ function* deleteEventSaga(action) {
     const response = yield call(deleteEvent, action.id);
 
     yield put({ type: DELETE_EVENT_SUCCESS, response });
-
-    // yield history.push("/");
+    yield deleteEventSuccessToast();
   } catch (error) {
     yield put({ type: DELETE_EVENT_FAILURE, error });
+    yield deleteEventFailureToast();
   }
 }
 
@@ -223,11 +229,10 @@ function* remindSaga(action) {
     );
 
     yield put({ type: REMIND_EVENT_SUCCESS, response });
-    // yield inviteSuccessToast();
-    // yield history.push("/");
+    yield remindEventSuccessToast();
   } catch (error) {
     yield put({ type: REMIND_EVENT_FAILURE, error });
-    // yield inviteFailureToast();
+    yield remindEventFailureToast();
   }
 }
 

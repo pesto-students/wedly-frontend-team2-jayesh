@@ -18,6 +18,7 @@ export default function EventsSection({
   guests,
   remindEvent,
   loading,
+  user,
 }) {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -26,14 +27,12 @@ export default function EventsSection({
   useEffect(() => {
     setIsUpdate(new Array(events.length).fill(false));
   }, [events]);
-
   const sendReminderofEvent = async (eventName, date, time, venue) => {
     console.log("reminder Called");
     for (let guest of guests) {
-      console.log(guest);
       await remindEvent(
         guest.name,
-        "Shivanshu Amitabh",
+        user.name,
         eventName,
         date,
         time,
