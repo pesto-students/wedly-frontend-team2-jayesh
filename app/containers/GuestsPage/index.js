@@ -8,13 +8,22 @@ import { useInjectReducer } from "utils/injectReducer";
 import reducer from "./reducer";
 import homeReducer from "../HomePage/reducer";
 import saga from "./saga";
-import { makeSelectGuests } from "./selectors";
+import { makeSelectGuests, makeSelectIsLoading } from "./selectors";
 import { DELETE_GUEST, GET_GUEST, SEND_INVITE } from "./constants";
 import { AUTH_STATE } from "../HomePage/constants";
 import { makeSelectUser } from "../HomePage/selectors";
 import GuestsSection from "../../components/GuestsSection";
 import MobileGuestsSection from "../../components/MobileGuestsSection";
 import searchByName from "../../utils/searchByName";
+import MoonLoader from "react-spinners/MoonLoader";
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  zIndex: 1000,
+};
 
 export function GuestsPage({
   guests,
@@ -23,6 +32,7 @@ export function GuestsPage({
   user,
   sendInvite,
   checkAuthState,
+  loading,
 }) {
   useInjectReducer({ key: "guestsPage", reducer });
   useInjectReducer({ key: "home", reducer: homeReducer });
@@ -79,6 +89,7 @@ export function GuestsPage({
   return (
     <>
       <GuestsSection
+        loading={loading}
         guests={guests}
         getGuests={getGuests}
         deleteGuest={deleteGuest}
@@ -92,6 +103,7 @@ export function GuestsPage({
       />
       <MobileGuestsSection
         guests={guests}
+        loading={loading}
         getGuests={getGuests}
         deleteGuest={deleteGuest}
         user={user}
@@ -101,6 +113,9 @@ export function GuestsPage({
         selectedGuests={selectedGuests}
         setSelectedGuests={setSelectedGuests}
       />
+      {loading ? (
+        <MoonLoader cssOverride={override} size={40} loading={loading} />
+      ) : null}
     </>
   );
 }
@@ -108,6 +123,7 @@ export function GuestsPage({
 const mapStateToProps = createStructuredSelector({
   guests: makeSelectGuests(),
   user: makeSelectUser(),
+  loading: makeSelectIsLoading(),
 });
 
 function mapDispatchToProps(dispatch) {

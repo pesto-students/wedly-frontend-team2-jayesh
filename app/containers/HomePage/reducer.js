@@ -16,6 +16,8 @@ import {
   AUTH_STATE_SUCCESS,
   SIGNOUT,
   SIGNOUT_FAILURE,
+  AUTH_STATE,
+  AUTH_STATE_FAILURE,
 } from "./constants";
 
 // The initial state of the App
@@ -67,13 +69,21 @@ const homeReducer = (state = initialState, action) =>
         draft.loading = false;
         break;
 
+      case AUTH_STATE:
+        draft.loading = true;
+
       case AUTH_STATE_SUCCESS:
-        if (action.response.data.flag) {
+        if (action.response && action.response.data.flag) {
           draft.success = true;
           draft.user = action.response.data.user;
         } else {
           draft.success = false;
         }
+        draft.loading = false;
+        break;
+
+      case AUTH_STATE_FAILURE:
+        draft.loading = false;
         break;
     }
   });

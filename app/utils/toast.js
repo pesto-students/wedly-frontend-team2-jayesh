@@ -206,3 +206,15 @@ export const paymentSucessToast = (amount) => {
     progress: undefined,
   });
 };
+
+export const paymentFailureToast = (amount) => {
+  toast.error(`Aashirvaad was not sent! Please try again`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};

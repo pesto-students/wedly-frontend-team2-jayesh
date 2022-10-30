@@ -10,17 +10,27 @@ import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
-import { makeSelectCoupleDetailsPage } from "./selectors";
+import { makeSelectCoupleDetailsPage, makeSelectLoading } from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
 import Details from "../../components/Details";
 import { ADD_COUPLE_DETAILS, GET_COUPLE_DETAILS } from "./constants";
 import history from "../../utils/history";
+import MoonLoader from "react-spinners/MoonLoader";
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  zIndex: 1000,
+};
 
 function CoupleDetailsPage({
   addCoupleDetails,
   coupleDetailsPage,
   getCoupleDetails,
+  loading,
 }) {
   useInjectReducer({ key: "coupleDetailsPage", reducer });
   useInjectSaga({ key: "coupleDetailsPage", saga });
@@ -47,22 +57,23 @@ function CoupleDetailsPage({
 
   useEffect(() => {
     console.log(coupleDetailsPage);
-    if(Object.keys(coupleDetailsPage).length > 0) {
-    const { bride, groom } = coupleDetailsPage;
-    setGroomInput({
-      fullName: groom.name,
-      fatherName: groom.fatherName,
-      motherName: groom.motherName,
-      city: groom.city,
-      state: groom.state,
-    });
-    setBrideInput({
-      fullName: bride.name,
-      fatherName: bride.fatherName,
-      motherName: bride.motherName,
-      city: bride.city,
-      state: bride.state,
-    });}
+    if (Object.keys(coupleDetailsPage).length > 0) {
+      const { bride, groom } = coupleDetailsPage;
+      setGroomInput({
+        fullName: groom.name,
+        fatherName: groom.fatherName,
+        motherName: groom.motherName,
+        city: groom.city,
+        state: groom.state,
+      });
+      setBrideInput({
+        fullName: bride.name,
+        fatherName: bride.fatherName,
+        motherName: bride.motherName,
+        city: bride.city,
+        state: bride.state,
+      });
+    }
   }, [coupleDetailsPage]);
 
   const handleSubmit = async (e) => {
@@ -83,7 +94,7 @@ function CoupleDetailsPage({
   };
 
   return (
-    <div className="p-5">
+    <div className={`${loading ? "opacity-50" : "opacity-100"} p-5`}>
       <h3 className="pl-4 mb-4 text-xl font-semibold text-gray-900">
         Fill the wedding details to start inviting people to your wedding.
       </h3>
@@ -105,12 +116,16 @@ function CoupleDetailsPage({
           Next
         </button>
       </div>
+      {loading ? (
+        <MoonLoader cssOverride={override} size={40} loading={loading} />
+      ) : null}
     </div>
   );
 }
 
 const mapStateToProps = createStructuredSelector({
   coupleDetailsPage: makeSelectCoupleDetailsPage(),
+  loading: makeSelectLoading(),
 });
 
 export function mapDispatchToProps(dispatch) {

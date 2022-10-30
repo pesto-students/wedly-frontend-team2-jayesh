@@ -5,7 +5,7 @@ import { initialState } from "./reducer";
  * Direct selector to the guestEInvite state domain
  */
 
-const selectGuestEInviteDomain = state => state.guestEInvite || initialState;
+const selectGuestEInviteDomain = (state) => state.guestEInvite || initialState;
 
 /**
  * Other specific selectors
@@ -15,12 +15,16 @@ const selectGuestEInviteDomain = state => state.guestEInvite || initialState;
  * Default selector used by GuestEInvite
  */
 
- const makeSelectEinvite = () =>
- createSelector(
-  selectGuestEInviteDomain,
-   (substate) => substate.einvite
- );
+const makeSelectEinvite = () =>
+  createSelector(
+    selectGuestEInviteDomain,
+    (substate) => substate.einvite
+  );
 
+const makeSelectLoading = () =>
+  createSelector(
+    selectGuestEInviteDomain,
+    (substate) => substate.loading
+  );
 
-
-export { selectGuestEInviteDomain, makeSelectEinvite };
+export { selectGuestEInviteDomain, makeSelectEinvite, makeSelectLoading };

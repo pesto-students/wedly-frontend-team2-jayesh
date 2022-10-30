@@ -62,7 +62,7 @@ const eventsPageReducer = (state = initialState, action) =>
         break;
 
       case ADD_MULTIPLE_EVENTS_SUCCESS:
-        draft.events.push(action.response.data.addedEvents);
+        draft.events.push(...action.response.data.addedEvents);
         draft.loading = false;
         break;
 

@@ -28,8 +28,14 @@ const makeSelectEinviteOtherPages = () =>
     (substate) => substate.otherPages
   );
 
+const makeSelectLoading = () =>
+  createSelector(
+    selectEinviteEditPageDomain,
+    (substate) => substate.loading
+  );
 export {
   makeSelectEinviteFirstPage,
   selectEinviteEditPageDomain,
   makeSelectEinviteOtherPages,
+  makeSelectLoading,
 };

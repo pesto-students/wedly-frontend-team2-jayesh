@@ -9,9 +9,20 @@ import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import saga from "./saga";
 import { GET_EINVITE } from "./constants";
-import { makeSelectEinvite } from "./selectors";
+import { makeSelectEinvite, makeSelectLoading } from "./selectors";
 import reducer from "./reducer";
 import { templates } from "utils/eInviteTemplates";
+import axios from "axios";
+import { paymentFailureToast, paymentSucessToast } from "../../utils/toast";
+import MoonLoader from "react-spinners/MoonLoader";
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  zIndex: 1000,
+};
 
 const dateOptions = {
   weekday: "long",
@@ -29,7 +40,7 @@ const settings = {
   initialSlide: 0,
 };
 
-function GuestEInvite({ einvite, getEinvite }) {
+function GuestEInvite({ einvite, getEinvite, loading }) {
   useInjectSaga({ key: "guestEInvite", saga });
   useInjectReducer({ key: "guestEInvite", reducer });
   const hostID = window.location.href.split("/")[5];
@@ -38,6 +49,8 @@ function GuestEInvite({ einvite, getEinvite }) {
     getEinvite(hostID);
   }, []);
   const [pageData, setPageData] = useState([]);
+  const [isClicked, setIsClicked] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState(null);
   useEffect(() => {
     let pages = [];
     if (einvite.length > 0) {
@@ -45,13 +58,51 @@ function GuestEInvite({ einvite, getEinvite }) {
         if (event.hasOwnProperty("page")) pages[event.page - 1] = event;
         else pages[0] = event;
       });
-      console.log(templates[pages[0].templateID - 1].imageUrls.firstPage);
       setPageData(pages);
     }
   }, [einvite]);
-  console.log(pageData);
+  
+  const initPayment = (data) => {
+    const options = {
+      key: process.env.RAZORPAY_KEY,
+      amount: data.amount,
+      currency: data.currency,
+      description: "Test Transaction",
+      order_id: data.id,
+      handler: async (response) => {
+        try {
+          const verifyUrl = `${process.env.SERVER_URL}/eaashirvaad/verify`;
+          const { data } = await axios.post(verifyUrl, response);
+          console.log(data);
+          paymentSucessToast(Number(paymentAmount));
+        } catch (error) {
+          paymentFailureToast();
+        }
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
+  const handlePayment = async () => {
+    try {
+      const aashirvaadUrl = `${process.env.SERVER_URL}/eaashirvaad`;
+      const { data } = await axios.post(aashirvaadUrl, {
+        amount: Number(paymentAmount),
+      });
+      console.log(data);
+      initPayment(data.data);
+      setIsClicked(false);
+      setPaymentAmount("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <div className="mb-[100px]">
+    <div className={`mb-[100px] ${loading ? "opacity-50" : "opacity-100"}`}>
       {pageData.length > 0 ? (
         <Slider {...settings}>
           {pageData.map((page, index) =>
@@ -111,12 +162,44 @@ function GuestEInvite({ einvite, getEinvite }) {
           )}
         </Slider>
       ) : null}
+      {!isClicked ? (
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={() => {
+              setIsClicked(true);
+            }}
+            className="border rounded-lg px-10 py-3 text-[#44a030] border-[#44a030]"
+          >
+            Send Aashirvaad
+          </button>
+        </div>
+      ) : (
+        <div className="flex justify-center mt-10">
+          <input
+            className="px-2 py-3 mr-4 border rounded-lg border-[#44a030]"
+            placeholder="Enter the amount..."
+            type="text"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+          />
+          <button
+            onClick={handlePayment}
+            className="border rounded-lg px-4 py-3 text-[#44a030] border-[#44a030]"
+          >
+            Pay Now
+          </button>
+        </div>
+      )}
+      {loading ? (
+        <MoonLoader cssOverride={override} size={40} loading={loading} />
+      ) : null}
     </div>
   );
 }
 
 const mapStateToProps = createStructuredSelector({
   einvite: makeSelectEinvite(),
+  loading: makeSelectLoading(),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -84,7 +84,6 @@ function UploadModal({
       <button
         onClick={() => {
           upload();
-          window.location.reload();
         }}
       >
         Upload

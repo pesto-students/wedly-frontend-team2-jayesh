@@ -19,7 +19,7 @@ import SignupPage from "../SignupPage";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import CoupleDetailsPage from "../CoupleDetailsPage/index.js";
-import EventsPage from "../EventsPage/Loadable";
+import EventsPage from "../EventsPage/index.js";
 import GuestsPage from "../GuestsPage";
 import EinvitePage from "../EinvitePage";
 import EinviteEditPage from "../EinviteEditPage";
@@ -30,7 +30,10 @@ import saga from "../HomePage/saga.js";
 import reducer from "../HomePage/reducer.js";
 import { AUTH_STATE } from "../HomePage/constants";
 import { useInjectSaga } from "../../utils/injectSaga";
-import { makeSelectAuth, makeSelectUser } from "../HomePage/selectors";
+import {
+  makeSelectAuth,
+  makeSelectUser,
+} from "../HomePage/selectors";
 import GuestEInvite from "../GuestEInvite";
 import { useInjectReducer } from "../../utils/injectReducer";
 
@@ -72,7 +75,6 @@ function App({ checkAuthState, user }) {
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
-      {/* <GlobalStyle /> */}
     </div>
   );
 }

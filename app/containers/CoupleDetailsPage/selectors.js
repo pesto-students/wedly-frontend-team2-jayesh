@@ -5,7 +5,7 @@ import { initialState } from "./reducer";
  * Direct selector to the coupleDetailsPage state domain
  */
 
-const selectCoupleDetailsPageDomain = state =>
+const selectCoupleDetailsPageDomain = (state) =>
   state.coupleDetailsPage || initialState;
 
 /**
@@ -19,7 +19,17 @@ const selectCoupleDetailsPageDomain = state =>
 const makeSelectCoupleDetailsPage = () =>
   createSelector(
     selectCoupleDetailsPageDomain,
-    substate => substate.coupleDetails
+    (substate) => substate.coupleDetails
   );
 
-export { selectCoupleDetailsPageDomain, makeSelectCoupleDetailsPage };
+const makeSelectLoading = () =>
+  createSelector(
+    selectCoupleDetailsPageDomain,
+    (substate) => substate.loading
+  );
+
+export {
+  selectCoupleDetailsPageDomain,
+  makeSelectCoupleDetailsPage,
+  makeSelectLoading,
+};

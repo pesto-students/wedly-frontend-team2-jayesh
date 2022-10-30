@@ -27,6 +27,7 @@ function GuestsSection({
   searchTerm,
   setSearchTerm,
   handleChange,
+  loading,
 }) {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -41,7 +42,10 @@ function GuestsSection({
     <div className="hidden lg:block">
       <div
         className={`${
-          isAddOpen || isUploadOpen || isUpdate.filter((item) => item).length
+          isAddOpen ||
+          isUploadOpen ||
+          isUpdate.filter((item) => item).length ||
+          loading
             ? "opacity-50 pointer-events-none"
             : "opacity-100"
         } w-full bg-gray-100 relative`}

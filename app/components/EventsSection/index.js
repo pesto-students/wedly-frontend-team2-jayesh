@@ -143,7 +143,11 @@ export default function EventsSection({
                                   sendReminderofEvent(
                                     eventDetails.category ||
                                       eventDetails.customEvent,
-                                    eventDetails.date,
+                                    eventDetails.date
+                                      .split("T")[0]
+                                      .split("-")
+                                      .reverse()
+                                      .join("-"),
                                     eventDetails.time,
                                     eventDetails.venue
                                   )

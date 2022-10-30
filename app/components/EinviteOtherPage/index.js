@@ -18,6 +18,16 @@ import { makeSelectEinviteOtherPages } from "containers/EinviteEditPage/selector
 import einviteEditReducer from "containers/EinviteEditPage/reducer";
 import { makeSelectUser } from "containers/HomePage/selectors";
 import { AUTH_STATE } from "containers/HomePage/constants";
+import MoonLoader from "react-spinners/MoonLoader";
+import { makeSelectLoading } from "../../containers/EinviteEditPage/selectors";
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  zIndex: 1000,
+};
 
 const dateOptions = {
   weekday: "long",
@@ -36,6 +46,7 @@ function EinviteOtherPage({
   addOtherPages,
   checkAuthState,
   getOtherPages,
+  loading,
 }) {
   useInjectReducer({ key: "eventsPage", reducer: eventsReducer });
   useInjectSaga({ key: "eventsPage", saga: eventsSaga });
@@ -85,29 +96,26 @@ function EinviteOtherPage({
           if (otherEvents.length > page - 3) {
             const otherEvent = otherEvents[page - 3];
             setInput({
-              category: otherEvent.category
-              ? otherEvent.category
-              : "Other",
+              category: otherEvent.category ? otherEvent.category : "Other",
               date: otherEvent.date && otherEvent.date.split("T")[0],
               time: otherEvent.time,
               eventVenue: otherEvent.venue,
               customEvent: otherEvent.customEvent,
             });
-          }
-          else {
+          } else {
             setInput({
               category: "",
               date: "",
               time: "",
               eventVenue: "",
               customEvent: "",
-            })
+            });
           }
         }
       }
     }
   }, [Object.keys(user).length, otherPageDetails, events, page]);
-  const handleClick = async(e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
     const templateID = template.id;
     await addOtherPages(
@@ -138,7 +146,11 @@ function EinviteOtherPage({
   };
 
   return (
-    <div className="flex mt-4 lg:mt-10 flex-col lg:flex-row lg:items-center mb-[100px]">
+    <div
+      className={`${
+        loading ? "opacity-50" : "opacity-100"
+      } flex mt-4 lg:mt-10 flex-col lg:flex-row lg:items-center mb-[100px]`}
+    >
       <div
         id="otherPage"
         className={`bg-[url(${
@@ -257,6 +269,9 @@ function EinviteOtherPage({
           </div>
         </div>
       </div>
+      {loading ? (
+        <MoonLoader cssOverride={override} size={40} loading={loading} />
+      ) : null}
     </div>
   );
 }
@@ -265,6 +280,7 @@ const mapStateToProps = createStructuredSelector({
   events: makeSelectEvents(),
   otherPageDetails: makeSelectEinviteOtherPages(),
   user: makeSelectUser(),
+  loading: makeSelectLoading(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -272,7 +288,15 @@ function mapDispatchToProps(dispatch) {
     getEvents: () => {
       dispatch({ type: GET_EVENT });
     },
-    addOtherPages: (category, customEvent, date, time, venue, page, templateID) => {
+    addOtherPages: (
+      category,
+      customEvent,
+      date,
+      time,
+      venue,
+      page,
+      templateID
+    ) => {
       dispatch({
         type: ADD_OTHER_PAGES,
         category,
@@ -281,7 +305,7 @@ function mapDispatchToProps(dispatch) {
         time,
         venue,
         page,
-        templateID
+        templateID,
       });
     },
     getOtherPages: (hostID, page) => {

@@ -24,6 +24,6 @@ const makeSelectGuests = () =>
 const makeSelectIsLoading = () =>
   createSelector(
     selectGuestsPageDomain,
-    (substate) => substate.isLoading
+    (substate) => substate.loading
   );
 export { selectGuestsPageDomain, makeSelectGuests, makeSelectIsLoading };

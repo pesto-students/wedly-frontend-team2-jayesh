@@ -25,6 +25,7 @@ function MobileGuestsSection({
   searchTerm,
   setSearchTerm,
   setSelectedGuests,
+  loading,
 }) {
   const ref = useRef();
   const [isAddOpen, setIsAddOpen] = useState(false);
@@ -47,7 +48,10 @@ function MobileGuestsSection({
     <div className="block lg:hidden">
       <div
         className={`${
-          isAddOpen || isUploadOpen || isUpdate.filter((item) => item).length
+          isAddOpen ||
+          isUploadOpen ||
+          isUpdate.filter((item) => item).length ||
+          loading
             ? "opacity-50 pointer-events-none"
             : "opacity-100"
         } w-full bg-gray-100 relative`}
