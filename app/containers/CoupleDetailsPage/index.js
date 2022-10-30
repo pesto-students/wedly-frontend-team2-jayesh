@@ -7,24 +7,18 @@
 import React, { memo, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Helmet } from "react-helmet";
-import { FormattedMessage } from "react-intl";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
-
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
-import makeSelectCoupleDetailsPage from "./selectors";
+import { makeSelectCoupleDetailsPage } from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
-import messages from "./messages";
 import Details from "../../components/Details";
 import { ADD_COUPLE_DETAILS } from "./constants";
 import history from "../../utils/history";
 
 function CoupleDetailsPage({ addCoupleDetails }) {
-  const inputStyles =
-    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5";
   useInjectReducer({ key: "coupleDetailsPage", reducer });
   useInjectSaga({ key: "coupleDetailsPage", saga });
 
@@ -47,16 +41,16 @@ function CoupleDetailsPage({ addCoupleDetails }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await addCoupleDetails(
-      groomInput.fullName,
-      groomInput.motherName,
-      groomInput.fatherName,
-      groomInput.state,
-      groomInput.city,
       brideInput.fullName,
       brideInput.motherName,
       brideInput.fatherName,
       brideInput.state,
-      brideInput.city
+      brideInput.city,
+      groomInput.fullName,
+      groomInput.motherName,
+      groomInput.fatherName,
+      groomInput.state,
+      groomInput.city,   
     );
     history.push("/events");
   };

@@ -30,7 +30,6 @@ function ContactUs() {
             </label>
             <input
               type="email"
-              id="email"
               className="block p-3 w-full text-sm text-inputGrey rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
               placeholder="Email"
               required

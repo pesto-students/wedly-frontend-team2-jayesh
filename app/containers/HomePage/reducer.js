@@ -24,7 +24,7 @@ export const initialState = {
   password: "",
   error: false,
   success: false,
-  user: null,
+  user: {},
   loading: false,
 };
 
@@ -58,13 +58,12 @@ const homeReducer = (state = initialState, action) =>
 
       case SIGNOUT_SUCCESS:
         draft.success = false;
-        draft.user = null;
+        draft.user = {};
         draft.loading = false;
         break;
 
       case SIGNOUT_FAILURE:
         draft.success = false;
-        draft.user = null;
         draft.loading = false;
         break;
 

@@ -15,13 +15,12 @@ const selectGuestEInviteDomain = state => state.guestEInvite || initialState;
  * Default selector used by GuestEInvite
  */
 
-const makeSelectGuestEInvite = () =>
-  createSelector(
-    selectGuestEInviteDomain,
-    substate => substate
-  );
+ const makeSelectEinvite = () =>
+ createSelector(
+  selectGuestEInviteDomain,
+   (substate) => substate.einvite
+ );
 
 
 
-export default makeSelectGuestEInvite;
-export { selectGuestEInviteDomain };
+export { selectGuestEInviteDomain, makeSelectEinvite };

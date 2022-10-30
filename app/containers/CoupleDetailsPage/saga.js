@@ -4,6 +4,9 @@ import {
   ADD_COUPLE_DETAILS,
   ADD_COUPLE_DETAILS_FAILURE,
   ADD_COUPLE_DETAILS_SUCCESS,
+  GET_COUPLE_DETAILS,
+  GET_COUPLE_DETAILS_SUCCESS,
+  GET_COUPLE_DETAILS_FAILURE
 } from "./constants";
 import {
   addCoupleSuccessToast,
@@ -45,11 +48,11 @@ export async function addCoupleDtails(
   return response;
 }
 
-// export async function getEvents() {
-//   const requestURL = `${process.env.SERVER_URL}/event`;
-//   const response = await axios.get(requestURL, { withCredentials: true });
-//   return response;
-// }
+export async function getCoupleDetails() {
+  const requestURL = `${process.env.SERVER_URL}/weddingDetails`;
+  const response = await axios.get(requestURL, { withCredentials: true });
+  return response;
+}
 
 function* addDetailsSaga(action) {
   try {
@@ -75,18 +78,16 @@ function* addDetailsSaga(action) {
   }
 }
 
-// function* getEventSaga() {
-//   try {
-//     const response = yield call(getEvents);
-
-//     yield put({ type: GET_EVENT_SUCCESS, response });
-
-//     // yield history.push("/");
-//   } catch (error) {
-//     yield put({ type: GET_EVENT_FAILURE, error });
-//   }
-// }
+function* getCoupleSaga() {
+  try {
+    const response = yield call(getCoupleDetails);
+    yield put({ type: GET_COUPLE_DETAILS_SUCCESS, response });
+  } catch (error) {
+    yield put({ type: GET_COUPLE_DETAILS_FAILURE, error });
+  }
+}
 
 export default function* watcherSaga() {
   yield takeEvery(ADD_COUPLE_DETAILS, addDetailsSaga);
+  yield takeEvery(GET_COUPLE_DETAILS, getCoupleSaga);
 }

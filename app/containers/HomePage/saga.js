@@ -20,7 +20,6 @@ import {
 import history from "../../utils/history";
 
 export async function signIn(email, password) {
-  console.log(process.env.SERVER_URL);
   const requestURL = `${process.env.SERVER_URL}/login`;
   const response = await axios.post(
     requestURL,
@@ -30,7 +29,6 @@ export async function signIn(email, password) {
     },
     { withCredentials: true }
   );
-  console.log(response);
   return response;
 }
 
