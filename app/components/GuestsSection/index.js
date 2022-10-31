@@ -90,7 +90,7 @@ function GuestsSection({
                   className="flex items-center text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow"
                   onClick={() => setIsAddOpen(!isAddOpen)}
                 >
-                  <BsPlusLg size="0.7rem" className="mr-1" />
+                  <BsPlus size="0.7rem" className="mr-1" />
                   Add a Guest
                 </button>
               </div>
