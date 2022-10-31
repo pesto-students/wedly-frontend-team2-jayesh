@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const token = window.localStorage.getItem("accessToken");
+const token = localStorage.getItem("accessToken");
+console.log(token);
 
 const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
