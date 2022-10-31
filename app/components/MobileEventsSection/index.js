@@ -32,19 +32,8 @@ export default function MobileEventsSection({
     setIsUpdateOrDelete(new Array(events.length).fill(false))
   );
 
-  const sendReminderofEvent = async (eventName, date, time, venue) => {
-    console.log("reminder Called");
-    for (let guest of guests) {
-      await remindEvent(
-        guest.name,
-        user.name,
-        eventName,
-        date,
-        time,
-        venue,
-        guest.mobile
-      );
-    }
+  const sendReminderofEvent = async (eventDetails) => {
+    await remindEvent(guests, user.name, eventDetails);
   };
 
   return (
@@ -153,18 +142,7 @@ export default function MobileEventsSection({
                     </div>
                     <div className="flex justify-center items-center">
                       <button
-                        onClick={() =>
-                          sendReminderofEvent(
-                            eventDetails.category || eventDetails.customEvent,
-                            eventDetails.date
-                              .split("T")[0]
-                              .split("-")
-                              .reverse()
-                              .join("-"),
-                            eventDetails.time,
-                            eventDetails.venue
-                          )
-                        }
+                        onClick={() => sendReminderofEvent(eventDetails)}
                         className="bg-pink rounded-xl text-white py-1 px-2 text-xs xs:w-1/2"
                       >
                         Remind

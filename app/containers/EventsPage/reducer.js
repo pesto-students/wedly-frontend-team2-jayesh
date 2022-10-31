@@ -17,6 +17,9 @@ import {
   GET_EVENT,
   GET_EVENT_FAILURE,
   GET_EVENT_SUCCESS,
+  REMIND_EVENT,
+  REMIND_EVENT_FAILURE,
+  REMIND_EVENT_SUCCESS,
   UPDATE_EVENT,
   UPDATE_EVENT_FAILURE,
   UPDATE_EVENT_SUCCESS,
@@ -103,6 +106,18 @@ const eventsPageReducer = (state = initialState, action) =>
         break;
 
       case DELETE_EVENT_FAILURE:
+        draft.loading = false;
+        break;
+
+      case REMIND_EVENT:
+        draft.loading = true;
+        break;
+
+      case REMIND_EVENT_SUCCESS:
+        draft.loading = false;
+        break;
+
+      case REMIND_EVENT_FAILURE:
         draft.loading = false;
         break;
     }

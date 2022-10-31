@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
+import axiosInstance from "../../utils/axios.js";
 import {
   ADD_EVENT,
   ADD_EVENT_FAILURE,
@@ -44,113 +45,89 @@ export async function addEvent(category, customEvent, date, time, venue) {
   body["date"] = date;
   body["time"] = time;
   body["venue"] = venue;
-  const requestURL = `${process.env.SERVER_URL}/event/single`;
-  const response = await axios.post(requestURL, body, {
-    withCredentials: true,
-  });
+  const response = await axiosInstance.post("/event/single", body);
   return response;
 }
 
 export async function getEvents() {
-  const requestURL = `${process.env.SERVER_URL}/event`;
-  const response = await axios.get(requestURL, { withCredentials: true });
+  const response = await axiosInstance.get("/event");
   return response;
 }
 
 export async function deleteEvent(id) {
-  const requestURL = `${process.env.SERVER_URL}/event`;
-  const response = await axios({
-    method: "DELETE",
-    url: requestURL,
-    withCredentials: true,
-    data: { id: id },
-  });
-
+  const response = await axiosInstance.delete("/event", { data: { id: id } });
   return response;
 }
 
 export async function addMultipleEvents(arrayOfEvents) {
-  const requestURL = `${process.env.SERVER_URL}/event/multiple`;
-
-  const response = await axios.post(requestURL, arrayOfEvents, {
-    withCredentials: true,
-  });
+  const response = await axiosInstance.post("/event/multiple", arrayOfEvents);
   return response;
 }
 
 export async function updateEvent(updateObj) {
-  const requestURL = `${process.env.SERVER_URL}/event`;
-
-  const response = await axios.patch(requestURL, updateObj, {
-    withCredentials: true,
-  });
+  const response = await axiosInstance.patch("/event", updateObj);
   return response;
 }
 
-export async function sendReminder(
-  guestName,
-  hostName,
-  eventName,
-  date,
-  time,
-  venue,
-  mobile
-) {
+export async function sendReminder(guestsArray, hostName, eventDetails) {
   const requestURL = `https://graph.facebook.com/v14.0/109962048563832/messages`;
-
-  const response = await axios.post(
-    requestURL,
-    {
-      messaging_product: "whatsapp",
-      to: `91${mobile}`,
-      type: "template",
-      template: {
-        name: "event",
-        language: {
-          code: "en",
-        },
-        components: [
-          {
-            type: "body",
-            parameters: [
-              {
-                type: "text",
-                text: `${guestName}`,
-              },
-              {
-                type: "text",
-                text: `${hostName}`,
-              },
-              {
-                type: "text",
-                text: `${eventName}`,
-              },
-              {
-                type: "text",
-                text: `${date}`,
-              },
-              {
-                type: "text",
-                text: `${time}`,
-              },
-              {
-                type: "text",
-                text: `${venue}`,
-              },
-            ],
+  for (let guest of guestsArray) {
+    await axios.post(
+      requestURL,
+      {
+        messaging_product: "whatsapp",
+        to: `91${guest.mobile}`,
+        type: "template",
+        template: {
+          name: "event",
+          language: {
+            code: "en",
           },
-        ],
+          components: [
+            {
+              type: "body",
+              parameters: [
+                {
+                  type: "text",
+                  text: `${guest.name}`,
+                },
+                {
+                  type: "text",
+                  text: `${hostName}`,
+                },
+                {
+                  type: "text",
+                  text: `${eventDetails.category || eventDetails.customEvent}`,
+                },
+                {
+                  type: "text",
+                  text: `${eventDetails.date
+                    .split("T")[0]
+                    .split("-")
+                    .reverse()
+                    .join("-")}`,
+                },
+                {
+                  type: "text",
+                  text: `${eventDetails.time}`,
+                },
+                {
+                  type: "text",
+                  text: `${eventDetails.venue}`,
+                },
+              ],
+            },
+          ],
+        },
       },
-    },
-    {
-      headers: {
-        Authorization: `Bearer EAALnfn2bArEBAJ7gv9uFcSlZBioEQA3ZCL1ZBn04qvOELz5GffHh7uuOLUCKf1XCuDo6Re8d2MDT4nZBLFFLLVy0X6eIKOlX8ui7ZAlOAOYm4ZBH2Bq3vRjIutNabUs5DEfdpw6oOxDjKjZBMZB1QsUI0aZBZCIOc7Jg82898CJw0zXrwNobfOxOZBmTDDgcfEyBfwWHuTy4FQZB8wZDZD`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  return response;
+      {
+        headers: {
+          Authorization: `Bearer EAALnfn2bArEBAJPluQxt1E3DE0evIdwiXlSo7elfhZAH9j17zZBj3PK022w1TNff30cR4XlZCXDuu0jvRWPau90Rgf11J2U8AbGRrsgflSYbAG1pRYOExL3vI2wPh2VYlH6d4kThuxXJL6PCyBFinoHWW0GPgUCeFXhVJ3NeNYPtRxinlU1suY8Rxxtttdo6ZCzd1gpZCdwZDZD`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
 }
 
 function* addEventSaga(action) {
@@ -217,18 +194,14 @@ function* deleteEventSaga(action) {
 
 function* remindSaga(action) {
   try {
-    const response = yield call(
+    yield call(
       sendReminder,
-      action.guestName,
+      action.guestsArray,
       action.hostName,
-      action.eventName,
-      action.date,
-      action.time,
-      action.venue,
-      action.mobile
+      action.eventDetails
     );
 
-    yield put({ type: REMIND_EVENT_SUCCESS, response });
+    yield put({ type: REMIND_EVENT_SUCCESS });
     yield remindEventSuccessToast();
   } catch (error) {
     yield put({ type: REMIND_EVENT_FAILURE, error });

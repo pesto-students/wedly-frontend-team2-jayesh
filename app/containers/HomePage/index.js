@@ -40,7 +40,6 @@ const override = {
 };
 
 export function HomePage({ isOpen, loading }) {
-  console.log(loading, "sdkh;ksd");
   useInjectReducer({ key, reducer });
   useEffect(() => {
     if (history.location.search === "?success=true") {

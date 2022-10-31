@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import axios from "axios";
+import axiosInstance from "../../utils/axios";
 import {
   GET_EINVITE,
   GET_EINVITE_SUCCESS,
@@ -7,15 +7,13 @@ import {
 } from "./constants";
 
 export async function getEinviteDetails(hostID) {
-  const requestURL = `${process.env.SERVER_URL}/guesteinvite/${hostID}`;
-  const response = await axios.get(requestURL);
-  console.log(response)
+  const response = await axiosInstance.get(`/guesteinvite/${hostID}`);
   return response;
 }
 
 function* getEinviteSaga(action) {
   try {
-    console.log(action.hostID)
+    console.log(action.hostID);
     const response = yield call(getEinviteDetails, action.hostID);
     yield put({ type: GET_EINVITE_SUCCESS, response });
   } catch (error) {

@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import axios from "axios";
+import axiosInstance from "../../utils/axios";
 import {
   ADD_FIRST_PAGE,
   ADD_FIRST_PAGE_FAILURE,
@@ -17,25 +17,17 @@ import {
 import { addEinviteSuccessToast } from "../../utils/toast";
 
 export async function addFirstPageDetails(date, groom, bride, templateID) {
-  const requestURL = `${process.env.SERVER_URL}/firstpageeinvite`;
-  const response = await axios.post(
-    requestURL,
-    {
-      date,
-      groom,
-      bride,
-      templateID
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axiosInstance.post("/firstpageeinvite", {
+    date,
+    groom,
+    bride,
+    templateID,
+  });
   return response;
 }
 
 export async function getFirstPageDetails(hostID) {
-  const requestURL = `${process.env.SERVER_URL}/firstpageeinvite/${hostID}`;
-  const response = await axios.get(requestURL);
+  const response = await axiosInstance.get(`/firstpageeinvite/${hostID}`);
   return response;
 }
 
@@ -48,28 +40,22 @@ export async function addOtherPagesDetails(
   page,
   templateID
 ) {
-  const requestURL = `${process.env.SERVER_URL}/otherpageseinvite`;
-  const response = await axios.post(
-    requestURL,
-    {
-      category,
-      customEvent,
-      date,
-      time,
-      venue,
-      page,
-      templateID
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axiosInstance.post("/otherpageseinvite", {
+    category,
+    customEvent,
+    date,
+    time,
+    venue,
+    page,
+    templateID,
+  });
   return response;
 }
 
 export async function getOtherPagesDetails(hostID, page) {
-  const requestURL = `${process.env.SERVER_URL}/otherpageseinvite/${hostID}/${page}`;
-  const response = await axios.get(requestURL);
+  const response = await axiosInstance.get(
+    `/otherpageseinvite/${hostID}/${page}`
+  );
   return response;
 }
 
@@ -121,7 +107,11 @@ function* addOtherPagesSaga(action) {
 
 function* getOtherPagesSaga(action) {
   try {
-    const response = yield call(getOtherPagesDetails, action.hostID, action.page);
+    const response = yield call(
+      getOtherPagesDetails,
+      action.hostID,
+      action.page
+    );
     yield put({ type: GET_OTHER_PAGES_SUCCESS, response });
   } catch (error) {
     yield put({ type: GET_OTHER_PAGES_FAILURE, error });

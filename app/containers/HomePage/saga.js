@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import axios from "axios";
+import axiosInstance from "../../utils/axios";
 import {
   SIGNIN,
   SIGNIN_SUCCESS,
@@ -20,39 +20,34 @@ import {
 import history from "../../utils/history";
 
 export async function signIn(email, password) {
-  const requestURL = `${process.env.SERVER_URL}/login`;
-  const response = await axios.post(
-    requestURL,
-    {
-      email,
-      password,
-    },
-    { withCredentials: true }
-  );
+  const response = await axiosInstance.post("/login", {
+    email,
+    password,
+  });
+  localStorage.setItem("accessToken", response.data.accessToken);
   return response;
 }
 
 export async function signOut() {
-  const requestURL = `${process.env.SERVER_URL}/logout`;
-  const response = await axios.post(requestURL, {}, { withCredentials: true });
+  const response = await axiosInstance.post("/logout", {});
+  localStorage.removeItem("accessToken");
   return response;
 }
 
 export async function getAuthState() {
-  const requestURL = `${process.env.SERVER_URL}/authState`;
-  const response = await axios.get(requestURL, { withCredentials: true });
+  const response = await axiosInstance.get("/authState");
+  if (response.data.user.google) {
+    localStorage.setItem("accessToken", response.data.cookies.accessToken);
+  }
   return response;
 }
 
 function* signinSaga(action) {
   try {
     const response = yield call(signIn, action.email, action.password);
-
-    // dispatch a success action to the store with the new dog
     yield put({ type: SIGNIN_SUCCESS, response });
     yield signinSuccessToast();
   } catch (error) {
-    // dispatch a failure action to the store with the error
     yield put({ type: SIGNIN_FAILURE, error });
     yield signinFailureToast();
   }

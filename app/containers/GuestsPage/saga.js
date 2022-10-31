@@ -1,4 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
+import axiosInstance from "../../utils/axios";
 import axios from "axios";
 import {
   ADD_GUEST,
@@ -34,50 +35,31 @@ import {
 } from "../../utils/toast";
 
 export async function addGuest(name, mobile, email) {
-  const requestURL = `${process.env.SERVER_URL}/guest/single`;
-  const response = await axios.post(
-    requestURL,
-    { name, mobile, email },
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axiosInstance.post("/guest/single", {
+    name,
+    mobile,
+    email,
+  });
   return response;
 }
 
 export async function getGuests() {
-  const requestURL = `${process.env.SERVER_URL}/guest`;
-  const response = await axios.get(requestURL, { withCredentials: true });
+  const response = await axiosInstance.get("/guest");
   return response;
 }
 
 export async function deleteGuest(id) {
-  const requestURL = `${process.env.SERVER_URL}/guest`;
-  const response = await axios({
-    method: "DELETE",
-    url: requestURL,
-    withCredentials: true,
-    data: { id: id },
-  });
-
+  const response = await axiosInstance.delete("/guest", { data: { id: id } });
   return response;
 }
 
 export async function addMultipleGuests(arrayOfGuests) {
-  const requestURL = `${process.env.SERVER_URL}/guest/multiple`;
-
-  const response = await axios.post(requestURL, arrayOfGuests, {
-    withCredentials: true,
-  });
+  const response = await axiosInstance.post("/guest/multiple", arrayOfGuests);
   return response;
 }
 
 export async function updateGuest(updateObj) {
-  const requestURL = `${process.env.SERVER_URL}/guest`;
-
-  const response = await axios.patch(requestURL, updateObj, {
-    withCredentials: true,
-  });
+  const response = await axiosInstance.patch("/guest", updateObj);
   return response;
 }
 
@@ -118,7 +100,7 @@ export async function sendInvite(from, to, mobile, userId) {
     },
     {
       headers: {
-        Authorization: `Bearer EAALnfn2bArEBAJ7gv9uFcSlZBioEQA3ZCL1ZBn04qvOELz5GffHh7uuOLUCKf1XCuDo6Re8d2MDT4nZBLFFLLVy0X6eIKOlX8ui7ZAlOAOYm4ZBH2Bq3vRjIutNabUs5DEfdpw6oOxDjKjZBMZB1QsUI0aZBZCIOc7Jg82898CJw0zXrwNobfOxOZBmTDDgcfEyBfwWHuTy4FQZB8wZDZD`,
+        Authorization: `Bearer EAALnfn2bArEBAJPluQxt1E3DE0evIdwiXlSo7elfhZAH9j17zZBj3PK022w1TNff30cR4XlZCXDuu0jvRWPau90Rgf11J2U8AbGRrsgflSYbAG1pRYOExL3vI2wPh2VYlH6d4kThuxXJL6PCyBFinoHWW0GPgUCeFXhVJ3NeNYPtRxinlU1suY8Rxxtttdo6ZCzd1gpZCdwZDZD`,
         "Content-Type": "application/json",
       },
     }

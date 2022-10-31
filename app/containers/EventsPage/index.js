@@ -5,7 +5,11 @@ import { compose } from "redux";
 
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
-import { makeSelectEventLoader, makeSelectEvents } from "./selectors";
+import {
+  makeSelectEventLoader,
+  makeSelectEvents,
+  makeSelectRemindEvent,
+} from "./selectors";
 import reducer from "./reducer";
 import homeReducer from "../HomePage/reducer";
 import guestsReducer from "../GuestsPage/reducer";
@@ -19,6 +23,7 @@ import { GET_GUEST } from "../GuestsPage/constants";
 import { makeSelectGuests } from "../GuestsPage/selectors";
 import MoonLoader from "react-spinners/MoonLoader";
 import { makeSelectUser } from "../HomePage/selectors";
+import { allReminderSent } from "./actions";
 
 const override = {
   display: "block",
@@ -102,24 +107,12 @@ function mapDispatchToProps(dispatch) {
     getGuests: () => {
       dispatch({ type: GET_GUEST });
     },
-    remindEvent: (
-      guestName,
-      hostName,
-      eventName,
-      date,
-      time,
-      venue,
-      mobile
-    ) => {
+    remindEvent: (guestsArray, hostName, eventDetails) => {
       dispatch({
         type: REMIND_EVENT,
-        guestName,
+        guestsArray,
         hostName,
-        eventName,
-        date,
-        time,
-        venue,
-        mobile,
+        eventDetails,
       });
     },
     checkAuthState: () => {

@@ -1,12 +1,12 @@
 import { call, put, takeLatest, takeEvery } from "redux-saga/effects";
-import axios from "axios";
+import axiosInstance from "../../utils/axios";
 import {
   ADD_COUPLE_DETAILS,
   ADD_COUPLE_DETAILS_FAILURE,
   ADD_COUPLE_DETAILS_SUCCESS,
   GET_COUPLE_DETAILS,
   GET_COUPLE_DETAILS_SUCCESS,
-  GET_COUPLE_DETAILS_FAILURE
+  GET_COUPLE_DETAILS_FAILURE,
 } from "./constants";
 import {
   addCoupleSuccessToast,
@@ -26,31 +26,23 @@ export async function addCoupleDtails(
   groomState,
   groomCity
 ) {
-  const requestURL = `${process.env.SERVER_URL}/weddingDetails`;
-  const response = await axios.post(
-    requestURL,
-    {
-      brideName,
-      brideMotherName,
-      brideFatherName,
-      brideState,
-      brideCity,
-      groomName,
-      groomMotherName,
-      groomFatherName,
-      groomState,
-      groomCity,
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axiosInstance.post("weddingDetails", {
+    brideName,
+    brideMotherName,
+    brideFatherName,
+    brideState,
+    brideCity,
+    groomName,
+    groomMotherName,
+    groomFatherName,
+    groomState,
+    groomCity,
+  });
   return response;
 }
 
 export async function getCoupleDetails() {
-  const requestURL = `${process.env.SERVER_URL}/weddingDetails`;
-  const response = await axios.get(requestURL, { withCredentials: true });
+  const response = await axiosInstance.get("/weddingDetails");
   return response;
 }
 

@@ -12,7 +12,7 @@ import { GET_EINVITE } from "./constants";
 import { makeSelectEinvite, makeSelectLoading } from "./selectors";
 import reducer from "./reducer";
 import { templates } from "utils/eInviteTemplates";
-import axios from "axios";
+import axiosInstance from "../../utils/axios";
 import { paymentFailureToast, paymentSucessToast } from "../../utils/toast";
 import MoonLoader from "react-spinners/MoonLoader";
 
@@ -61,7 +61,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
       setPageData(pages);
     }
   }, [einvite]);
-  
+
   const initPayment = (data) => {
     const options = {
       key: process.env.RAZORPAY_KEY,
@@ -71,8 +71,10 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
       order_id: data.id,
       handler: async (response) => {
         try {
-          const verifyUrl = `${process.env.SERVER_URL}/eaashirvaad/verify`;
-          const { data } = await axios.post(verifyUrl, response);
+          const { data } = await axiosInstance.post(
+            "/eaashirvaad/verify",
+            response
+          );
           console.log(data);
           paymentSucessToast(Number(paymentAmount));
         } catch (error) {
@@ -89,8 +91,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
 
   const handlePayment = async () => {
     try {
-      const aashirvaadUrl = `${process.env.SERVER_URL}/eaashirvaad`;
-      const { data } = await axios.post(aashirvaadUrl, {
+      const { data } = await axiosInstance.post("/eaashirvaad", {
         amount: Number(paymentAmount),
       });
       console.log(data);

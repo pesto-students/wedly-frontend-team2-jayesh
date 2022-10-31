@@ -1,20 +1,15 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import axios from "axios";
+import axiosInstance from "../../utils/axios";
 import { SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE } from "./constants";
 import { signupFailureToast, signupSuccessToast } from "../../utils/toast";
 import history from "../../utils/history";
 
 export async function signup(name, email, password) {
-  const requestURL = `${process.env.SERVER_URL}/signup`;
-  const response = await axios.post(
-    requestURL,
-    {
-      name,
-      email,
-      password,
-    },
-    { withCredentials: true }
-  );
+  const response = await axiosInstance.post("/signup", {
+    name,
+    email,
+    password,
+  });
   return response;
 }
 
