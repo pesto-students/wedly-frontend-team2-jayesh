@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import useOnClickOutside from "use-onclickoutside";
-import {
-  AiOutlineInfoCircle,
-  AiOutlineEdit,
-  AiOutlineDelete,
-} from "react-icons/ai";
-import { BsPlusLg, BsThreeDotsVertical } from "react-icons/bs";
-import { HiDownload } from "react-icons/hi";
+import { AiOutlineInfoCircle } from "@react-icons/all-files/ai/AiOutlineInfoCircle";
+import { AiOutlineEdit } from "@react-icons/all-files/ai/AiOutlineEdit";
+import { AiOutlineDelete } from "@react-icons/all-files/ai/AiOutlineDelete";
+import { BsPlus } from "@react-icons/all-files/bs/BsPlus";
+import { BsThreeDotsVertical } from "@react-icons/all-files/bs/BsThreeDotsVertical";
+import { HiDownload } from "@react-icons/all-files/hi/HiDownload";
 import UploadModal from "components/UploadModal";
 import AddEventModal from "components/AddEventModal";
 
@@ -68,7 +67,7 @@ export default function MobileEventsSection({
                 className="p-1.5 flex flex-col bg-pink w-[45%] rounded-md justify-center items-center text-white font-semibold space-y-2 cursor-pointer"
                 onClick={() => setIsAddOpen(!isAddOpen)}
               >
-                <BsPlusLg size="1.5rem" />
+                <BsPlus size="1.5rem" />
                 <div className="text-center">Add an event </div>
               </div>
               {events.length > 0 &&

@@ -12,7 +12,7 @@ import {
   makeSelectAuth,
   makeSelectUser,
 } from "../../containers/HomePage/selectors";
-import { MdAccountCircle } from "react-icons/md";
+import { MdAccountCircle } from "@react-icons/all-files/md/MdAccountCircle";
 import history from "../../utils/history";
 import { SIGNOUT } from "../../containers/HomePage/constants";
 

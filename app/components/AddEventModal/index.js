@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle } from "@react-icons/all-files/ai/AiOutlineCloseCircle";
 import { options } from "../../utils/constants";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -219,7 +219,9 @@ function AddEventModal({
               <div>
                 <input
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12 p-1.5 py-2 md:p-2.5"
-                  {...getInputProps({ placeholder: "Enter the venue of event" })}
+                  {...getInputProps({
+                    placeholder: "Enter the venue of event",
+                  })}
                 />
                 <div>
                   {loading ? <div>Loading...</div> : null}

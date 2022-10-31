@@ -8,15 +8,13 @@ import { toggleModal } from "../../containers/App/actions";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { makeSelectAuth } from "../../containers/HomePage/selectors";
-import { GiHamburgerMenu } from "react-icons/gi";
-import {
-  MdClose,
-  MdInfoOutline,
-  MdOutlineSettingsPhone,
-  MdEvent,
-  MdPersonAddAlt,
-  MdOutlineMarkEmailRead,
-} from "react-icons/md";
+import { GiHamburgerMenu } from "@react-icons/all-files/gi/GiHamburgerMenu";
+import { MdClose } from "@react-icons/all-files/md/MdClose";
+import { MdSettings } from "@react-icons/all-files/md/MdSettings";
+import { MdEvent } from "@react-icons/all-files/md/MdEvent";
+import { MdPersonAdd } from "@react-icons/all-files/md/MdPersonAdd";
+import { MdEmail } from "@react-icons/all-files/md/MdEmail";
+import { MdInfoOutline } from "@react-icons/all-files/md/MdInfoOutline";
 import history from "../../utils/history";
 import { SIGNOUT } from "../../containers/HomePage/constants";
 
@@ -75,7 +73,7 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
                   }}
                   className="flex items-center w-fit"
                 >
-                  <MdPersonAddAlt className="mr-1" />
+                  <MdPersonAdd className="mr-1" />
                   <span>Guests</span>
                 </a>
                 <a
@@ -85,7 +83,7 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
                   }}
                   className="flex items-center w-fit"
                 >
-                  <MdOutlineMarkEmailRead className="mr-1" />
+                  <MdEmail className="mr-1" />
                   <span>E-Invites</span>
                 </a>
               </>
@@ -107,7 +105,7 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
               href="/#contactUs"
               className="flex items-center w-fit"
             >
-              <MdOutlineSettingsPhone className="mr-1" />
+              <MdSettings className="mr-1" />
               <span>Contact Us</span>
             </a>
           </div>

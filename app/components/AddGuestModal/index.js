@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle } from "@react-icons/all-files/ai/AiOutlineCloseCircle";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { ADD_GUEST, UPDATE_GUEST } from "../../containers/GuestsPage/constants";
@@ -12,7 +12,7 @@ function AddGuestModal({
   guest,
   updateGuest,
   setIsUpdate,
-  guests
+  guests,
 }) {
   const [input, setInput] = useState({
     name: role === "add" ? "" : guest.name,

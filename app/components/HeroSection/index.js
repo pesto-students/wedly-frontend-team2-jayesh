@@ -8,7 +8,7 @@ import H1 from "../H1";
 import H3 from "../H3";
 import { toggleModal } from "../../containers/App/actions";
 import { makeSelectAuth } from "../../containers/HomePage/selectors";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { AiOutlineArrowRight } from "@react-icons/all-files/ai/AiOutlineArrowRight";
 import history from "../../utils/history";
 
 function HeroSection({ onToggleModal, success }) {

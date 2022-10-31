@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  AiOutlineInfoCircle,
-  AiOutlineEdit,
-  AiOutlineDelete,
-} from "react-icons/ai";
-import { BsPlusLg } from "react-icons/bs";
-import { HiDownload } from "react-icons/hi";
+import { AiOutlineInfoCircle } from "@react-icons/all-files/ai/AiOutlineInfoCircle";
+import { AiOutlineEdit } from "@react-icons/all-files/ai/AiOutlineEdit";
+import { AiOutlineDelete } from "@react-icons/all-files/ai/AiOutlineDelete";
+import { BsPlus } from "@react-icons/all-files/bs/BsPlus";
+import { HiDownload } from "@react-icons/all-files/hi/HiDownload";
 import UploadModal from "components/UploadModal";
 import AddEventModal from "components/AddEventModal";
 import ReactTooltip from "react-tooltip";
@@ -67,7 +65,7 @@ export default function EventsSection({
                     setisLoading(false);
                   }}
                 >
-                  <BsPlusLg size="0.7rem" className="mr-1" />
+                  <BsPlus size="0.7rem" className="mr-1" />
                   Add an Event
                 </button>
               </div>

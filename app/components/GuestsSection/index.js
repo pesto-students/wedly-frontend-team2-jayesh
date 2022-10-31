@@ -1,12 +1,10 @@
 import React, { useState, useEffect, memo } from "react";
-import {
-  AiOutlineInfoCircle,
-  AiOutlineEdit,
-  AiOutlineDelete,
-  AiOutlineSearch,
-} from "react-icons/ai";
-import { BsPlusLg } from "react-icons/bs";
-import { HiDownload } from "react-icons/hi";
+import { AiOutlineInfoCircle } from "@react-icons/all-files/ai/AiOutlineInfoCircle";
+import { AiOutlineEdit } from "@react-icons/all-files/ai/AiOutlineEdit";
+import { AiOutlineDelete } from "@react-icons/all-files/ai/AiOutlineDelete";
+import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
+import { BsPlus } from "@react-icons/all-files/bs/BsPlus";
+import { HiDownload } from "@react-icons/all-files/hi/HiDownload";
 import UploadModal from "../UploadModal";
 import AddGuestModal from "../AddGuestModal";
 import searchByName from "../../utils/searchByName";

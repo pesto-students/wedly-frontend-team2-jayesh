@@ -1,5 +1,6 @@
 import React, { memo } from "react";
-import { AiOutlineCloudUpload, AiOutlineCloseCircle } from "react-icons/ai";
+import { AiOutlineCloudUpload } from "@react-icons/all-files/ai/AiOutlineCloudUpload";
+import { AiOutlineCloseCircle } from "@react-icons/all-files/ai/AiOutlineCloseCircle";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { ADD_MULTIPLE_EVENTS } from "../../containers/EventsPage/constants";
