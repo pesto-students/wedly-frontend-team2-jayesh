@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use((req) => {
