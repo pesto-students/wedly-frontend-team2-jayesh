@@ -1,15 +1,20 @@
 import axios from "axios";
 
 const token = localStorage.getItem("accessToken");
-console.log(token);
 
 const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
   headers: {
-    "Access-Control-Allow-Headers": "Authorization",
     Authorization: token ? `${token}` : "",
   },
   withCredentials: true,
+});
+
+axiosInstance.interceptors.request.use((req) => {
+  if (token) {
+    req.headers.Authorization = `${token}`;
+  }
+  return req;
 });
 
 export default axiosInstance;
