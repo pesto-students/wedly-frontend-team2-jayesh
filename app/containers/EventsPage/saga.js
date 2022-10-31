@@ -122,7 +122,7 @@ export async function sendReminder(guestsArray, hostName, eventDetails) {
       },
       {
         headers: {
-          Authorization: `Bearer EAALnfn2bArEBAJPluQxt1E3DE0evIdwiXlSo7elfhZAH9j17zZBj3PK022w1TNff30cR4XlZCXDuu0jvRWPau90Rgf11J2U8AbGRrsgflSYbAG1pRYOExL3vI2wPh2VYlH6d4kThuxXJL6PCyBFinoHWW0GPgUCeFXhVJ3NeNYPtRxinlU1suY8Rxxtttdo6ZCzd1gpZCdwZDZD`,
+          Authorization: `Bearer EAALnfn2bArEBADFcAbZA1NwZAZBdSmOvSR82UqouqKiegW3Eu4JeeKzokDPYXH9Begj4DIiccov6wTiLmAzOGs00IjbZBTwv5yqnQZCOZCXcrNRW8ektpUoZC6pTditnZAEZB0harkYCItQ76cbdDfB2WZA0T3FZBl4p5DmuDt6jVtEnVDfHF5cEKHtbS6j9aZBjUgvSD7yDSjWjvwZDZD`,
           "Content-Type": "application/json",
         },
       }
