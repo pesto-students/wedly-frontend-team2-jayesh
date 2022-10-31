@@ -37,7 +37,10 @@ export async function signOut() {
 export async function getAuthState() {
   const response = await axiosInstance.get("/authState");
   if (response.data.user.google) {
-    localStorage.setItem("accessToken", response.data.cookies.accessToken);
+    localStorage.setItem(
+      "accessToken",
+      response.data.cookies.accessToken.split(" ")[1]
+    );
   }
   return response;
 }
