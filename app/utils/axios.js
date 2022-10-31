@@ -5,7 +5,7 @@ const token = localStorage.getItem("accessToken");
 const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
   headers: {
-    Authorization: token ? `${token}` : "",
+    Authorization: token,
   },
   withCredentials: true,
 });
