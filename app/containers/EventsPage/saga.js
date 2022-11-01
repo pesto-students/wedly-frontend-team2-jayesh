@@ -70,7 +70,7 @@ export async function updateEvent(updateObj) {
 }
 
 export async function sendReminder(guestsArray, hostName, eventDetails) {
-  const requestURL = `https://graph.facebook.com/v14.0/109962048563832/messages`;
+  const requestURL = `https://graph.facebook.com/v15.0/109962048563832/messages`;
   for (let guest of guestsArray) {
     await axios.post(
       requestURL,
@@ -122,7 +122,7 @@ export async function sendReminder(guestsArray, hostName, eventDetails) {
       },
       {
         headers: {
-          Authorization: `Bearer EAALnfn2bArEBAH5hDZCwe2hKwwhZAZCqMY7IdaYrZCAdUQovUj8ASG4YzKERgBEFCDe2kSKHXp3jeRXYMSLglRZBuikhhWSxxymFOIo2sZCPmYFGO0pk3JZAZBoKiftpOy9xgx4HNdPNr56hNaK6IBxm7LxMGR2cTnbrVIJDD4LBNz0Ah0RMM6BQeBWs1Fx1RuizDO7y4hqzcgZDZD`,
+          Authorization: `Bearer EAALnfn2bArEBAHT4vQOw6GQQUx6gyoCUMIf1oD5avK1FPEnjhMy3ojImHRiAKE2mSRYTTMtEaI8qZAO0jN5ZCQCoa60izsOZA0HwgB0d7RqKmzFNlZCNp85jkfANP5nQMrtNa4SWTbtQZBtDQZCAlOVitm9gZARpocyZAYvDBoUpLPXBbfb03ZCM8Hn7WyE9IFPLvJVo04uKsegZDZD`,
           "Content-Type": "application/json",
         },
       }
