@@ -51,6 +51,7 @@ export function HomePage({ isOpen, loading }) {
       verifyEmailFailureToast();
     }
   }, []);
+
   return (
     <article>
       <Helmet>
