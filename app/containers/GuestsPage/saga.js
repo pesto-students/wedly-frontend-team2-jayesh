@@ -64,47 +64,12 @@ export async function updateGuest(updateObj) {
 }
 
 export async function sendInvite(from, to, mobile, userId) {
-  const requestURL = `https://graph.facebook.com/v15.0/109962048563832/messages`;
-  const response = await axios.post(
-    requestURL,
-    {
-      messaging_product: "whatsapp",
-      to: `91${mobile}`,
-      type: "template",
-      template: {
-        name: "e_invite",
-        language: {
-          code: "en",
-        },
-        components: [
-          {
-            type: "body",
-            parameters: [
-              {
-                type: "text",
-                text: `${to}`,
-              },
-              {
-                type: "text",
-                text: `${from}`,
-              },
-              {
-                type: "text",
-                text: `${process.env.APP_URL}/einvite/view/${userId}`,
-              },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
+  const response = await axiosInstance.post("/sendInvite", {
+    from,
+    to,
+    mobile,
+    userId,
+  });
   return response;
 }
 

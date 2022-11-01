@@ -70,64 +70,11 @@ export async function updateEvent(updateObj) {
 }
 
 export async function sendReminder(guestsArray, hostName, eventDetails) {
-  const requestURL = `https://graph.facebook.com/v15.0/109962048563832/messages`;
-  for (let guest of guestsArray) {
-    await axios.post(
-      requestURL,
-      {
-        messaging_product: "whatsapp",
-        to: `91${guest.mobile}`,
-        type: "template",
-        template: {
-          name: "event",
-          language: {
-            code: "en",
-          },
-          components: [
-            {
-              type: "body",
-              parameters: [
-                {
-                  type: "text",
-                  text: `${guest.name}`,
-                },
-                {
-                  type: "text",
-                  text: `${hostName}`,
-                },
-                {
-                  type: "text",
-                  text: `${eventDetails.category || eventDetails.customEvent}`,
-                },
-                {
-                  type: "text",
-                  text: `${eventDetails.date
-                    .split("T")[0]
-                    .split("-")
-                    .reverse()
-                    .join("-")}`,
-                },
-                {
-                  type: "text",
-                  text: `${eventDetails.time}`,
-                },
-                {
-                  type: "text",
-                  text: `${eventDetails.venue}`,
-                },
-              ],
-            },
-          ],
-        },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  }
+  await axiosInstance.post("/sendReminder", {
+    guestsArray,
+    hostName,
+    eventDetails,
+  });
 }
 
 function* addEventSaga(action) {
