@@ -122,7 +122,7 @@ export async function sendReminder(guestsArray, hostName, eventDetails) {
       },
       {
         headers: {
-          Authorization: `Bearer EAALnfn2bArEBAHT4vQOw6GQQUx6gyoCUMIf1oD5avK1FPEnjhMy3ojImHRiAKE2mSRYTTMtEaI8qZAO0jN5ZCQCoa60izsOZA0HwgB0d7RqKmzFNlZCNp85jkfANP5nQMrtNa4SWTbtQZBtDQZCAlOVitm9gZARpocyZAYvDBoUpLPXBbfb03ZCM8Hn7WyE9IFPLvJVo04uKsegZDZD`,
+          Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
           "Content-Type": "application/json",
         },
       }

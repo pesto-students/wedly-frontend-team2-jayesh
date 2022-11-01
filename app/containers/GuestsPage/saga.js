@@ -65,7 +65,6 @@ export async function updateGuest(updateObj) {
 
 export async function sendInvite(from, to, mobile, userId) {
   const requestURL = `https://graph.facebook.com/v15.0/109962048563832/messages`;
-
   const response = await axios.post(
     requestURL,
     {
@@ -100,7 +99,7 @@ export async function sendInvite(from, to, mobile, userId) {
     },
     {
       headers: {
-        Authorization: `Bearer EAALnfn2bArEBAHT4vQOw6GQQUx6gyoCUMIf1oD5avK1FPEnjhMy3ojImHRiAKE2mSRYTTMtEaI8qZAO0jN5ZCQCoa60izsOZA0HwgB0d7RqKmzFNlZCNp85jkfANP5nQMrtNa4SWTbtQZBtDQZCAlOVitm9gZARpocyZAYvDBoUpLPXBbfb03ZCM8Hn7WyE9IFPLvJVo04uKsegZDZD`,
+        Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
         "Content-Type": "application/json",
       },
     }
