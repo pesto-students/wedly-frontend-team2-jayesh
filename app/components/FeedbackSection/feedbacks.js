@@ -1,34 +1,34 @@
-import profilePicture from "./profilePicture.svg"
+import profilePicture from "./profilePicture.png";
 
-export const feedbacks= [
- {
-    "name" : "Shiril Adhikari",
-    "place" : "Guwahati, Assam",
-    "image" : profilePicture,
-    "content" : `Great experience. Saves Time and Money. Extremely smooth user experience.`
- },
- {
-    "name" : "Shiril Adhikari",
-    "place" : "Guwahati, Assam",
-    "image" : profilePicture,
-    "content" : `Great experience. Saves Time and Money. Extremely smooth user experience.`
- },
- {
-    "name" : "Shiril Adhikari",
-    "place" : "Guwahati, Assam",
-    "image" : profilePicture,
-    "content" : `Great experience. Saves Time and Money. Extremely smooth user experience.`
- },
- {
-    "name" : "Shiril Adhikari",
-    "place" : "Guwahati, Assam",
-    "image" : profilePicture,
-    "content" : `Great experience. Saves Time and Money. Extremely smooth user experience.`
- },
- {
-   "name" : "Shiril Adhikari",
-   "place" : "Guwahati, Assam",
-   "image" : profilePicture,
-   "content" : `Great experience. Saves Time and Money. Extremely smooth user experience.`
-},
-]
+export const feedbacks = [
+  {
+    name: "Shiril Adhikari",
+    place: "Guwahati, Assam",
+    image: profilePicture,
+    content: `Great experience. Saves Time and Money. Extremely smooth user experience.`,
+  },
+  {
+    name: "Shiril Adhikari",
+    place: "Guwahati, Assam",
+    image: profilePicture,
+    content: `Great experience. Saves Time and Money. Extremely smooth user experience.`,
+  },
+  {
+    name: "Shiril Adhikari",
+    place: "Guwahati, Assam",
+    image: profilePicture,
+    content: `Great experience. Saves Time and Money. Extremely smooth user experience.`,
+  },
+  {
+    name: "Shiril Adhikari",
+    place: "Guwahati, Assam",
+    image: profilePicture,
+    content: `Great experience. Saves Time and Money. Extremely smooth user experience.`,
+  },
+  {
+    name: "Shiril Adhikari",
+    place: "Guwahati, Assam",
+    image: profilePicture,
+    content: `Great experience. Saves Time and Money. Extremely smooth user experience.`,
+  },
+];

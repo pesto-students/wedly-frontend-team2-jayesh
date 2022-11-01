@@ -32,7 +32,11 @@ export default function MobileEventsSection({
   );
 
   const sendReminderofEvent = async (eventDetails) => {
-    await remindEvent(guests, user.name, eventDetails);
+    await remindEvent(
+      guests,
+      user.name ? user.name : user[0].name,
+      eventDetails
+    );
   };
 
   return (

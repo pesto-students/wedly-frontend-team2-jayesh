@@ -165,10 +165,10 @@ function GuestsSection({
                                     onClick={() => {
                                       invite(
                                         guest._id,
-                                        user.name,
+                                        user.name ? user.name : user[0].name,
                                         guest.name,
                                         guest.mobile,
-                                        user._id
+                                        user._id ? user._id : user[0]._id
                                       );
                                     }}
                                     className="bg-pink rounded-xl text-white py-1 px-4 mr-1"

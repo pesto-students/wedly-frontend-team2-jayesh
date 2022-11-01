@@ -57,11 +57,11 @@ function NavBar({ user, success, onToggleModal, logout, loading }) {
               </a>
             </div>
             <div className="flex items-center justify-end w-1/4">
-              {user && user.google ? (
+              {user[0] && user[0].google ? (
                 <img
                   onClick={() => setClicked(!clicked)}
                   className="rounded-full h-11 cursor-pointer"
-                  src={user.google.photo}
+                  src={user[0].google.photo}
                   alt="profilePicture"
                 />
               ) : (

@@ -100,7 +100,7 @@ export async function sendInvite(from, to, mobile, userId) {
     },
     {
       headers: {
-        Authorization: `Bearer EAALnfn2bArEBAKZBzBajL9PXn6fPCBCJHoJuxezJRKYOXQlyRZC2NU40tFStO3Lpb5n6qAS48q1orBtHWbiJixw4cHZCHZBEbZAXN4PyyTN1xZB5yH0XpF3j6TfkZBggAQVudVk9qVovtlFNCWhSYRGYqa2JZBZB30ssCgs8QA8MZBlwtFcJZCjfZCtVK2vu1UOCmH7pGfEJhueyHwZDZD`,
+        Authorization: `Bearer EAALnfn2bArEBAH5hDZCwe2hKwwhZAZCqMY7IdaYrZCAdUQovUj8ASG4YzKERgBEFCDe2kSKHXp3jeRXYMSLglRZBuikhhWSxxymFOIo2sZCPmYFGO0pk3JZAZBoKiftpOy9xgx4HNdPNr56hNaK6IBxm7LxMGR2cTnbrVIJDD4LBNz0Ah0RMM6BQeBWs1Fx1RuizDO7y4hqzcgZDZD`,
         "Content-Type": "application/json",
       },
     }

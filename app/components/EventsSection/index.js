@@ -26,7 +26,11 @@ export default function EventsSection({
     setIsUpdate(new Array(events.length).fill(false));
   }, [events]);
   const sendReminderofEvent = async (eventDetails) => {
-    await remindEvent(guests, user.name, eventDetails);
+    await remindEvent(
+      guests,
+      user.name ? user.name : user[0].name,
+      eventDetails
+    );
   };
   return (
     <div

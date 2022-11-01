@@ -40,12 +40,6 @@ export async function getAuthState() {
     if (key === "accessToken") localStorage.setItem("accessToken", value);
   }
   const response = await axiosInstance.get("/authState");
-  // if (response.data.user.google) {
-  //   localStorage.setItem(
-  //     "accessToken",
-  //     response.data.cookies.accessToken.split(" ")[1]
-  //   );
-  // }
   return response;
 }
 
