@@ -62,7 +62,7 @@ function EinviteFirstPage({
   const [brideName, setBrideName] = useState("");
   const [groomName, setGroomName] = useState("");
   useEffect(() => {
-    if (Object.keys(user).length > 0) getFirstPage(user._id);
+    if (Object.keys(user).length > 0) getFirstPage(user._id ? user._id : user[0]._id);
   }, [Object.keys(user).length]);
   useEffect(() => {
     if (Object.keys(user).length === 0) checkAuthState();

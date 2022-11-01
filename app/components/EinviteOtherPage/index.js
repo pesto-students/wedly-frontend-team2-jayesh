@@ -61,7 +61,8 @@ function EinviteOtherPage({
   });
 
   useEffect(() => {
-    if (Object.keys(user).length > 0) getOtherPages(user._id, page);
+    if (Object.keys(user).length > 0)
+      getOtherPages(user._id ? user._id : user[0]._id, page);
   }, [Object.keys(user).length, page]);
   useEffect(() => {
     if (Object.keys(user).length === 0) checkAuthState();
