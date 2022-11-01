@@ -54,7 +54,7 @@ RewriteCond %{REQUEST_FILENAME} !\/\$
 
 RewriteRule ^(.\*) /
 
-RewriteRule . /index.html [L]
+RewriteRule . /build/index.html [L]
 
 </ifModule>
 
