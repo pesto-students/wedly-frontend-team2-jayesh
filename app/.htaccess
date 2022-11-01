@@ -1,4 +1,4 @@
-<!-- <ifModule mod_rewrite.c>
+<ifModule mod_rewrite.c>
 
 
   #######################################################################
@@ -41,15 +41,7 @@
   # Rewrite all requests to the root
   RewriteRule ^(.*) /
 
-  RewriteRule . /index.html [L]
-
-</ifModule> -->
-<IfModule mod_rewrite.c>
-  RewriteEngine on
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
-</IfModule>
+</ifModule>
 
 <IfModule mod_headers.c>
   # Do not cache sw.js, required for offline-first updates.
