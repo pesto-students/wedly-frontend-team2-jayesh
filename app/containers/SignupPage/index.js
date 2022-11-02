@@ -11,10 +11,19 @@ import { toggleModal } from "../App/actions";
 import { useInjectReducer } from "../../utils/injectReducer";
 import { useInjectSaga } from "../../utils/injectSaga";
 import { SIGNUP } from "./constants";
-import { makeSelectSignupSuccess } from "./selectors";
+import { makeSelectSignupLoading, makeSelectSignupSuccess } from "./selectors";
+import MoonLoader from "react-spinners/MoonLoader";
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  zIndex: 1000,
+};
 
 const key = "signup";
-function SignupPage({ isOpen, onToggleModal, signup }) {
+function SignupPage({ isOpen, onToggleModal, signup, loading }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const [input, setInput] = useState({
@@ -105,8 +114,9 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
   return (
     <div>
       <div
-        className={`p-4 w-full h-full md:h-auto flex justify-center items-center flex-col ${isOpen &&
-          "opacity-50"}`}
+        className={`p-4 w-full h-full md:h-auto flex justify-center items-center flex-col ${
+          isOpen || loading ? "opacity-50" : "opacity-100"
+        }`}
       >
         <h3 className="mb-4 hidden md:block text-xl font-medium text-gray-900">
           Create an Account to start using our services
@@ -116,7 +126,7 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
         </h3>
 
         <form
-          class="space-y-6 w-full p-3 md:w-4/5 lg:w-1/2"
+          className="space-y-6 w-full p-3 md:w-4/5 lg:w-1/2"
           onSubmit={(e) => handleSubmit(e)}
         >
           <div>
@@ -155,7 +165,7 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
           <div>
             <label
               for="email"
-              class="block mb-2 text-sm font-medium text-gray-900"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Email Address
             </label>
@@ -247,6 +257,9 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
         </div>
       </div>
       {isOpen && <SigninModal />}
+      {loading ? (
+        <MoonLoader cssOverride={override} size={40} loading={loading} />
+      ) : null}
     </div>
   );
 }
@@ -254,6 +267,7 @@ function SignupPage({ isOpen, onToggleModal, signup }) {
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectIsOpen(),
   success: makeSelectSignupSuccess(),
+  loading: makeSelectSignupLoading(),
 });
 
 export function mapDispatchToProps(dispatch) {

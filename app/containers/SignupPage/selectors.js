@@ -9,4 +9,10 @@ const makeSelectSignupSuccess = () =>
     (signupstate) => signupstate.success
   );
 
-export { selectSignup, makeSelectSignupSuccess };
+const makeSelectSignupLoading = () =>
+  createSelector(
+    selectSignup,
+    (signupstate) => signupstate.loading
+  );
+
+export { selectSignup, makeSelectSignupSuccess, makeSelectSignupLoading };

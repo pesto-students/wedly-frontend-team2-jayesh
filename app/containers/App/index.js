@@ -23,6 +23,7 @@ import EventsPage from "../EventsPage/index.js";
 import GuestsPage from "../GuestsPage";
 import EinvitePage from "../EinvitePage";
 import EinviteEditPage from "../EinviteEditPage";
+import AccountSettingsPage from "../AccountSettingsPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
@@ -30,10 +31,7 @@ import saga from "../HomePage/saga.js";
 import reducer from "../HomePage/reducer.js";
 import { AUTH_STATE } from "../HomePage/constants";
 import { useInjectSaga } from "../../utils/injectSaga";
-import {
-  makeSelectAuth,
-  makeSelectUser,
-} from "../HomePage/selectors";
+import { makeSelectAuth, makeSelectUser } from "../HomePage/selectors";
 import GuestEInvite from "../GuestEInvite";
 import { useInjectReducer } from "../../utils/injectReducer";
 
@@ -66,6 +64,7 @@ function App({ checkAuthState, user }) {
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignupPage} />
+        <Route path="/accountSettings" component={AccountSettingsPage} />
         <Route path="/coupleDetails" component={CoupleDetailsPage} />
         <Route path="/events" component={EventsPage} />
         <Route path="/guests" component={GuestsPage} />

@@ -154,3 +154,7 @@ export const updateEventSuccessToast = () => {
 export const updateEventFailureToast = () => {
   toast.error(`Event was not updated!`, toastProperties);
 };
+
+export const custom401toast = (message) => {
+  toast.error(`${message}`, toastProperties);
+};

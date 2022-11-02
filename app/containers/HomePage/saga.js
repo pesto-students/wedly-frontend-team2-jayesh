@@ -16,6 +16,7 @@ import {
   signinFailureToast,
   signinSuccessToast,
   signoutSuccessToast,
+  custom401toast,
 } from "../../utils/toast";
 import history from "../../utils/history";
 
@@ -49,8 +50,9 @@ function* signinSaga(action) {
     yield put({ type: SIGNIN_SUCCESS, response });
     yield signinSuccessToast();
   } catch (error) {
+    console.log(error);
     yield put({ type: SIGNIN_FAILURE, error });
-    yield signinFailureToast();
+    yield custom401toast(error.response.data.message);
   }
 }
 
