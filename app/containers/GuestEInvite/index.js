@@ -61,7 +61,6 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
       setPageData(pages);
     }
   }, [einvite]);
-
   const initPayment = (data) => {
     const options = {
       key: process.env.RAZORPAY_KEY,
