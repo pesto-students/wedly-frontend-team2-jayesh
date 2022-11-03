@@ -106,7 +106,7 @@ function EinviteFirstPage({
             template.imageUrls.firstPage
           })] min-[320px]:bg-center bg-contain h-[500px] md:h-[700px] lg:w-[600px] pt-2 sm:pt-5 md:pt-10 mb-2.5`}
         >
-          <h2 className="text-2xl md:text-3xl text-center text-[#CCCCCC] mt-2">
+          <h2 className="text-2xl md:text-3xl text-center text-[#CCCCCC] mt-4">
             {brideName}
           </h2>
           <h2 className="text-lg text-center text-[#CCCCCC]">&amp;</h2>

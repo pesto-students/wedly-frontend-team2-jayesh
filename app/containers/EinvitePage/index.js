@@ -28,10 +28,11 @@ export function EinvitePage() {
   useInjectSaga({ key: "einvitePage", saga });
 
   return (
-    <div className="p-5">
-      <h3 className="pl-4 mb-4 text-xl font-semibold text-gray-900">
+    <div className="p-5 mb-[100px]">
+      <h3 className="pl-4 mb-4 text-xl font-semibold text-gray-900 text-center">
         Select your template
       </h3>
+      <div className="flex flex-col sm:flex-row justify-center items-center">
       {templates.map((template) => (
         <div
           onClick={() => history.push(`/einviteEdit/${template.id}`)}
@@ -46,6 +47,7 @@ export function EinvitePage() {
           <h5 className="my-3">{template.name}</h5>
         </div>
       ))}
+      </div>
     </div>
   );
 }

@@ -16,6 +16,7 @@ export default function Details({ input, setInput, role, classes }) {
     <div
       className={`p-4 pt-1 w-full h-full md:h-auto flex items-start flex-col ${classes}`}
     >
+      <h4 className="mb-1 text-lg font-medium text-gray-900 hidden md:block">{role} Details</h4>
       <form className="space-y-6 w-full" onSubmit={(e) => console.log(e)}>
         <div>
           <label

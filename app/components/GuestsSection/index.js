@@ -96,7 +96,7 @@ function GuestsSection({
               </div>
             </div>
             {selectedGuests.length !== 0 ? (
-              <div className="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-24">
+              <div className="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-24 mb-[100px]">
                 <div className="align-middle inline-block w-full shadow overflow-x-auto sm:rounded-lg border-b border-gray-200">
                   <table className="min-w-full">
                     <thead>

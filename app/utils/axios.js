@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { signOut } from "../containers/HomePage/saga";
 import history from "./history";
 import { store } from "../app";
 import { SIGNOUT_SUCCESS } from "../containers/HomePage/constants";

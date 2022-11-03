@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { AiOutlineCloudUpload } from "@react-icons/all-files/ai/AiOutlineCloudUpload";
 import { AiOutlineCloseCircle } from "@react-icons/all-files/ai/AiOutlineCloseCircle";
 import { connect } from "react-redux";
@@ -19,6 +19,7 @@ function UploadModal({
 }) {
   useInjectReducer({ key: "eventsPage", reducer });
   useInjectSaga({ key: "eventsPage", saga });
+  const [uploadActive, setUploadActive] = useState(false);
   const upload = () => {
     let fileUpload = document.getElementById("upload");
     if (typeof FileReader !== undefined) {
@@ -27,22 +28,26 @@ function UploadModal({
       let arrayOfGuests = [];
       reader.onload = async function(e) {
         let rows = await e.target.result.split("\n");
-        for (var i = 0; i < rows.length; i++) {
+        for (var i = 1; i < rows.length && i<=11; i++) {
           if (rows[i].length > 0) {
             let cells = await rows[i].split(",");
             const eventBody = {};
             const guestBody = {};
             if (role === "event") {
+              if(cells[0] || cells[1]){
               if (cells[0] !== "Other") {
                 eventBody["category"] = cells[0];
               }
               if (cells[1] !== "") {
                 eventBody["customEvent"] = cells[1];
               }
-              eventBody["date"] = cells[2];
+              const dateArray = cells[2].split("-")
+  
+              eventBody["date"] = `${dateArray[2]}-${dateArray[0]}-${dateArray[1]}`;
               eventBody["time"] = cells[3];
               eventBody["venue"] = cells[4];
               arrayOfEvents.push(eventBody);
+            }
             } else {
               guestBody["name"] = cells[0];
               guestBody["mobile"] = cells[1];
@@ -57,6 +62,7 @@ function UploadModal({
       };
       reader.readAsText(fileUpload.files[0]);
     }
+    setUploadActive(false)
     setIsOpen(!isOpen);
   };
   return (
@@ -73,7 +79,7 @@ function UploadModal({
         id="upload"
         type="file"
         accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-        className=" "
+        onChange={()=>setUploadActive(document.getElementById("upload") && document.getElementById("upload").files.length > 0)}
         hidden
       />
       <label
@@ -82,17 +88,24 @@ function UploadModal({
       >
         Choose file
       </label>
-      <button
+      {uploadActive &&<button
+        className="my-1 flex items-center text-white bg-[#44A300] hover:bg-inherit hover:border hover:border-[#44A300] hover:text-[#44A300] font-medium rounded-2xl text-sm px-5 py-1.5 text-center"
         onClick={() => {
           upload();
         }}
       >
         Upload
-      </button>
+      </button>}
+      {role === "event" ?<a href="https://docs.google.com/spreadsheets/d/1SaAe0Z5vutjbvLPghsoQZwfkvgdT1NCr/edit?usp=sharing" target="_blank">
       <p className="cursor-pointer text-xs underline font-medium text-[#0E62AA]">
-        Download Sample csv
+        Redirect to Sample csv
       </p>
-      <p className="mt-2">Only .xls and .csv accepted (Max 1MB)</p>
+      </a>:<a href="https://docs.google.com/spreadsheets/d/1ux3oBGFWQM20N-kXX5NBCK8uCTeGYXoDemvePKeQ2KM/edit?usp=sharing" target="_blank">
+      <p className="cursor-pointer text-xs underline font-medium text-[#0E62AA]">
+        Redirect to Sample csv
+      </p>
+      </a>}
+      <p className="mt-2">Only .csv accepted (Max 1MB)</p>
     </div>
   );
 }
