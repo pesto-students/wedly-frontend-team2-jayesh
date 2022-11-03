@@ -58,6 +58,16 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
               <>
                 <a
                   onClick={() => {
+                    history.push("/coupleDetails");
+                    setHamburgerClicked(!hamburgerClicked);
+                  }}
+                  className="flex items-center w-fit"
+                >
+                  <MdEvent className="mr-1" />
+                  <span>Details</span>
+                </a>
+                <a
+                  onClick={() => {
                     history.push("/events");
                     setHamburgerClicked(!hamburgerClicked);
                   }}
@@ -88,16 +98,6 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
                 </a>
               </>
             ) : null}
-            <a
-              onClick={() => {
-                history.push("/contactUs");
-                setHamburgerClicked(!hamburgerClicked);
-              }}
-              className="flex items-center w-fit"
-            >
-              <MdInfoOutline className="mr-1" />
-              <span>About Us</span>
-            </a>
             <a
               onClick={() => {
                 history.push("/contactUs");
