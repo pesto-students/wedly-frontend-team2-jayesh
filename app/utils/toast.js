@@ -158,3 +158,22 @@ export const updateEventFailureToast = () => {
 export const custom401toast = (message) => {
   toast.error(`${message}`, toastProperties);
 };
+
+export const updatePasswordFailureToast = () => {
+  toast.error(
+    "Old Password and new password cannot be the same",
+    toastProperties
+  );
+};
+
+export const updateUserSuccessToast = () => {
+  toast.success("User Updated Successfully", toastProperties);
+};
+
+export const updateUserFailureToast = (message) => {
+  toast.error(message, toastProperties);
+};
+
+export const connectionTimedOutToast = () => {
+  toast.error("Connection timed out. Please login again!");
+};

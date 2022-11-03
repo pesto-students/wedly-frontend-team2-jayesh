@@ -23,6 +23,7 @@ import { makeSelectUser } from "containers/HomePage/selectors";
 import { AUTH_STATE } from "containers/HomePage/constants";
 import MoonLoader from "react-spinners/MoonLoader";
 import { makeSelectLoading } from "../../containers/CoupleDetailsPage/selectors";
+import { makeSelectLoadingEInvite } from "../../containers/EinviteEditPage/selectors";
 
 const override = {
   display: "block",
@@ -50,6 +51,7 @@ function EinviteFirstPage({
   getFirstPage,
   checkAuthState,
   loading,
+  savingLoading,
 }) {
   useInjectReducer({ key: "coupleDetailsPage", reducer: coupleDetailsReducer });
   useInjectSaga({ key: "coupleDetailsPage", saga: coupleDetailsSaga });
@@ -62,7 +64,8 @@ function EinviteFirstPage({
   const [brideName, setBrideName] = useState("");
   const [groomName, setGroomName] = useState("");
   useEffect(() => {
-    if (Object.keys(user).length > 0) getFirstPage(user._id ? user._id : user[0]._id);
+    if (Object.keys(user).length > 0)
+      getFirstPage(user._id ? user._id : user[0]._id);
   }, [Object.keys(user).length]);
   useEffect(() => {
     if (Object.keys(user).length === 0) checkAuthState();
@@ -94,7 +97,7 @@ function EinviteFirstPage({
     <>
       <div
         className={`${
-          loading ? "opacity-50" : "opacity-100"
+          loading || savingLoading ? "opacity-50" : "opacity-100"
         } flex mt-4 lg:mt-10 flex-col lg:flex-row lg:items-center mb-[100px]`}
       >
         <div
@@ -188,6 +191,13 @@ function EinviteFirstPage({
         {loading ? (
           <MoonLoader cssOverride={override} size={40} loading={loading} />
         ) : null}
+        {savingLoading ? (
+          <MoonLoader
+            cssOverride={override}
+            size={40}
+            loading={savingLoading}
+          />
+        ) : null}
       </div>
     </>
   );
@@ -199,6 +209,7 @@ const mapStateToProps = createStructuredSelector({
   firstPageDetails: makeSelectEinviteFirstPage(),
   user: makeSelectUser(),
   loading: makeSelectLoading(),
+  savingLoading: makeSelectLoadingEInvite(),
 });
 
 function mapDispatchToProps(dispatch) {

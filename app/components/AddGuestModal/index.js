@@ -121,7 +121,7 @@ function AddGuestModal({
           />
         </div>
         <div className="w-11/12 flex justify-end">
-          <button className="bg-pink rounded-lg text-white py-3 px-4">
+          <button className="bg-pink rounded-lg text-white py-3 px-4 border border-pink hover:bg-white hover:text-pink">
             {role === "add" ? "Add" : "Update"}
           </button>
         </div>

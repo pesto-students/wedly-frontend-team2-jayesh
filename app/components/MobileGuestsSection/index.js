@@ -105,7 +105,7 @@ function MobileGuestsSection({
                 <BsPlus size="1.5rem" />
                 <div className="text-center">Add a Guest </div>
               </div>
-              {selectedGuests.length !== 0 &&
+              {selectedGuests.length !== 0 ? (
                 selectedGuests.map((guestDetails, index) => {
                   return (
                     <div
@@ -203,7 +203,13 @@ function MobileGuestsSection({
                       </div>
                     </div>
                   );
-                })}
+                })
+              ) : (
+                <h3 className="text-center text-sm mt-20">
+                  No guest added! Start adding guests by either clicking on Add
+                  a Guest button or you can also import CSV of guests.
+                </h3>
+              )}
             </div>
           </div>
         </div>

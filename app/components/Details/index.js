@@ -12,7 +12,6 @@ export default function Details({ input, setInput, role, classes }) {
       [name]: value,
     }));
   };
-console.log(input.city.trim())
   return (
     <div
       className={`p-4 pt-1 w-full h-full md:h-auto flex items-start flex-col ${classes}`}

@@ -8,7 +8,7 @@ function ContactUs() {
         <form action="#" className="space-y-8">
           <div>
             <label
-              for="name"
+              htmlFor="name"
               className="block mb-2 text-sm font-medium text-inputGrey"
             >
               Name
@@ -23,7 +23,7 @@ function ContactUs() {
           </div>
           <div>
             <label
-              for="email"
+              htmlFor="email"
               className="block mb-2 text-sm font-medium text-inputGrey"
             >
               Email
@@ -37,7 +37,7 @@ function ContactUs() {
           </div>
           <div className="sm:col-span-2">
             <label
-              for="message"
+              htmlFor="message"
               className="block mb-2 text-sm font-medium text-inputGrey"
             >
               What do you wanna say?

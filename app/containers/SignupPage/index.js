@@ -131,7 +131,7 @@ function SignupPage({ isOpen, onToggleModal, signup, loading }) {
         >
           <div>
             <label
-              for="firstName"
+              htmlFor="firstName"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               First Name
@@ -148,7 +148,7 @@ function SignupPage({ isOpen, onToggleModal, signup, loading }) {
           </div>
           <div>
             <label
-              for="lastName"
+              htmlFor="lastName"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Last Name
@@ -164,7 +164,7 @@ function SignupPage({ isOpen, onToggleModal, signup, loading }) {
           </div>
           <div>
             <label
-              for="email"
+              htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Email Address
@@ -184,7 +184,7 @@ function SignupPage({ isOpen, onToggleModal, signup, loading }) {
           </div>
           <div>
             <label
-              for="password"
+              htmlFor="password"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Password
@@ -204,7 +204,7 @@ function SignupPage({ isOpen, onToggleModal, signup, loading }) {
           </div>
           <div>
             <label
-              for="confirmPassword"
+              htmlFor="confirmPassword"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Confirm Password

@@ -74,7 +74,7 @@ export default function MobileEventsSection({
                 <BsPlus size="1.5rem" />
                 <div className="text-center">Add an event </div>
               </div>
-              {events.length > 0 &&
+              {events.length > 0 ? (
                 events.map((eventDetails, index) => (
                   <div
                     className="p-1.5 flex flex-col bg-white w-[45%] rounded-md justify-between relative"
@@ -156,7 +156,13 @@ export default function MobileEventsSection({
                       />
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <h3 className="text-center text-sm mt-24">
+                  No events added! Start adding events by either clicking on Add
+                  an Event button or you can also import CSV of events.
+                </h3>
+              )}
             </div>
           </div>
         </div>

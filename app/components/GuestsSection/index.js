@@ -79,7 +79,7 @@ function GuestsSection({
               <div className="flex py-2">
                 <button
                   type="submit"
-                  className="flex items-center text-white bg-[#44A300] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow mr-4"
+                  className="flex items-center text-white bg-[#44A300] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow mr-4 border border-[#44A300] hover:bg-white hover:text-[#44A300]"
                   onClick={() => setIsUploadOpen(!isUploadOpen)}
                 >
                   <HiDownload size="1.1rem" className="mr-1" />
@@ -87,10 +87,10 @@ function GuestsSection({
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow"
+                  className="flex items-center text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow border border-[#3498DB] hover:bg-white hover:text-[#3498DB]"
                   onClick={() => setIsAddOpen(!isAddOpen)}
                 >
-                  <BsPlus size="0.7rem" className="mr-1" />
+                  <BsPlus size="1.2rem" className="mr-1" />
                   Add a Guest
                 </button>
               </div>
@@ -122,7 +122,7 @@ function GuestsSection({
                           </th>
                         ))}
                         <th className="px-6 py-3 text-center font-medium">
-                          <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1">
+                          <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1 border border-pink hover:bg-white hover:text-pink">
                             Invite selected guests
                           </button>
                         </th>
@@ -171,7 +171,7 @@ function GuestsSection({
                                         user._id ? user._id : user[0]._id
                                       );
                                     }}
-                                    className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
+                                    className="bg-pink rounded-xl text-white py-1 px-4 mr-1 border border-pink hover:bg-white hover:text-pink"
                                   >
                                     Invite
                                   </button>
@@ -222,7 +222,10 @@ function GuestsSection({
                 </div>
               </div>
             ) : (
-              <LoadingIndicator />
+              <h3 className="text-center text-xl mt-48">
+                No guest added! Start adding guests by either clicking on Add a
+                Guest button or you can also import CSV of guests.
+              </h3>
             )}
           </div>
         </div>

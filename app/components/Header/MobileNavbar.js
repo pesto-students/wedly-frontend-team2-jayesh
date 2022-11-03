@@ -90,9 +90,9 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
             ) : null}
             <a
               onClick={() => {
+                history.push("/contactUs");
                 setHamburgerClicked(!hamburgerClicked);
               }}
-              href="/#aboutUs"
               className="flex items-center w-fit"
             >
               <MdInfoOutline className="mr-1" />
@@ -100,9 +100,9 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
             </a>
             <a
               onClick={() => {
+                history.push("/contactUs");
                 setHamburgerClicked(!hamburgerClicked);
               }}
-              href="/#contactUs"
               className="flex items-center w-fit"
             >
               <MdSettings className="mr-1" />

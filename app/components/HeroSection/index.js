@@ -25,7 +25,7 @@ function HeroSection({ onToggleModal, success }) {
       {success ? (
         <button
           onClick={() => history.push("/coupleDetails")}
-          className="flex items-center bg-wedlyPink rounded-xl lg:text-lg text-white py-2 px-5 font-semibold"
+          className="flex items-center bg-wedlyPink hover:bg-[#a51742] rounded-xl lg:text-lg text-white py-2 px-5 font-semibold"
         >
           Fill Details
           <AiOutlineArrowRight className="ml-1" />
@@ -33,7 +33,7 @@ function HeroSection({ onToggleModal, success }) {
       ) : (
         <Button
           onClickFunction={() => onToggleModal()}
-          classes="font-semibold"
+          classes="font-semibold hover:bg-[#a51742]"
           text={messages.getStarted}
         />
       )}

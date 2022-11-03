@@ -11,8 +11,11 @@ import {
 import {
   addCoupleSuccessToast,
   addCoupleFailureToast,
+  connectionTimedOutToast,
 } from "../../utils/toast";
-// import history from "../../utils/history";
+import { signOut } from "../HomePage/saga";
+import { SIGNOUT_SUCCESS } from "../HomePage/constants";
+import history from "../../utils/history";
 
 export async function addCoupleDtails(
   brideName,

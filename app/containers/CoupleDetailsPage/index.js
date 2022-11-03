@@ -14,8 +14,8 @@ import {
   AccordionItemHeading,
   AccordionItemButton,
   AccordionItemPanel,
-} from 'react-accessible-accordion';
-import 'react-accessible-accordion/dist/fancy-example.css';
+} from "react-accessible-accordion";
+import "react-accessible-accordion/dist/fancy-example.css";
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import { makeSelectCoupleDetailsPage, makeSelectLoading } from "./selectors";
@@ -64,7 +64,6 @@ function CoupleDetailsPage({
   }, []);
 
   useEffect(() => {
-    console.log(coupleDetailsPage);
     if (Object.keys(coupleDetailsPage).length > 0) {
       const { bride, groom } = coupleDetailsPage;
       if (groom)
@@ -118,36 +117,32 @@ function CoupleDetailsPage({
         <Details role="Bride" input={brideInput} setInput={setBrideInput} />
       </div>
       <Accordion className="md:hidden" allowZeroExpanded>
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton>
-                        Groom Details
-                    </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                <Details
-          role="Groom"
-          input={groomInput}
-          setInput={setGroomInput}
-          classes="lg:mr-24"
-        />
-                </AccordionItemPanel>
-            </AccordionItem>
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton>
-                        Bride Details
-                    </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                <Details role="Bride" input={brideInput} setInput={setBrideInput} />
-                </AccordionItemPanel>
-            </AccordionItem>
-        </Accordion>
+        <AccordionItem>
+          <AccordionItemHeading>
+            <AccordionItemButton>Groom Details</AccordionItemButton>
+          </AccordionItemHeading>
+          <AccordionItemPanel>
+            <Details
+              role="Groom"
+              input={groomInput}
+              setInput={setGroomInput}
+              classes="lg:mr-24"
+            />
+          </AccordionItemPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionItemHeading>
+            <AccordionItemButton>Bride Details</AccordionItemButton>
+          </AccordionItemHeading>
+          <AccordionItemPanel>
+            <Details role="Bride" input={brideInput} setInput={setBrideInput} />
+          </AccordionItemPanel>
+        </AccordionItem>
+      </Accordion>
       <div className="flex justify-end px-4 my-12">
         <button
           type="submit"
-          className="text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow"
+          className="text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow border border-[#3498DB] hover:bg-white hover:text-[#3498DB] "
           onClick={(e) => handleSubmit(e)}
         >
           Next

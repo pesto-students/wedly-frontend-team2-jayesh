@@ -34,6 +34,7 @@ import { useInjectSaga } from "../../utils/injectSaga";
 import { makeSelectAuth, makeSelectUser } from "../HomePage/selectors";
 import GuestEInvite from "../GuestEInvite";
 import { useInjectReducer } from "../../utils/injectReducer";
+import { ContactUsPage } from "../ContactUsPage";
 
 function App({ checkAuthState, user }) {
   const key = "app";
@@ -49,8 +50,8 @@ function App({ checkAuthState, user }) {
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       <ToastContainer
-        position="top-center"
-        autoClose={5000}
+        position="top-right"
+        autoClose={3000}
         hideProgressBar
         newestOnTop={false}
         closeOnClick
@@ -71,7 +72,8 @@ function App({ checkAuthState, user }) {
         <Route path="/einvites" component={EinvitePage} />
         <Route path="/einviteEdit/:id" component={EinviteEditPage} />
         <Route path="/einvite/view/:id" component={GuestEInvite} />
-        <Route path="" component={NotFoundPage} />
+        <Route path="/contactUs" component={ContactUsPage} />
+        <Route path="*" component={NotFoundPage} />
       </Switch>
       <Footer />
     </div>

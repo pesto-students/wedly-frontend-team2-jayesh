@@ -19,7 +19,7 @@ import einviteEditReducer from "containers/EinviteEditPage/reducer";
 import { makeSelectUser } from "containers/HomePage/selectors";
 import { AUTH_STATE } from "containers/HomePage/constants";
 import MoonLoader from "react-spinners/MoonLoader";
-import { makeSelectLoading } from "../../containers/EinviteEditPage/selectors";
+import { makeSelectLoadingEInvite } from "../../containers/EinviteEditPage/selectors";
 
 const override = {
   display: "block",
@@ -282,7 +282,7 @@ const mapStateToProps = createStructuredSelector({
   events: makeSelectEvents(),
   otherPageDetails: makeSelectEinviteOtherPages(),
   user: makeSelectUser(),
-  loading: makeSelectLoading(),
+  loading: makeSelectLoadingEInvite(),
 });
 
 function mapDispatchToProps(dispatch) {

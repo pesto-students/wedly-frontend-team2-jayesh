@@ -32,6 +32,7 @@ const einviteEditPageReducer = (state = initialState, action) =>
     switch (action.type) {
       case ADD_FIRST_PAGE:
         draft.loading = true;
+        break;
 
       case ADD_FIRST_PAGE_SUCCESS:
         draft.loading = false;

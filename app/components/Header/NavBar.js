@@ -15,7 +15,6 @@ import {
 import { MdAccountCircle } from "@react-icons/all-files/md/MdAccountCircle";
 import history from "../../utils/history";
 import { SIGNOUT } from "../../containers/HomePage/constants";
-
 function NavBar({ user, success, onToggleModal, logout, loading }) {
   const ref = useRef();
   const [clicked, setClicked] = useState(false);
@@ -35,26 +34,29 @@ function NavBar({ user, success, onToggleModal, logout, loading }) {
           <>
             <div className="flex items-center justify-evenly md:w-3/5 lg:w-2/5">
               <button
+                onClick={() => history.push("/coupleDetails")}
+                className="link-underline link-underline-black font-semibold"
+              >
+                Details
+              </button>
+              <button
                 onClick={() => history.push("/events")}
-                className="font-semibold"
+                className="link-underline link-underline-black font-semibold"
               >
                 Events
               </button>
               <button
                 onClick={() => history.push("/guests")}
-                className="font-semibold"
+                className="link-underline link-underline-black font-semibold"
               >
                 Guests
               </button>
               <button
                 onClick={() => history.push("/einvites")}
-                className="font-semibold"
+                className="link-underline link-underline-black font-semibold"
               >
                 E-Invites
               </button>
-              <a className="font-semibold" href="/#contactUs">
-                Contact Us
-              </a>
             </div>
             <div className="flex items-center justify-end w-1/4">
               {user[0] && user[0].google ? (
@@ -75,10 +77,13 @@ function NavBar({ user, success, onToggleModal, logout, loading }) {
             {clicked && (
               <div
                 ref={ref}
-                className="flex flex-col justify-around border border-slate-400 p-2 absolute right-2 top-14 bg-white h-20 rounded-xl z-10"
+                className="cursor-pointer flex flex-col justify-around border border-slate-400 p-2 absolute right-2 top-14 bg-white h-20 rounded-xl z-10"
               >
                 <h3
-                  onClick={() => history.push("/accountSettings")}
+                  onClick={() => {
+                    history.push("/accountSettings");
+                    setClicked(!clicked);
+                  }}
                   className="font-semibold"
                 >
                   Account Settings
@@ -100,11 +105,12 @@ function NavBar({ user, success, onToggleModal, logout, loading }) {
             <Button
               text={messages.login}
               onClickFunction={() => onToggleModal()}
+              classes="border border-pink hover:bg-white hover:text-pink"
             />
             <Button
               onClickFunction={() => history.push("/signup")}
               text={messages.signup}
-              classes="ml-3"
+              classes="border border-pink hover:bg-white hover:text-pink ml-3"
             />
           </div>
         )}

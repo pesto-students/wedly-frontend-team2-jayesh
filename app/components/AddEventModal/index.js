@@ -186,24 +186,6 @@ function AddEventModal({
             }
           />
         </div>
-        {/* <div>
-          <label
-            htmlFor="eventVenue"
-            className="block mb-1 md:mb-2 text-sm font-medium text-gray-900"
-          >
-            Event Venue
-          </label>
-          <input
-            type="text"
-            name="eventVenue"
-            id="eventVenue"
-            placeholder="Enter the venue of event"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12 p-1.5 py-2 md:p-2.5"
-            required
-            value={input.eventVenue}
-            onChange={onInputChange}
-          />
-        </div> */}
         <div>
           <PlacesAutocomplete
             value={venue}
@@ -227,7 +209,6 @@ function AddEventModal({
                   {loading ? <div>Loading...</div> : null}
 
                   {suggestions.map((suggestion) => {
-                    console.log(suggestions);
                     const style = {
                       backgroundColor: suggestion.active ? "#FF477E" : "#fff",
                       color: suggestion.active ? "#fff" : "black",
@@ -235,6 +216,7 @@ function AddEventModal({
 
                     return (
                       <div
+                        key={suggestion.id}
                         className="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12 p-1.5 py-2 md:p-2.5"
                         {...getSuggestionItemProps(suggestion, { style })}
                       >
@@ -248,7 +230,7 @@ function AddEventModal({
           </PlacesAutocomplete>
         </div>
         <div className="w-11/12 flex justify-end">
-          <button className="bg-pink rounded-lg text-white py-3 px-4">
+          <button className="bg-pink rounded-lg text-white py-3 px-4 border border-pink hover:bg-white hover:text-pink">
             {role === "add" ? "Add" : "Update"}
           </button>
         </div>

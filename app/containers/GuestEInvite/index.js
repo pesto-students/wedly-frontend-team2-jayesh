@@ -75,7 +75,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
             "/eaashirvaad/verify",
             response
           );
-          console.log(data);
+
           paymentSucessToast(Number(paymentAmount));
         } catch (error) {
           paymentFailureToast();
@@ -94,7 +94,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
       const { data } = await axiosInstance.post("/eaashirvaad", {
         amount: Number(paymentAmount),
       });
-      console.log(data);
+
       initPayment(data.data);
       setIsClicked(false);
       setPaymentAmount("");
@@ -169,7 +169,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
             onClick={() => {
               setIsClicked(true);
             }}
-            className="border rounded-lg px-10 py-2 lg:py-3 text-[#44a030] border-[#44a030]"
+            className="border rounded-lg px-10 py-2 lg:py-3 text-[#44a030] border-[#44a030]  hover:bg-[#44a030] hover:text-white"
           >
             Send Aashirvaad
           </button>
@@ -185,7 +185,7 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
           />
           <button
             onClick={handlePayment}
-            className="border rounded-lg text-sm lg:text-lg px-2 lg:px-4 py-1 lg:py-2 text-[#44a030] border-[#44a030]"
+            className="border rounded-lg text-sm lg:text-lg px-2 lg:px-4 py-1 lg:py-2 text-[#44a030] border-[#44a030]  hover:bg-[#44a030] hover:text-white"
           >
             Pay Now
           </button>

@@ -50,7 +50,6 @@ function* signinSaga(action) {
     yield put({ type: SIGNIN_SUCCESS, response });
     yield signinSuccessToast();
   } catch (error) {
-    console.log(error);
     yield put({ type: SIGNIN_FAILURE, error });
     yield custom401toast(error.response.data.message);
   }

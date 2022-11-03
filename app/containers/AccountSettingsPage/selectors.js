@@ -5,7 +5,7 @@ import { initialState } from "./reducer";
  * Direct selector to the accountSettingsPage state domain
  */
 
-const selectAccountSettingsPageDomain = state =>
+const selectAccountSettingsPageDomain = (state) =>
   state.accountSettingsPage || initialState;
 
 /**
@@ -19,8 +19,14 @@ const selectAccountSettingsPageDomain = state =>
 const makeSelectAccountSettingsPage = () =>
   createSelector(
     selectAccountSettingsPageDomain,
-    substate => substate
+    (substate) => substate
+  );
+
+const makeSelectAccountLoading = () =>
+  createSelector(
+    selectAccountSettingsPageDomain,
+    (substate) => substate.loading
   );
 
 export default makeSelectAccountSettingsPage;
-export { selectAccountSettingsPageDomain };
+export { selectAccountSettingsPageDomain, makeSelectAccountLoading };

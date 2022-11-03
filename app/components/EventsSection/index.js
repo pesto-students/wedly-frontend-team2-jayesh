@@ -55,7 +55,7 @@ export default function EventsSection({
               <div className="flex py-2">
                 <button
                   type="submit"
-                  className="flex items-center text-white bg-[#44A300] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow mr-4"
+                  className="flex items-center text-white bg-[#44A300] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow mr-4 border border-[#44A300] hover:bg-white hover:text-[#44A300]"
                   onClick={() => setIsUploadOpen(!isUploadOpen)}
                 >
                   <HiDownload size="1.1rem" className="mr-1" />
@@ -63,13 +63,12 @@ export default function EventsSection({
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow"
+                  className="flex items-center text-white bg-[#3498DB] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow border border-[#3498DB] hover:bg-white hover:text-[#3498DB]"
                   onClick={() => {
                     setIsAddOpen(!isAddOpen);
-                    setisLoading(false);
                   }}
                 >
-                  <BsPlus size="0.7rem" className="mr-1" />
+                  <BsPlus size="1.2rem" className="mr-1" />
                   Add an Event
                 </button>
               </div>
@@ -132,7 +131,7 @@ export default function EventsSection({
                                 onClick={() =>
                                   sendReminderofEvent(eventDetails)
                                 }
-                                className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
+                                className="bg-pink rounded-xl text-white py-1 px-4 mr-1 border border-pink hover:bg-white hover:text-pink"
                               >
                                 Remind
                               </button>
@@ -174,7 +173,10 @@ export default function EventsSection({
                 </div>
               </div>
             ) : (
-              <LoadingIndicator />
+              <h3 className="text-center text-xl mt-48">
+                No events added! Start adding events by either clicking on Add
+                an Event button or you can also import CSV of events
+              </h3>
             )}
           </div>
         </div>
