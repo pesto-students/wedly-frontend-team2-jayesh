@@ -19,7 +19,7 @@ A web application that a person or a family can use to store wedding details, gu
 Please Note:
 
 1. We recommend using this app in any browser other than Microsoft Edge
-2. Use the website on Laptop | desktop | tablet only for better expirence.
+2. Use the website on Laptop | Desktop | Tablet | Mobile only for better expirence.
 
 **Test Credentials for Users:**
 | Email | Password
