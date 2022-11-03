@@ -77,17 +77,21 @@ function NavBar({ user, success, onToggleModal, logout, loading }) {
             {clicked && (
               <div
                 ref={ref}
-                className="cursor-pointer flex flex-col justify-around border border-slate-400 p-2 absolute right-2 top-14 bg-white h-20 rounded-xl z-10"
+                className={`cursor-pointer flex flex-col justify-around border border-slate-400 p-2 absolute right-2 top-14 bg-white ${
+                  user[0] ? "h-10 w-28" : "h-20"
+                } h-20 rounded-xl z-10`}
               >
-                <h3
-                  onClick={() => {
-                    history.push("/accountSettings");
-                    setClicked(!clicked);
-                  }}
-                  className="font-semibold"
-                >
-                  Account Settings
-                </h3>
+                {!user[0] ? (
+                  <h3
+                    onClick={() => {
+                      history.push("/accountSettings");
+                      setClicked(!clicked);
+                    }}
+                    className="font-semibold"
+                  >
+                    Account Settings
+                  </h3>
+                ) : null}
                 <h3
                   onClick={() => {
                     logout();
