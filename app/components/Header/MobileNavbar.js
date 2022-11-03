@@ -12,6 +12,7 @@ import { GiHamburgerMenu } from "@react-icons/all-files/gi/GiHamburgerMenu";
 import { MdClose } from "@react-icons/all-files/md/MdClose";
 import { MdSettings } from "@react-icons/all-files/md/MdSettings";
 import { MdEvent } from "@react-icons/all-files/md/MdEvent";
+import { MdDetails } from "@react-icons/all-files/md/MdDetails";
 import { MdPersonAdd } from "@react-icons/all-files/md/MdPersonAdd";
 import { MdEmail } from "@react-icons/all-files/md/MdEmail";
 import { MdInfoOutline } from "@react-icons/all-files/md/MdInfoOutline";
@@ -63,7 +64,7 @@ function MobileNavBar({ user, success, onToggleModal, logout }) {
                   }}
                   className="flex items-center w-fit"
                 >
-                  <MdEvent className="mr-1" />
+                  <MdDetails className="mr-1" />
                   <span>Details</span>
                 </a>
                 <a
