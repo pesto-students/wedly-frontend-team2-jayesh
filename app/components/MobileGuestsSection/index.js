@@ -25,6 +25,7 @@ function MobileGuestsSection({
   setSearchTerm,
   setSelectedGuests,
   loading,
+  einvite,
 }) {
   const ref = useRef();
   const [isAddOpen, setIsAddOpen] = useState(false);
@@ -168,7 +169,14 @@ function MobileGuestsSection({
                         </div>
                       </div>
                       <div className="flex justify-center items-center mt-2">
-                        {!guestDetails.isInvited ? (
+                        {einvite[0] === null ? (
+                          <button
+                            disabled
+                            className="bg-[#c82b5a] rounded-xl text-white py-1 px-4 mr-1"
+                          >
+                            Invite
+                          </button>
+                        ) : (
                           <button
                             onClick={() => {
                               invite(
@@ -183,13 +191,6 @@ function MobileGuestsSection({
                           >
                             Invite
                           </button>
-                        ) : (
-                          <button
-                            disabled
-                            className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
-                          >
-                            Invited
-                          </button>
                         )}
                         <button data-tip data-for="invite">
                           <AiOutlineInfoCircle
@@ -197,8 +198,10 @@ function MobileGuestsSection({
                             className=" text-black"
                           />
                         </button>
-                        <ReactTooltip id="invite" place="bottom" effect="solid">
-                          Sends invitation to the given Whatsapp number
+                        <ReactTooltip id="invite" place="top" effect="solid">
+                          {einvite[0] === null
+                            ? "Please add some pages to your E-Invite to start sending invitations"
+                            : "Sends invitation to the given Whatsapp number"}
                         </ReactTooltip>
                       </div>
                     </div>

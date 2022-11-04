@@ -7,7 +7,9 @@ import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import reducer from "./reducer";
 import homeReducer from "../HomePage/reducer";
+import einviteReducer from "../GuestEInvite/reducer";
 import saga from "./saga";
+import einviteSaga from "../GuestEInvite/saga";
 import { makeSelectGuests, makeSelectIsLoading } from "./selectors";
 import { DELETE_GUEST, GET_GUEST, SEND_INVITE } from "./constants";
 import { AUTH_STATE } from "../HomePage/constants";
@@ -16,6 +18,9 @@ import GuestsSection from "../../components/GuestsSection";
 import MobileGuestsSection from "../../components/MobileGuestsSection";
 import searchByName from "../../utils/searchByName";
 import MoonLoader from "react-spinners/MoonLoader";
+
+import { GET_EINVITE } from "../GuestEInvite/constants";
+import { makeSelectGuestEInvite } from "../GuestEInvite/selectors";
 
 const override = {
   display: "block",
@@ -33,18 +38,28 @@ export function GuestsPage({
   sendInvite,
   checkAuthState,
   loading,
+  getEinvite,
+  einvite,
 }) {
   useInjectReducer({ key: "guestsPage", reducer });
   useInjectReducer({ key: "home", reducer: homeReducer });
+  useInjectReducer({ key: "guestEInvite", reducer: einviteReducer });
   useInjectSaga({ key: "guestsPage", saga });
+  useInjectSaga({ key: "guestEInvite", saga: einviteSaga });
   const [selectedGuests, setSelectedGuests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
+  const [einviteData, setEinviteData] = useState([]);
   useEffect(() => {
     checkAuthState();
   }, []);
   useEffect(() => {
     if (Object.keys(user).length > 0) getGuests();
+  }, [user]);
+
+  useEffect(() => {
+    if (Object.keys(user).length > 0)
+      getEinvite(user._id ? user._id : user[0]._id);
   }, [user]);
 
   useEffect(() => {
@@ -55,6 +70,10 @@ export function GuestsPage({
     }
   }, [debouncedSearchTerm, guests]);
 
+  useEffect(() => {
+    setEinviteData(einvite);
+  }, [einvite]);
+
   const handleChange = (e) => {
     const { name, checked } = e.target;
     if (name === "allSelect") {
@@ -64,31 +83,18 @@ export function GuestsPage({
           ? { ...guest, isChecked: checked }
           : { ...guest, isChecked: guest.isChecked };
       });
-      // let tempFilteredUsers = filteredUsers.map((user) => {
-      //   if (user.isChecked === undefined) user.isChecked = false;
-      //   return usersCurrent.includes(user)
-      //     ? { ...user, isChecked: checked }
-      //     : { ...user, isChecked: user.isChecked };
-      // });
-      // setFilteredUsers(tempFilteredUsers);
-      // setUsers(tempUsers);
       setSelectedGuests(tempCheckedGuests);
     } else {
       let tempCheckedGuests = selectedGuests.map((guest) =>
         guest._id === name ? { ...guest, isChecked: checked } : guest
       );
       setSelectedGuests(tempCheckedGuests);
-      // let tempFilteredUsers = filteredUsers.map((user) =>
-      //   user.id === name ? { ...user, isChecked: checked } : user
-      // );
-      // setFilteredUsers(tempFilteredUsers);
-      // setUsers(tempUsers);
     }
   };
-
   return (
     <>
       <GuestsSection
+        einvite={einviteData}
         loading={loading}
         guests={guests}
         getGuests={getGuests}
@@ -102,6 +108,7 @@ export function GuestsPage({
         handleChange={handleChange}
       />
       <MobileGuestsSection
+        einvite={einviteData}
         guests={guests}
         loading={loading}
         getGuests={getGuests}
@@ -124,6 +131,7 @@ const mapStateToProps = createStructuredSelector({
   guests: makeSelectGuests(),
   user: makeSelectUser(),
   loading: makeSelectIsLoading(),
+  einvite: makeSelectGuestEInvite(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -139,6 +147,9 @@ function mapDispatchToProps(dispatch) {
     },
     checkAuthState: () => {
       dispatch({ type: AUTH_STATE });
+    },
+    getEinvite: (hostID) => {
+      dispatch({ type: GET_EINVITE, hostID });
     },
   };
 }

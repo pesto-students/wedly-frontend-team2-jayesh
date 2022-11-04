@@ -27,4 +27,15 @@ const makeSelectLoading = () =>
     (substate) => substate.loading
   );
 
-export { selectGuestEInviteDomain, makeSelectEinvite, makeSelectLoading };
+const makeSelectGuestEInvite = () =>
+  createSelector(
+    selectGuestEInviteDomain,
+    (substate) => substate.einvite
+  );
+
+export {
+  selectGuestEInviteDomain,
+  makeSelectEinvite,
+  makeSelectLoading,
+  makeSelectGuestEInvite,
+};

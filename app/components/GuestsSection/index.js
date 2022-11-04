@@ -26,6 +26,7 @@ function GuestsSection({
   setSearchTerm,
   handleChange,
   loading,
+  einvite,
 }) {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -33,6 +34,7 @@ function GuestsSection({
   const invite = async (guestId, from, to, mobile, userId) => {
     await sendInvite(from, to, mobile, userId);
   };
+
   useEffect(() => {
     setIsUpdate(new Array(selectedGuests.length).fill(false));
   }, [selectedGuests]);
@@ -101,18 +103,6 @@ function GuestsSection({
                   <table className="min-w-full">
                     <thead>
                       <tr className="bg-gray-50 border-b border-gray-200 text-xs leading-4 text-gray-500 tracking-wider">
-                        <th className="px-6 py-3 text-left">
-                          <input
-                            type="checkbox"
-                            name="allSelect"
-                            checked={
-                              !selectedGuests.some(
-                                (guest) => guest.isChecked !== true
-                              ) || false
-                            }
-                            onChange={handleChange}
-                          />
-                        </th>
                         {tableHeaders.map((tableHeader, index) => (
                           <th
                             className="px-6 py-3 text-left font-medium"
@@ -121,11 +111,7 @@ function GuestsSection({
                             {tableHeader}
                           </th>
                         ))}
-                        <th className="px-6 py-3 text-center font-medium">
-                          <button className="bg-pink rounded-xl text-white py-1 px-4 mr-1 border border-pink hover:bg-white hover:text-pink">
-                            Invite selected guests
-                          </button>
-                        </th>
+                        <th />
                       </tr>
                     </thead>
                     <tbody className="bg-white">
@@ -135,14 +121,6 @@ function GuestsSection({
                             className={index % 2 && `bg-[#f7f8ff]`}
                             key={guest._id}
                           >
-                            <td className="px-6 py-4 whitespace-no-wrap ">
-                              <input
-                                type="checkbox"
-                                name={guest._id}
-                                checked={guest.isChecked || false}
-                                onChange={handleChange}
-                              />
-                            </td>
                             <td className="px-6 py-4 whitespace-no-wrap ">
                               <div className="text-sm leading-5 text-gray-900">
                                 {guest.name}
@@ -160,7 +138,14 @@ function GuestsSection({
                             </td>
                             <td className="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500 flex items-center justify-around">
                               <div className="flex items-center justify-between">
-                                {!guest.isInvited ? (
+                                {einvite[0] === null ? (
+                                  <button
+                                    disabled
+                                    className="bg-[#c82b5a] rounded-xl text-white py-1 px-4 mr-1"
+                                  >
+                                    Invite
+                                  </button>
+                                ) : (
                                   <button
                                     onClick={() => {
                                       invite(
@@ -175,13 +160,6 @@ function GuestsSection({
                                   >
                                     Invite
                                   </button>
-                                ) : (
-                                  <button
-                                    disabled
-                                    className="bg-pink rounded-xl text-white py-1 px-4 mr-1"
-                                  >
-                                    Invited
-                                  </button>
                                 )}
                                 <button data-tip data-for="invite">
                                   <AiOutlineInfoCircle
@@ -194,7 +172,9 @@ function GuestsSection({
                                   place="top"
                                   effect="solid"
                                 >
-                                  Sends invitation to the given Whatsapp number
+                                  {einvite[0] === null
+                                    ? "Please add some pages to your E-Invite to start sending invitations"
+                                    : "Sends invitation to the given Whatsapp number"}
                                 </ReactTooltip>
                               </div>
                               <AiOutlineEdit

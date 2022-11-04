@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { formDataSuccessToast } from "../../utils/toast";
 
 function ContactUs() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTimeout(() => {
+      formDataSuccessToast();
+    }, 1000);
+  };
   return (
     <section id="contactUs" className="w-full mt-3 md:mt-0 md:w-1/2">
       <div className="py-8 lg:py-16 px-4">
         <h2 className="mb-4 text-xl font-semibold">Contact Us</h2>
-        <form action="#" className="space-y-8">
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-8">
           <div>
             <label
               htmlFor="name"

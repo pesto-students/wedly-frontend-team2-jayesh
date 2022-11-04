@@ -175,5 +175,9 @@ export const updateUserFailureToast = (message) => {
 };
 
 export const connectionTimedOutToast = () => {
-  toast.error("Connection timed out. Please login again!");
+  toast.error("Connection timed out. Please login again!", toastProperties);
+};
+
+export const formDataSuccessToast = () => {
+  toast.success("Your details were saved successfully!", toastProperties);
 };

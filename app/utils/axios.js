@@ -2,7 +2,7 @@ import axios from "axios";
 import history from "./history";
 import { store } from "../app";
 import { SIGNOUT_SUCCESS } from "../containers/HomePage/constants";
-import { connectionTimedOutToast } from "./toast";
+import { connectionTimedOutToast, custom401toast } from "./toast";
 
 const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
@@ -26,11 +26,17 @@ axiosInstance.interceptors.response.use(
       error.response.status === 401 &&
       !window.location.href.includes("/einvite/view")
     ) {
+      console.log(error.response);
       await store.dispatch({ type: SIGNOUT_SUCCESS });
       history.push("/");
-      if (error.response.config.url !== "/authState") {
+      if (
+        error.response.config.url !== "/authState" &&
+        error.response.config.url !== "/login"
+      ) {
         connectionTimedOutToast();
         localStorage.removeItem("accessToken");
+      } else if (error.response.config.url === "/login") {
+        custom401toast(error.response.data.message);
       }
     }
   }
