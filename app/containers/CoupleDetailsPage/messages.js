@@ -11,6 +11,6 @@ export const scope = "app.containers.CoupleDetailsPage";
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: "This is the CoupleDetailsPage container!"
-  }
+    defaultMessage: "This is the CoupleDetailsPage container!",
+  },
 });

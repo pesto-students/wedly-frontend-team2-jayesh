@@ -11,6 +11,6 @@ export const scope = "app.containers.EinvitePage";
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: "This is the EinvitePage container!"
-  }
+    defaultMessage: "This is the EinvitePage container!",
+  },
 });

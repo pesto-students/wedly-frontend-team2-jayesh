@@ -33,20 +33,20 @@ export function EinvitePage() {
         Select your template
       </h3>
       <div className="flex flex-col sm:flex-row justify-center items-center">
-      {templates.map((template) => (
-        <div
-          onClick={() => history.push(`/einviteEdit/${template.id}`)}
-          key={template.id}
-          className="cursor-pointer px-4"
-        >
-          <img
-            className="h-96"
-            src={template.imageUrls.firstPage}
-            alt={template.name}
-          />
-          <h5 className="my-3">{template.name}</h5>
-        </div>
-      ))}
+        {templates.map((template) => (
+          <div
+            onClick={() => history.push(`/einviteEdit/${template.id}`)}
+            key={template.id}
+            className="cursor-pointer px-4"
+          >
+            <img
+              className="h-96"
+              src={template.imageUrls.firstPage}
+              alt={template.name}
+            />
+            <h5 className="my-3">{template.name}</h5>
+          </div>
+        ))}
       </div>
     </div>
   );

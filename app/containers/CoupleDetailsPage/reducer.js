@@ -25,7 +25,7 @@ const coupleDetailsPageReducer = (state = initialState, action) =>
       case ADD_COUPLE_DETAILS:
         draft.loading = true;
         break;
-        
+
       case ADD_COUPLE_DETAILS_SUCCESS:
         draft.coupleDetails.bride = action.response.data.newBride;
         draft.coupleDetails.groom = action.response.data.newGroom;

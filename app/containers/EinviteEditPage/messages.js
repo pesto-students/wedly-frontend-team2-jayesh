@@ -11,6 +11,6 @@ export const scope = "app.containers.EinviteEditPage";
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: "This is the EinviteEditPage container!"
-  }
+    defaultMessage: "This is the EinviteEditPage container!",
+  },
 });

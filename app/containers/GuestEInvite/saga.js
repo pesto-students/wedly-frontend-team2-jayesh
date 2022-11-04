@@ -13,7 +13,6 @@ export async function getEinviteDetails(hostID) {
 
 function* getEinviteSaga(action) {
   try {
-
     const response = yield call(getEinviteDetails, action.hostID);
     yield put({ type: GET_EINVITE_SUCCESS, response });
   } catch (error) {

@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled, { keyframes } from 'styled-components';
+import React from "react";
+import PropTypes from "prop-types";
+import styled, { keyframes } from "styled-components";
 
 const circleFadeDelay = keyframes`
   0%,
@@ -14,7 +14,7 @@ const circleFadeDelay = keyframes`
   }
 `;
 
-const Circle = props => {
+const Circle = (props) => {
   const CirclePrimitive = styled.div`
     width: 100%;
     height: 100%;
@@ -27,7 +27,7 @@ const Circle = props => {
       -ms-transform: rotate(${props.rotate}deg);
       transform: rotate(${props.rotate}deg);
     `} &:before {
-      content: '';
+      content: "";
       display: block;
       margin: 0 auto;
       width: 15%;

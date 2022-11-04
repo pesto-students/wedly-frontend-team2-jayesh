@@ -1,6 +1,6 @@
-import React from 'react'
-import ContactUsSection from "../ContactUsSection"
-import AboutUsSection from "../AboutUsSection"
+import React from "react";
+import ContactUsSection from "../ContactUsSection";
+import AboutUsSection from "../AboutUsSection";
 
 function Info() {
   return (
@@ -8,7 +8,7 @@ function Info() {
       <ContactUsSection />
       <AboutUsSection />
     </div>
-  )
+  );
 }
 
-export default Info
+export default Info;

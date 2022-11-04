@@ -1,8 +1,8 @@
 /**
- *
- * {{ properCase name }}
- *
- */
+*
+* {{ properCase name }}
+*
+*/
 
 {{#if memo}}
 import React, { memo } from 'react';
@@ -18,13 +18,13 @@ import messages from './messages';
 {{/if}}
 
 function {{ properCase name }}() {
-  return (
-    <div>
-    {{#if wantMessages}}
-      <FormattedMessage {...messages.header} />
-    {{/if}}
-    </div>
-  );
+return (
+<div>
+  {{#if wantMessages}}
+  <FormattedMessage {...messages.header} />
+  {{/if}}
+</div>
+);
 }
 
 {{ properCase name }}.propTypes = {};

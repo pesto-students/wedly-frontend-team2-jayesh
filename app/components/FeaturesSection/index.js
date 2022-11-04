@@ -9,7 +9,9 @@ export default function FeaturesSection() {
           key={Math.random()}
         >
           <img className="w-9 lg:w-fit" src={logo} alt={`${text}.logo`} />
-          <p className="ml-4 w-1/2 md:w-fit font-semibold text-menuGrey">{text}</p>
+          <p className="ml-4 w-1/2 md:w-fit font-semibold text-menuGrey">
+            {text}
+          </p>
         </div>
       ))}
     </div>

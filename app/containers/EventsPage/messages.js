@@ -11,6 +11,6 @@ export const scope = "app.containers.EventsPage";
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: "This is the EventsPage container!"
-  }
+    defaultMessage: "This is the EventsPage container!",
+  },
 });

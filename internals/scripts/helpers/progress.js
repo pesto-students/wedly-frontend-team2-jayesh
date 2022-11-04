@@ -1,4 +1,4 @@
-const readline = require('readline');
+const readline = require("readline");
 
 /**
  * Adds an animated progress indicator
@@ -11,7 +11,7 @@ function animateProgress(message, amountOfDots = 3) {
   return setInterval(() => {
     readline.cursorTo(process.stdout, 0);
     i = (i + 1) % (amountOfDots + 1);
-    const dots = new Array(i + 1).join('.');
+    const dots = new Array(i + 1).join(".");
     process.stdout.write(message + dots);
   }, 500);
 }

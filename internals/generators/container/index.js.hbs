@@ -1,8 +1,8 @@
 /**
- *
- * {{properCase name }}
- *
- */
+*
+* {{properCase name }}
+*
+*/
 
 {{#if memo}}
 import React, { memo } from 'react';
@@ -38,42 +38,42 @@ import messages from './messages';
 {{/if}}
 
 export function {{ properCase name }}() {
-  {{#if wantActionsAndReducer}}
-  useInjectReducer({ key: '{{ camelCase name }}', reducer });
-  {{/if}}
-  {{#if wantSaga}}
-  useInjectSaga({ key: '{{ camelCase name }}', saga });
-  {{/if}}
+{{#if wantActionsAndReducer}}
+useInjectReducer({ key: '{{ camelCase name }}', reducer });
+{{/if}}
+{{#if wantSaga}}
+useInjectSaga({ key: '{{ camelCase name }}', saga });
+{{/if}}
 
-  return (
-    <div>
-    {{#if wantHeaders}}
-      <Helmet>
-        <title>{{properCase name}}</title>
-        <meta name="description" content="Description of {{properCase name}}" />
-      </Helmet>
-    {{/if}}
-    {{#if wantMessages}}
-      <FormattedMessage {...messages.header} />
-    {{/if}}
-    </div>
-  );
+return (
+<div>
+  {{#if wantHeaders}}
+  <Helmet>
+    <title>{{properCase name}}</title>
+    <meta name="description" content="Description of {{properCase name}}" />
+  </Helmet>
+  {{/if}}
+  {{#if wantMessages}}
+  <FormattedMessage {...messages.header} />
+  {{/if}}
+</div>
+);
 }
 
 {{ properCase name }}.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+dispatch: PropTypes.func.isRequired,
 };
 
 {{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({
-  {{ camelCase name }}: makeSelect{{properCase name}}(),
+{{ camelCase name }}: makeSelect{{properCase name}}(),
 });
 {{/if}}
 
 function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
+return {
+dispatch,
+};
 }
 
 {{#if wantActionsAndReducer}}
@@ -83,8 +83,8 @@ const withConnect = connect(null, mapDispatchToProps);
 {{/if}}
 
 export default compose(
-  withConnect,
+withConnect,
 {{#if memo}}
-  memo,
+memo,
 {{/if}}
 )({{ properCase name }});

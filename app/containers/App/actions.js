@@ -70,4 +70,3 @@ export function toggleModal() {
     type: TOGGLE_MODAL,
   };
 }
-

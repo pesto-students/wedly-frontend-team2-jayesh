@@ -28,26 +28,28 @@ function UploadModal({
       let arrayOfGuests = [];
       reader.onload = async function(e) {
         let rows = await e.target.result.split("\n");
-        for (var i = 1; i < rows.length && i<=11; i++) {
+        for (var i = 1; i < rows.length && i <= 11; i++) {
           if (rows[i].length > 0) {
             let cells = await rows[i].split(",");
             const eventBody = {};
             const guestBody = {};
             if (role === "event") {
-              if(cells[0] || cells[1]){
-              if (cells[0] !== "Other") {
-                eventBody["category"] = cells[0];
+              if (cells[0] || cells[1]) {
+                if (cells[0] !== "Other") {
+                  eventBody["category"] = cells[0];
+                }
+                if (cells[1] !== "") {
+                  eventBody["customEvent"] = cells[1];
+                }
+                const dateArray = cells[2].split("-");
+
+                eventBody["date"] = `${dateArray[2]}-${dateArray[0]}-${
+                  dateArray[1]
+                }`;
+                eventBody["time"] = cells[3];
+                eventBody["venue"] = cells[4];
+                arrayOfEvents.push(eventBody);
               }
-              if (cells[1] !== "") {
-                eventBody["customEvent"] = cells[1];
-              }
-              const dateArray = cells[2].split("-")
-  
-              eventBody["date"] = `${dateArray[2]}-${dateArray[0]}-${dateArray[1]}`;
-              eventBody["time"] = cells[3];
-              eventBody["venue"] = cells[4];
-              arrayOfEvents.push(eventBody);
-            }
             } else {
               guestBody["name"] = cells[0];
               guestBody["mobile"] = cells[1];
@@ -62,7 +64,7 @@ function UploadModal({
       };
       reader.readAsText(fileUpload.files[0]);
     }
-    setUploadActive(false)
+    setUploadActive(false);
     setIsOpen(!isOpen);
   };
   return (
@@ -79,7 +81,12 @@ function UploadModal({
         id="upload"
         type="file"
         accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-        onChange={()=>setUploadActive(document.getElementById("upload") && document.getElementById("upload").files.length > 0)}
+        onChange={() =>
+          setUploadActive(
+            document.getElementById("upload") &&
+              document.getElementById("upload").files.length > 0
+          )
+        }
         hidden
       />
       <label
@@ -88,23 +95,35 @@ function UploadModal({
       >
         Choose file
       </label>
-      {uploadActive &&<button
-        className="my-1 flex items-center text-white bg-[#44A300] hover:bg-inherit hover:border hover:border-[#44A300] hover:text-[#44A300] font-medium rounded-2xl text-sm px-5 py-1.5 text-center"
-        onClick={() => {
-          upload();
-        }}
-      >
-        Upload
-      </button>}
-      {role === "event" ?<a href="https://docs.google.com/spreadsheets/d/1SaAe0Z5vutjbvLPghsoQZwfkvgdT1NCr/edit?usp=sharing" target="_blank">
-      <p className="cursor-pointer text-xs underline font-medium text-[#0E62AA]">
-        Redirect to Sample csv
-      </p>
-      </a>:<a href="https://docs.google.com/spreadsheets/d/1ux3oBGFWQM20N-kXX5NBCK8uCTeGYXoDemvePKeQ2KM/edit?usp=sharing" target="_blank">
-      <p className="cursor-pointer text-xs underline font-medium text-[#0E62AA]">
-        Redirect to Sample csv
-      </p>
-      </a>}
+      {uploadActive && (
+        <button
+          className="my-1 flex items-center text-white bg-[#44A300] hover:bg-inherit hover:border hover:border-[#44A300] hover:text-[#44A300] font-medium rounded-2xl text-sm px-5 py-1.5 text-center"
+          onClick={() => {
+            upload();
+          }}
+        >
+          Upload
+        </button>
+      )}
+      {role === "event" ? (
+        <a
+          href="https://docs.google.com/spreadsheets/d/1SaAe0Z5vutjbvLPghsoQZwfkvgdT1NCr/edit?usp=sharing"
+          target="_blank"
+        >
+          <p className="cursor-pointer text-xs underline font-medium text-[#0E62AA]">
+            Redirect to Sample csv
+          </p>
+        </a>
+      ) : (
+        <a
+          href="https://docs.google.com/spreadsheets/d/1ux3oBGFWQM20N-kXX5NBCK8uCTeGYXoDemvePKeQ2KM/edit?usp=sharing"
+          target="_blank"
+        >
+          <p className="cursor-pointer text-xs underline font-medium text-[#0E62AA]">
+            Redirect to Sample csv
+          </p>
+        </a>
+      )}
       <p className="mt-2">Only .csv accepted (Max 1MB)</p>
     </div>
   );

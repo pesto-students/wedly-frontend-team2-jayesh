@@ -5,7 +5,8 @@ import { initialState } from "./reducer";
  * Direct selector to the contactUsPage state domain
  */
 
-const selectContactUsPageDomain = state => state.contactUsPage || initialState;
+const selectContactUsPageDomain = (state) =>
+  state.contactUsPage || initialState;
 
 /**
  * Other specific selectors
@@ -18,7 +19,7 @@ const selectContactUsPageDomain = state => state.contactUsPage || initialState;
 const makeSelectContactUsPage = () =>
   createSelector(
     selectContactUsPageDomain,
-    substate => substate
+    (substate) => substate
   );
 
 export default makeSelectContactUsPage;
