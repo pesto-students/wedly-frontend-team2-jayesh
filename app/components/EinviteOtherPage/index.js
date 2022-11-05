@@ -20,6 +20,7 @@ import { makeSelectUser } from "containers/HomePage/selectors";
 import { AUTH_STATE } from "containers/HomePage/constants";
 import MoonLoader from "react-spinners/MoonLoader";
 import { makeSelectLoadingEInvite } from "../../containers/EinviteEditPage/selectors";
+import { getMinDate } from "utils/functions";
 
 const override = {
   display: "block",
@@ -35,6 +36,18 @@ const dateOptions = {
   month: "long",
   day: "numeric",
 };
+
+function eventForEinvite(name) {
+  if(name.length > 7)
+  {
+      name = name.split(" ")[0];
+      if(name.length>10)
+      {
+          name = name.substr(0,16) + "...";
+      }
+  }
+  return name;
+}
 
 function EinviteOtherPage({
   template,
@@ -162,8 +175,8 @@ function EinviteOtherPage({
         {input && (
           <div className="text-center mt-24 text-[#CCCCCC]">
             <p>Join for my</p>
-            <h1>
-              {input.category !== "Other" ? input.category : input.customEvent}
+            <h1 className="max-[768px]:text-2xl">
+              {input.category !== "Other" ? input.category : eventForEinvite(input.customEvent)}
             </h1>
             <p>{input.time}</p>
             <p>
@@ -228,6 +241,7 @@ function EinviteOtherPage({
                 required
                 value={input.date}
                 onChange={onInputChange}
+                min={getMinDate()}
               />
             </div>
             <div>

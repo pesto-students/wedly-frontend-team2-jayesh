@@ -15,6 +15,7 @@ import { templates } from "utils/eInviteTemplates";
 import axiosInstance from "../../utils/axios";
 import { paymentFailureToast, paymentSucessToast } from "../../utils/toast";
 import MoonLoader from "react-spinners/MoonLoader";
+import Logo from "../../components/Header/wedly_logo.svg";
 
 const override = {
   display: "block",
@@ -103,6 +104,11 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
   };
   return (
     <div className={`mb-[100px] ${loading ? "opacity-50" : "opacity-100"}`}>
+      <div className="bg-white py-2 px-2 w-full mb-3">
+        <div className="max-[768px]:w-1/2">
+          <img src={Logo} alt="wedly logo" />
+        </div>
+      </div>
       {pageData.length > 0 ? (
         <Slider {...settings}>
           {pageData.map((page, index) =>
@@ -174,9 +180,9 @@ function GuestEInvite({ einvite, getEinvite, loading }) {
           </button>
         </div>
       ) : (
-        <div className="flex justify-center mt-10">
+        <div className="flex flex-col md:flex-row justify-center  max-[768px]:items-center mt-10">
           <input
-            className="px-2 lg:py-2 py-1 mr-4 border rounded-lg border-[#44a030]"
+            className="px-2 lg:py-2 py-1 md:mr-4 border rounded-lg border-[#44a030]  max-[768px]:mb-4"
             placeholder="Enter the amount..."
             type="text"
             value={paymentAmount}
