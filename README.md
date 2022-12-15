@@ -1,21 +1,62 @@
-# Pesto Assignments
+# Wedly
 
-Welcome to Pesto assignments.
+![Wedly Logo](./app/components/Header/wedly_logo.svg)
+
+A web application that a person or a family can use to store wedding details, guest lists, and event details. The user can send E-Invites and then reminders before every event to the guests. The guest can send “Aashirvaad” to bless the couple. 
+
+# Table of Contents
+
+1. [Demo](#demo)
+2. [Installation](#installation)
+3. [Technology Stack](#technology-stack)
+4. [Authors](#authors)
+5. [License](#license)
+
+## Demo
+
+[Project Demo](https://wedly-frontend.netlify.app)
+
+Please Note:
+
+1. We recommend using this app in any browser other than Microsoft Edge
+2. Use the website on Laptop | Desktop | Tablet | Mobile only for better expirence.
+
+**Test Credentials for Users:**
+| Email | Password
+| ----------- | -----------  |
+| shivanshu+demo@gmail.com | demo |
 
 
-## How to solve assignments
+## Installation
 
-Weekly Assignments will be shared by your mentor or instructor.
+- Fork or directly clone this repository to your local machine
 
-Make sure master or main branch is protected and you are not able to push any code directly to master.
+- Run the below command to install the packages in package.json
 
-- Clone this repo to your local.
-- Checkout to new branch for submission. Suggestion you can name new branch week wise - branch for week 1 assignment can be week1
 ```bash
-git checkout -b week1
+npm install
 ```
-- Create Assignment week folder in root directory(if it doesn't exist) for eg. for solving week 1 assignment create folder with name "week1".
-- You can create subfolders in main week(week1) folder if required.
-- Add proper readme [(How to Write proper readme](https://meakaakka.medium.com/a-beginners-guide-to-writing-a-kickass-readme-7ac01da88ab3) )in week's folder or subfolder explaining about assignment, how to run assignment and any other instructions. 
-- Raise a PR against master and add your mentor as reviewer
-- Resolve PR comments if any and once your mentor approves your PR, Merge it.
+
+- Run the below command to start the app
+
+```bash
+ npm start
+```
+
+## Technology Stack
+
+We tried to use a completely modern tech stack while testing out some new technologies that we had never used before
+
+- [React](https://reactjs.org/)
+- [Redux toolkit](https://redux-toolkit.js.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Axios](https://axios-http.com/docs/intro)
+
+## Authors
+
+- [Shivanshu Amitabh](https://github.com/shiv123-max)
+- [Kamal Jain](https://github.com/kj2101)
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)

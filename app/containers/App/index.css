@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.hero-background-mobile {
+  background-image: url("../../components/HeroSection/hero-bg-mobile.png");
+  background-size: cover;
+  min-height: 250px;
+  width: 100vw;
+}
+
+.einvite-background {
+  background-image: url("https://image.wedmegood.com/e-invite-images/b6c97b4d-fd62-403e-85ed-219db391d1bd-bgImage.JPEG");
+  background-position: center center;
+  background-size: contain;
+  height: 600px;
+  margin-bottom: 10px;
+}
+
+.select-arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.link-underline {
+  border-bottom-width: 0;
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(#fff, #fff);
+  background-size: 0 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s ease-in-out;
+}
+
+.link-underline-black {
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(rgb(22, 22, 22), rgb(22, 22, 22));
+}
+
+.link-underline:hover {
+  background-size: 100% 2px;
+  background-position: 0 100%;
+}
+
+@media (min-width: 640px) {
+  .hero-background {
+    background-image: url("../../components/HeroSection/hero_background.png");
+    background-size: cover;
+    min-height: 300px;
+    width: 100vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-background {
+    background-image: url("../../components/HeroSection/hero_background.png");
+    background-size: cover;
+    min-height: 528px;
+    width: 100vw;
+  }
+}
+
+@media (max-height: 500px) {
+  .event-modal {
+    height: 100%;
+  }
+}
+
+@media (max-height: 400px) {
+  .guest-modal {
+    height: 100%;
+  }
+}

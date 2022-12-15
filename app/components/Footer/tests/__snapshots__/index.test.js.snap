@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Footer /> should render and match the snapshot 1`] = `
+<footer
+  className="flex justify-between bg-white p-4 md:p-4 absolute bottom-0 w-full max-h-[200px]"
+>
+  <section
+    className="text-xs md:text-md"
+  >
+    <span>
+      © 2022
+    </span>
+  </section>
+  <section
+    className="text-xs md:text-md"
+  >
+    <span>
+      
+      Terms and Conditions | Privacy Policy
+    
+    </span>
+  </section>
+</footer>
+`;
