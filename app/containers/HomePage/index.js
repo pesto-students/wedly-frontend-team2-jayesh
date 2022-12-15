@@ -67,7 +67,7 @@ export function HomePage({ isOpen, loading }) {
           content="A React.js Boilerplate application homepage"
         />
       </Helmet>
-      <div className={isOpen || loading ? `opacity-50` : `opacity-100`}>
+      <div className={isOpen || loading ? `opacity-50 mb-[100px]` : `opacity-100 mb-[50px]`}>
         <HeroSection />
         <FeaturesSection />
         <FeedbackSection />

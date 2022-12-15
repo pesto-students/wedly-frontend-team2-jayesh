@@ -52,7 +52,7 @@ function AddGuestModal({
   };
 
   return (
-    <div className="guest-modal overflow-y-auto overflow-x-hidden fixed top-1/2 left-1/2 z-40 w-4/5 lg:w-1/3 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-4 pl-8 rounded-lg">
+    <div className="guest-modal overflow-y-auto overflow-x-hidden fixed top-1/2 left-1/2 z-40 w-full min-[320px]:w-5/6 lg:w-1/3 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-4 pl-8 rounded-lg">
       <AiOutlineCloseCircle
         onClick={() => handleClick()}
         className="absolute top-0 right-0 m-2 cursor-pointer"
@@ -96,9 +96,10 @@ function AddGuestModal({
             type="tel"
             name="mobile"
             id="mobile"
-            placeholder="Enter contact number"
+            placeholder="Enter 10 digit mobile number"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12 p-1.5 py-2 md:p-2.5"
             required
+            pattern="[1-9]{1}[0-9]{9}"
             value={input.mobile}
             onChange={onInputChange}
           />

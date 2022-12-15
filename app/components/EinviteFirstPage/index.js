@@ -24,6 +24,7 @@ import { AUTH_STATE } from "containers/HomePage/constants";
 import MoonLoader from "react-spinners/MoonLoader";
 import { makeSelectLoading } from "../../containers/CoupleDetailsPage/selectors";
 import { makeSelectLoadingEInvite } from "../../containers/EinviteEditPage/selectors";
+import { getMinDate } from "utils/functions";
 
 const override = {
   display: "block",
@@ -39,6 +40,17 @@ const dateOptions = {
   month: "long",
   day: "numeric",
 };
+function nameForEinvite(name) {
+  if(name.length > 18)
+  {
+      name = name.split(" ")[0];
+      if(name.length>18)
+      {
+          name = name.substr(0,16) + "...";
+      }
+  }
+  return name;
+}
 function EinviteFirstPage({
   template,
   coupleDetails,
@@ -107,11 +119,11 @@ function EinviteFirstPage({
           })] min-[320px]:bg-center bg-contain h-[500px] md:h-[700px] lg:w-[600px] pt-2 sm:pt-5 md:pt-10 mb-2.5`}
         >
           <h2 className="text-2xl md:text-3xl text-center text-[#CCCCCC] mt-4">
-            {brideName}
+            {nameForEinvite(brideName)}
           </h2>
           <h2 className="text-lg text-center text-[#CCCCCC]">&amp;</h2>
           <h2 className="text-2xl md:text-3xl text-center text-[#CCCCCC] sm:mb-1 lg:mb-2">
-            {groomName}
+            {nameForEinvite(groomName)}
           </h2>
           <h4 className="text-center text-[#CCCCCC] text-xs md:text-lg">
             {weddingDate &&
@@ -175,6 +187,7 @@ function EinviteFirstPage({
                   required
                   value={weddingDate}
                   onChange={(e) => setWeddingDate(e.target.value)}
+                  min={getMinDate()}
                 />
               </div>
             </div>
