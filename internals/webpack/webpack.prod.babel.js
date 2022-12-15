@@ -85,7 +85,7 @@ module.exports = require("./webpack.base.babel")({
       inject: true,
     }),
     new webpack.EnvironmentPlugin({
-      SERVER_URL: "https://wedly-backend.herokuapp.com/api",
+      SERVER_URL: "https://wedly-backend.onrender.com/api",
       RAZORPAY_KEY: "rzp_test_RLM7fjm2Fi8KdM",
       APP_URL: "https://wedly-frontend.netlify.app",
     }),
